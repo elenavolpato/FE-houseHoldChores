@@ -8,7 +8,7 @@ function Hero() {
 
   return (
     <>
-      <section className="hero-section d-flex py-5 ">
+      <section className=" d-flex py-5 my-5">
         <Container>
           <Row className="align-items-center g-5 text-center text-md-start">
             {/* Left */}
@@ -36,11 +36,11 @@ function Hero() {
             </Col>
 
             {/* Right  */}
-            <Col lg={6} className="hero-visual">
+            <Col lg={6} className="hero-visual py-5 w-1/2">
               <div className="visual-wrapper">
                 <div className="scene-card">
                   <div className="scene-illustration">
-                    <img src="src/assets/hero-img.png" alt="image of two people watering plants in a house" />
+                    <img src="src/assets/hero-img-1.png" alt="image of two people watering plants in a house" />
                   </div>
                 </div>
               </div>
