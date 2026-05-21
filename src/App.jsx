@@ -1,11 +1,22 @@
 import "./App.css"
+import { BrowserRouter, Route, Routes /* Navigate */ } from "react-router-dom"
+import Home from "./views/Home"
 
 function App() {
   return (
     <>
-      <section>
-        <h1>titulo</h1>
-        {/*  <ul>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </>
+  )
+}
+
+export default App
+{
+  /*  <ul>
             <li>
               <a href="https://github.com/vitejs/vite" target="_blank">
                 <svg
@@ -54,10 +65,5 @@ function App() {
                 Bluesky
               </a>
             </li>
-          </ul> */}
-      </section>
-    </>
-  )
+          </ul> */
 }
-
-export default App
