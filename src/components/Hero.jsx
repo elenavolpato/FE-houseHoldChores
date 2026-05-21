@@ -1,7 +1,9 @@
 import { Badge, Col, Container, Row } from "react-bootstrap"
 import { useState } from "react"
+import "../css/hero.css"
 
 function Hero() {
+  // eslint-disable-next-line no-unused-vars
   const [hovered, setHovered] = useState(false)
 
   return (
