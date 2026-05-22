@@ -5,6 +5,8 @@ import TopBar from "./components/TopBar"
 import Login from "./components/LogIn"
 import Register from "./components/Register"
 import DailyTasks from "./views/DailyTasks"
+import CategoryTasks from "./views/CategoryTasks"
+import ManageGroup from "./views/ManageGroup"
 
 function App() {
   return (
@@ -22,6 +24,12 @@ function App() {
         </Routes>
         <Routes>
           <Route path="/home" element={<DailyTasks />}></Route>
+        </Routes>
+        <Routes>
+          <Route path="/category" element={<CategoryTasks />}></Route>
+        </Routes>
+        <Routes>
+          <Route path="/groups" element={<ManageGroup />}></Route>
         </Routes>
       </BrowserRouter>
     </>

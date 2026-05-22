@@ -69,7 +69,7 @@ function Footer() {
                 style={{ width: 34, height: 34 }}
                 aria-label="Email"
               >
-                <i class="bi bi-envelope-at"></i>
+                <i className="bi bi-envelope-at"></i>
               </a>
               <a
                 href="https://raposinha.dev"
@@ -78,10 +78,10 @@ function Footer() {
                 style={{ width: 34, height: 34 }}
                 aria-label="Website"
               >
-                <i class="bi bi-globe"></i>
+                <i className="bi bi-globe"></i>
               </a>
               <a href="https://github.com/elenavolpato" className=" rounded-circle border text-secondary text-decoration-none" target="_blank">
-                <i class="bi bi-github "></i>
+                <i className="bi bi-github "></i>
               </a>
             </div>
           </Col>
