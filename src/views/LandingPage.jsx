@@ -3,7 +3,7 @@ import BottomCallToAction from "../components/BottomCallToAction"
 import Features from "../components/Features"
 import Footer from "../components/Footer"
 
-function Home() {
+function LandingPage() {
   return (
     <section className="flex flex-grow items-center justify-center">
       <div className="text-center">
@@ -15,4 +15,4 @@ function Home() {
     </section>
   )
 }
-export default Home
+export default LandingPage

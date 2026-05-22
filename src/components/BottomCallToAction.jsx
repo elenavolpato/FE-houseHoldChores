@@ -10,7 +10,7 @@ function BottomCallToAction() {
           <div className="circle-right"></div>
 
           <Container className="cta-content z-1 text-light d-flex align-items-center flex-column justify-content-evenly position-relative ">
-            <h3 className=" text-light z-10">Start managing your home efficiently today</h3>
+            <h3 className=" text-light z-10">Start managing your LandingPage efficiently today</h3>
             <p>Join over 10,000 households using ChoreMate to maintain balance and clarity in their daily routines.</p>
             <div className="d-flex gap-3 mt-4">
               <Button className="btn-primary-custom">Get started free</Button>

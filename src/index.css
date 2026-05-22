@@ -39,6 +39,7 @@ h3 {
     box-shadow 0.25s;
   display: inline-flex;
   align-items: center;
+
   gap: 10px;
   box-shadow: 0 4px 18px rgba(26, 46, 68, 0.18);
 }
