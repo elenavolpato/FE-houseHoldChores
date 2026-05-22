@@ -1,0 +1,46 @@
+@import "../index.css";
+
+.cta-section {
+  position: relative;
+  height: 320px;
+  background: #0d6e8a;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 56px 48px;
+}
+
+/* Subtle center highlight */
+.cta-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 55% 70% at 52% 45%, #1080a0 0%, transparent 70%);
+}
+
+/* Bottom-left darker teal circle */
+.circle-left {
+  position: absolute;
+  width: 230px;
+  height: 230px;
+  background: #2a7a72;
+  border-radius: 50%;
+  bottom: -60px;
+  left: -30px;
+  opacity: 0.85;
+}
+
+/* Top-right lighter blue circle */
+.circle-right {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  background: #1a9cc2;
+  border-radius: 50%;
+  top: -60px;
+  right: -40px;
+  opacity: 0.75;
+}
