@@ -18,6 +18,13 @@ h3 {
   font-weight: 700;
 }
 
+.text-navy {
+  color: var(--navy);
+}
+.text-light-navy {
+  color: #00658d;
+}
+
 .btn-primary-custom {
   background-color: var(--navy);
   border: none;

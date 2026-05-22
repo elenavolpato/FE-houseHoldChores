@@ -6,6 +6,7 @@ h2 {
 
 .feature-card {
   min-width: 32%;
+  max-height: 220px;
 }
 .feature-card:first-child {
   background-color: color-mix(in srgb, var(--teal) 80%, transparent);

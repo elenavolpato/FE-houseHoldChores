@@ -4,7 +4,7 @@ import "../css/features.css"
 function Features() {
   return (
     <section>
-      <Container className="my-5">
+      <Container className="my-5 px-4">
         <div className="mb-5">
           <h2>Why Chores Mate? </h2>
           <p>Designed for clarity and efficiency in every room of your home</p>
@@ -20,8 +20,8 @@ function Features() {
             <h4>Intelligent Scheduling</h4>
             <p>Automatic rotation of tasks ensures a fair distribution of work across everyone in the household.</p>
           </Col>
-          <Col md={12} lg={3} className="feature-card rounded-4 p-4 ">
-            <i className="bi bi-house-check h1 m-2"></i>
+          <Col md={12} lg={3} className="feature-card rounded-4 p-4 h-min">
+            <i className="bi bi-view-stacked h1 m-2"></i>
             <h4>Whole-Home View</h4>
             <p>A comprehensive bird's-eye view of your household's status, from chores to groceries.</p>
           </Col>
