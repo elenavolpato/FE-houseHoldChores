@@ -29,11 +29,11 @@ function Footer() {
                   Task Engine
                 </a>
               </li>
-              <li className="mb-2">
+              {/*  <li className="mb-2">
                 <a href="#" className="text-secondary text-decoration-none small">
                   Pricing
                 </a>
-              </li>
+              </li> */}
             </ul>
           </Col>
 
@@ -62,22 +62,26 @@ function Footer() {
           {/* Contact */}
           <Col xs={12} md={3}>
             <p className="fw-semibold small mb-3">Contact</p>
-            <div className="d-flex gap-2">
+            <div className="d-flex gap-1 justify-content-start">
               <a
-                href="mailto:hello@choremate.com"
-                className="d-flex align-items-center justify-content-center rounded-circle border text-secondary text-decoration-none"
+                href="mailto:elena@raposinha.dev"
+                className="rounded-circle border text-secondary text-decoration-none "
                 style={{ width: 34, height: 34 }}
                 aria-label="Email"
               >
-                @
+                <i class="bi bi-envelope-at"></i>
               </a>
               <a
-                href="#"
-                className="d-flex align-items-center justify-content-center rounded-circle border text-secondary text-decoration-none"
+                href="https://raposinha.dev"
+                target="_blank"
+                className=" rounded-circle border text-secondary text-decoration-none"
                 style={{ width: 34, height: 34 }}
                 aria-label="Website"
               >
-                ⊕
+                <i class="bi bi-globe"></i>
+              </a>
+              <a href="https://github.com/elenavolpato" className=" rounded-circle border text-secondary text-decoration-none" target="_blank">
+                <i class="bi bi-github "></i>
               </a>
             </div>
           </Col>
