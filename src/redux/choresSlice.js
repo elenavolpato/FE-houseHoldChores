@@ -54,8 +54,12 @@ export const choresSlice = createSlice({
     setSelectedCategory: (state, action) => {
       state.selectedCategory = action.payload
     },
+    updateGroupName: (state, action) => {
+      // action.payload will be the new name string sent from the input field
+      state.groupName = action.payload
+    },
   },
 })
 
-export const { toggleChore, setActiveTab, setSelectedCategory } = choresSlice.actions
+export const { toggleChore, setActiveTab, setSelectedCategory, updateGroupName } = choresSlice.actions
 export default choresSlice.reducer
