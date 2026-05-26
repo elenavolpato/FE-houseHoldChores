@@ -3,41 +3,41 @@ import "../css/greetingSection.css"
 
 function GreetingSection() {
   const currentTime = new Date()
-  currentTime.getHours
+  const hours = currentTime.getHours()
 
   const name = "Baba"
-
   const totalTasks = 6
   const completedTasks = 4
-  return (
-    <>
-      <Container className="d-flex justify-content-center align-items-center py-3">
-        <Col md={6}>
-          <p className="text-light-navy caps-title mb-2">TODAY'S OVERVIEW</p>
-          {currentTime < 12 && <h1>Good Morning {name}!</h1>}
-          {currentTime >= 12 && currentTime < 18 && <h1>Good Afternoon {name}!</h1>}
-          {currentTime >= 18 && <h1>Good Evening {name}!</h1>}
 
-          <Row className="bg-white rounded-3 p-3 my-4 d-flex ambient-shadow align-items-center">
-            <Col className="col-9 p-3  ">
-              <p className="m-0">
-                You've completed{" "}
-                <span className="text-light-navy fw-bolder">
-                  {completedTasks} of {totalTasks}&nbsp;
-                </span>
-                chores!
-                <br />
-                Keep it up!
-              </p>
-            </Col>
-            <Col className="col-3">
-              {/* TODO CHANGE THE IMAGE FOR A CIRCLE THAT COMPLETES IT SELF.  */}
-              <img src="src/assets/login_house.png" alt="house image" className="tasks-completed" />
-            </Col>
-          </Row>
-        </Col>
-      </Container>
-    </>
+  return (
+    <Container className="py-4">
+      <Col md={8} className="mx-auto">
+        <p className="text-light-navy caps-title mb-2">TODAY'S OVERVIEW</p>
+        {hours < 12 && <h1>Good Morning {name}!</h1>}
+        {hours >= 12 && hours < 18 && <h1>Good Afternoon {name}!</h1>}
+        {hours >= 18 && <h1>Good Evening {name}!</h1>}
+
+        {/* CHANGED FROM <Row> TO A STANDARD <div className="d-flex"> */}
+        <div className="d-flex align-items-center justify-content-between bg-white rounded-3 p-4 my-4 ambient-shadow">
+          <div>
+            <p className="m-0 fs-5">
+              You've completed{" "}
+              <span className="text-light-navy fw-bolder">
+                {completedTasks} of {totalTasks}&nbsp;
+              </span>
+              chores!
+              <br />
+              <span className="text-muted small">Keep it up!</span>
+            </p>
+          </div>
+
+          <div>
+            {/* TODO CHANGE THE IMAGE FOR A CIRCLE THAT COMPLETES ITSELF. */}
+            <img src="src/assets/login_house.png" alt="house image" className="tasks-completed" style={{ maxWidth: "80px", height: "auto" }} />
+          </div>
+        </div>
+      </Col>
+    </Container>
   )
 }
 
