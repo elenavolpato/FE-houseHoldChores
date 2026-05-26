@@ -8,7 +8,7 @@ function DailyTasks() {
     <>
       <GreetingSection />
       <ChoresStatus />
-      <Goal />
+      {/*  <Goal /> */}
 
       <NavigationBar />
     </>
