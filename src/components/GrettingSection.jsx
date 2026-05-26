@@ -1,13 +1,19 @@
 import { Col, Container } from "react-bootstrap"
 import "../css/greetingSection.css"
+import { useSelector } from "react-redux"
 
 function GreetingSection() {
   const currentTime = new Date()
   const hours = currentTime.getHours()
 
   const name = "Baba"
-  const totalTasks = 6
-  const completedTasks = 4
+
+  // 1. Pull the chores list from your global Redux state
+  const chores = useSelector((state) => state.chores.list)
+
+  // 2. Dynamically calculate the totals
+  const totalTasks = chores.length
+  const completedTasks = chores.filter((chore) => chore.isComplete).length
 
   return (
     <Container className="py-4">
@@ -27,7 +33,9 @@ function GreetingSection() {
               </span>
               chores!
               <br />
-              <span className="text-muted small">Keep it up!</span>
+              {completedTasks === 0 && <span className="text-muted small">Let's get started! </span>}
+              {completedTasks < totalTasks && completedTasks !== 0 && <span className="text-muted small">Keep it up! </span>}
+              {completedTasks === totalTasks && <span className="text-muted small">Congratulations! You're done for today.</span>}
             </p>
           </div>
 

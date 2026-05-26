@@ -1,20 +1,12 @@
 import { Col, Container } from "react-bootstrap"
 import "../css/choresStatus.css"
-import { useState } from "react"
+import { toggleChore } from "../redux/choresSlice"
+import { useDispatch, useSelector } from "react-redux"
 
 function ChoresStatus() {
-  const [chores, setChores] = useState([
-    { id: 1, name: "Dishwashing", isComplete: false, icon: "sink", color: "#2C5FB3", category: "Kitchen" },
-    { id: 2, name: "Vacuuming", isComplete: false, icon: "broom", color: "#E53D00", category: "Cleaning" },
-    { id: 4, name: "Trash removal", isComplete: false, icon: "sink", color: "#E53D00", category: "Cleaning" },
-    { id: 3, name: "Walk dog", isComplete: true, icon: "paw", color: "#f5c518", category: "Pets" },
-  ])
+  const chores = useSelector((state) => state.chores.list)
+  const dispatch = useDispatch()
 
-  const handleToggleChore = (id) => {
-    setChores((prevChores) => prevChores.map((chore) => (chore.id === id ? { ...chore, isComplete: !chore.isComplete } : chore)))
-  }
-
-  // filter chores into two separate arrays
   const remainingChores = chores.filter((chore) => !chore.isComplete)
   const completedChores = chores.filter((chore) => chore.isComplete)
   return (
@@ -61,7 +53,7 @@ function ChoresStatus() {
 
                   {/* Empty Visual Checkbox Control */}
                   <label className="position-relative d-flex align-items-center" style={{ cursor: "pointer" }}>
-                    <input className="visually-hidden" type="checkbox" checked={chore.isComplete} onChange={() => handleToggleChore(chore.id)} />
+                    <input className="visually-hidden" type="checkbox" checked={chore.isComplete} onChange={() => dispatch(toggleChore(chore.id))} />
                     {/* Gray circular border acting as the empty checkbox */}
                     <div className="rounded-circle border border-2 border-secondary-subtle" style={{ width: "32px", height: "32px" }}></div>
                   </label>
@@ -100,7 +92,7 @@ function ChoresStatus() {
               {/* Checkmark Container */}
               <label className="position-relative d-flex align-items-center cursor-pointer">
                 {/* The actual checkbox is hidden but handles the click/state change */}
-                <input className="visually-hidden" type="checkbox" checked={chore.isComplete} onChange={() => handleToggleChore(chore.id)} />
+                <input className="visually-hidden" type="checkbox" checked={chore.isComplete} onChange={() => dispatch(toggleChore(chore.id))} />
 
                 {/* Visual Yellow Round Button */}
                 <div className="rounded-circle bg-warning d-flex align-items-center justify-content-center text-dark" style={{ width: "32px", height: "32px" }}>

@@ -1,7 +1,9 @@
-import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { setActiveTab } from "../redux/choresSlice"
 
 function NavigationBar({ variant = "mobile" }) {
-  const [activeTab, setActiveTab] = useState("today")
+  const activeTab = useSelector((state) => state.chores.activeTab)
+  const dispatch = useDispatch()
 
   const navItems = [
     { id: "today", label: "Today", icon: "fa-regular fa-calendar-check" },
@@ -10,10 +12,6 @@ function NavigationBar({ variant = "mobile" }) {
     { id: "groceries", label: "Groceries", icon: "fa-solid fa-cart-shopping" },
     { id: "group", label: "Group", icon: "fa-solid fa-users" },
   ]
-
-  // =========================================================
-  // 1. DESKTOP RENDER VARIANT
-  // =========================================================
   if (variant === "desktop") {
     return (
       <div className="d-flex align-items-center gap-4">
@@ -22,7 +20,7 @@ function NavigationBar({ variant = "mobile" }) {
           return (
             <button
               key={item.id}
-              onClick={() => setActiveTab(item.id)}
+              onClick={() => dispatch(setActiveTab(item.id))}
               className={`btn border-0 px-3 py-2 rounded-pill d-flex align-items-center gap-2 fw-medium transition-all ${
                 isActive ? "bg-warning text-dark" : "text-secondary"
               }`}
@@ -39,10 +37,6 @@ function NavigationBar({ variant = "mobile" }) {
       </div>
     )
   }
-
-  // =========================================================
-  // 2. MOBILE RENDER VARIANT (Default fallback)
-  // =========================================================
   return (
     <div className="d-block d-lg-none position-fixed bottom-0 start-0 w-100" style={{ zIndex: 1050 }}>
       <div className="position-relative w-100 bg-white shadow-lg border-top" style={{ height: "76px" }}>
@@ -69,7 +63,7 @@ function NavigationBar({ variant = "mobile" }) {
             return (
               <button
                 key={item.id}
-                onClick={() => setActiveTab(item.id)}
+                onClick={() => dispatch(setActiveTab(item.id))}
                 className="btn border-0 d-flex flex-column align-items-center justify-content-center p-0 position-relative"
                 style={{ width: "60px", background: "none" }}
               >
