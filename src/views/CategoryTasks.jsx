@@ -4,6 +4,7 @@ import ChoresStatus from "../components/ChoresStatus"
 import { useSelector, useDispatch } from "react-redux"
 import { setSelectedCategory } from "../redux/choresSlice"
 import ChoreActionButtons from "../components/ChoreActionButtons"
+import NavigationBar from "../components/NavigationBar"
 
 const AVAILABLE_CATEGORIES = ["Kitchen", "Cleaning", "Pets", "Groceries", "Laundry", "Garden", "Bills"]
 
@@ -45,6 +46,7 @@ function CategoryTasks() {
       <CategoryHeader categoryName={selectedCategory} />
       <ChoresStatus filterType="category" categoryName={selectedCategory} />
       <ChoreActionButtons />
+      <NavigationBar variant="mobile" />
     </Container>
   )
 }

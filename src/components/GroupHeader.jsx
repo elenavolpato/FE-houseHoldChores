@@ -23,7 +23,7 @@ function GroupHeader() {
 
     setIsSubmitting(true)
 
-    try {
+    /* try {
       // Replace with your true backend URL endpoint and configuration options
       const response = await fetch("https://api.yourdomain.com/group/update-name", {
         method: "PATCH", // or 'PUT' depending on your backend specification
@@ -50,7 +50,7 @@ function GroupHeader() {
       setNewGroupName(currentGroupName) // Rollback to original name on failure
     } finally {
       setIsSubmitting(false)
-    }
+    } */
   }
 
   return (
