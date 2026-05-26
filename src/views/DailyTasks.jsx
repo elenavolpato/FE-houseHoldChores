@@ -7,7 +7,7 @@ function DailyTasks() {
   return (
     <>
       <GreetingSection />
-      <ChoresStatus />
+      <ChoresStatus filterType="all" />
       {/*  <Goal /> */}
       <NavigationBar variant="mobile" />
     </>

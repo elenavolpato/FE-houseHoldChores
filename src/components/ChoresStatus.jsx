@@ -3,12 +3,20 @@ import "../css/choresStatus.css"
 import { toggleChore } from "../redux/choresSlice"
 import { useDispatch, useSelector } from "react-redux"
 
-function ChoresStatus() {
-  const chores = useSelector((state) => state.chores.list)
+function ChoresStatus({ filterType = "all", categoryName }) {
   const dispatch = useDispatch()
 
-  const remainingChores = chores.filter((chore) => !chore.isComplete)
-  const completedChores = chores.filter((chore) => chore.isComplete)
+  // Grab state from Redux
+  const chores = useSelector((state) => state.chores.list)
+  const reduxCategory = useSelector((state) => state.chores.selectedCategory)
+  const activeCategory = categoryName || reduxCategory
+
+  // 1. First layer of filtering: Decide if we filter by Category or show Dashboard view
+  const displayChores = filterType === "category" ? chores.filter((chore) => chore.category === activeCategory) : chores
+
+  const remainingChores = displayChores.filter((chore) => !chore.isComplete)
+  const completedChores = displayChores.filter((chore) => chore.isComplete)
+
   return (
     <Container className="py-4">
       <Col md={8} className="mx-auto">

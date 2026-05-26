@@ -7,6 +7,7 @@ import Register from "./components/Register"
 import DailyTasks from "./views/DailyTasks"
 import CategoryTasks from "./views/CategoryTasks"
 import ManageGroup from "./views/ManageGroup"
+import CategoryDashboard from "./views/CategoryDashboard"
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
         </Routes>
         <Routes>
           <Route path="/category" element={<CategoryTasks />}></Route>
+        </Routes>
+        <Routes>
+          <Route path="/categories/choose" element={<CategoryDashboard />}></Route>
         </Routes>
         <Routes>
           <Route path="/groups" element={<ManageGroup />}></Route>
