@@ -1,0 +1,41 @@
+.glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+}
+
+.interactive-card:active {
+  transform: scale(0.98);
+  transition: transform 0.1s ease;
+}
+.progress-ring-circle {
+  transition: stroke-dashoffset 0.35s;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+/* Custom Checkbox Animation */
+.chore-checkbox:checked + .checkbox-visual {
+  background-color: #00baff;
+  border-color: #00baff;
+}
+.chore-checkbox:checked + .checkbox-visual::after {
+  content: "done";
+  font-family: "Material Symbols Outlined";
+  color: white;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
+}
+@media (min-width: 769px) {
+  .mobile-nav {
+    display: none;
+  }
+}
