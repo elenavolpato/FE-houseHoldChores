@@ -4,12 +4,12 @@ import LandingPage from "./views/LandingPage"
 import TopBar from "./components/TopBar"
 import Login from "./components/LogIn"
 import Register from "./components/Register"
-import DailyTasks from "./views/DailyTasks"
-import CategoryTasks from "./views/CategoryTasks"
-import ManageGroup from "./views/ManageGroup"
-import CategoryDashboard from "./views/CategoryDashboard"
-import WeeklyTasks from "./views/WeeklyTasks"
-import GroceriesList from "./views/GroceriesList"
+import GroceriesView from "./views/GroceriesView"
+import DailyView from "./views/DailyView"
+import WeeklyView from "./views/WeeklyView"
+import CategoryView from "./views/CategoryView"
+import ManageGroupView from "./views/ManageGroupView"
+import AddNewTask from "./views/AddNewTaskView"
 
 function App() {
   return (
@@ -26,22 +26,22 @@ function App() {
           <Route path="/register" element={<Register />}></Route>
         </Routes>
         <Routes>
-          <Route path="/home" element={<DailyTasks />}></Route>
+          <Route path="/home" element={<DailyView />}></Route>
         </Routes>
         <Routes>
-          <Route path="/weekly" element={<WeeklyTasks />}></Route>
+          <Route path="/weekly" element={<WeeklyView />}></Route>
         </Routes>
         <Routes>
-          <Route path="/category" element={<CategoryTasks />}></Route>
+          <Route path="/category" element={<CategoryView />}></Route>
         </Routes>
         <Routes>
-          <Route path="/categories/choose" element={<CategoryDashboard />}></Route>
+          <Route path="/groups" element={<ManageGroupView />}></Route>
         </Routes>
         <Routes>
-          <Route path="/groups" element={<ManageGroup />}></Route>
+          <Route path="/groceries" element={<GroceriesView />}></Route>
         </Routes>
         <Routes>
-          <Route path="/groceries" element={<GroceriesList />}></Route>
+          <Route path="/new/task" element={<AddNewTask />}></Route>
         </Routes>
       </BrowserRouter>
     </>
@@ -49,3 +49,8 @@ function App() {
 }
 
 export default App
+{
+  /*  <Routes>
+          <Route path="/categories/choose" element={<CategoryDashboard />}></Route>
+        </Routes> */
+}

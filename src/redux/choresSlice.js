@@ -31,6 +31,7 @@ export const choresSlice = createSlice({
     activeTab: "today",
     selectedCategory: "Pets", // Tracks which category page the user is viewing
     selectedDate: getTodayString(),
+    groupName: "Casa da Baunilha",
     list: [
       {
         id: 1,

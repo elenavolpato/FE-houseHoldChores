@@ -1,0 +1,28 @@
+/* Selected custom item row state colors */
+.selected-preset {
+  background-color: #f4f9fd !important;
+  border: 1px solid #cbe4f9 !important;
+  transform: translateY(-2px);
+}
+
+/* Day Bubble Multi-selector for Custom Frequencies */
+.frequency-bubble-day {
+  background-color: #f0f4f8;
+  border: 1px solid #e2e8f0 !important;
+  color: #4a5568;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.15s ease;
+}
+
+.frequency-bubble-day:hover {
+  border-color: #1c668c !important;
+  color: #1c668c;
+}
+
+.frequency-bubble-day.active {
+  background-color: #fcd32d !important;
+  border-color: #cfa615 !important;
+  color: #212529 !important;
+  box-shadow: 0 4px 8px rgba(252, 211, 45, 0.3);
+}

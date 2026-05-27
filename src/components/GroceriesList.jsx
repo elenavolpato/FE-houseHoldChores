@@ -1,36 +1,37 @@
-import { useState } from "react"
-import { Col, Container, ProgressBar, Button, Form } from "react-bootstrap"
+//import { useState } from "react"
+import { Col, Container, ProgressBar /*  Button, Form  */ } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
-import { toggleGrocery, addGrocery } from "../redux/choresSlice" // Update path accordingly
+import { toggleGrocery /* addGrocery */ } from "../redux/choresSlice" // Update path accordingly
 import "../css/groceriesList.css"
 
 function GroceriesList() {
   const dispatch = useDispatch()
-  const [newItemName, setNewItemName] = useState("")
+  //const [newItemName, setNewItemName] = useState("")
 
   // Grab data dynamically from Redux
   const groceries = useSelector((state) => state.chores.groceriesList) || []
+  const groupName = useSelector((state) => state.chores.groupName) || "Your group"
 
   // Metrics calculation
   const totalItems = groceries.length
   const completedItems = groceries.filter((item) => item.isComplete).length
   const progressPercent = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0
 
-  const handleAddItemSubmit = (e) => {
+  /* const handleAddItemSubmit = (e) => {
     e.preventDefault()
     if (!newItemName.trim()) return
     dispatch(addGrocery(newItemName))
     setNewItemName("")
-  }
+  } */
 
   return (
     <Container className="py-4">
       <Col md={8} className="mx-auto">
         {/* --- HEADER TITLE SECTION --- */}
         <div className="mb-4">
-          <h2 className="fw-bold text-dark mb-1 h3">Weekly Groceries</h2>
+          <h2 className="fw-bold text-dark mb-1 h3">Groceries list</h2>
           <div className="d-flex align-items-center justify-content-between">
-            <span className="text-muted small">Shared with the Household</span>
+            <span className="text-muted small">{groupName}</span>
           </div>
         </div>
 
@@ -79,7 +80,7 @@ function GroceriesList() {
         </div>
 
         {/* --- QUICK INPUT ADD ACTION FOOTER --- */}
-        <Form onSubmit={handleAddItemSubmit} className="d-flex align-items-center bg-white p-2 rounded-4 shadow-sm border">
+        {/* <Form onSubmit={handleAddItemSubmit} className="d-flex align-items-center bg-white p-2 rounded-4 shadow-sm border">
           <Form.Control
             type="text"
             placeholder="Quick add (e.g. Eggs 1 dozen)"
@@ -90,7 +91,7 @@ function GroceriesList() {
           <Button type="submit" className="add-action-circle-btn rounded-circle p-0 d-flex align-items-center justify-content-center">
             <i className="fa-solid fa-plus fs-5"></i>
           </Button>
-        </Form>
+        </Form> */}
       </Col>
     </Container>
   )
