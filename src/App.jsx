@@ -8,6 +8,7 @@ import DailyTasks from "./views/DailyTasks"
 import CategoryTasks from "./views/CategoryTasks"
 import ManageGroup from "./views/ManageGroup"
 import CategoryDashboard from "./views/CategoryDashboard"
+import WeeklyTasks from "./views/WeeklyTasks"
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
         </Routes>
         <Routes>
           <Route path="/home" element={<DailyTasks />}></Route>
+        </Routes>
+        <Routes>
+          <Route path="/weekly" element={<WeeklyTasks />}></Route>
         </Routes>
         <Routes>
           <Route path="/category" element={<CategoryTasks />}></Route>
