@@ -1,7 +1,9 @@
 import { Button, Container } from "react-bootstrap"
 import "../css/bottomCallToAction.css"
+import { useAppNavigation } from "../utils/useAppNavigation"
 
 function BottomCallToAction() {
+  const { navigateTo } = useAppNavigation()
   return (
     <>
       <div className="d-flex align-items-center justify-content-center py-5 mx-2 bg-light">
@@ -13,8 +15,12 @@ function BottomCallToAction() {
             <h3 className=" text-light z-10">Start managing your LandingPage efficiently today</h3>
             <p>Join over 10,000 households using ChoreMate to maintain balance and clarity in their daily routines.</p>
             <div className="d-flex gap-3 mt-4">
-              <Button className="btn-primary-custom">Get started free</Button>
-              <Button className="btn-outline-custom">Login to account</Button>
+              <Button className="btn-primary-custom" onClick={() => navigateTo("register")}>
+                Get started free
+              </Button>
+              <Button className="btn-outline-custom" onClick={() => navigateTo("login")}>
+                Login to account
+              </Button>
             </div>
           </Container>
         </div>

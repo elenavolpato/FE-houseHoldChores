@@ -6,7 +6,6 @@ import { useAppNavigation } from "../utils/useAppNavigation"
 function TopBar() {
   // eslint-disable-next-line no-unused-vars
   const [isLoggedIn, setIsLoggedIn] = useState(false) // todo connect with token existance on localStorage
-  console.log(isLoggedIn)
 
   const { navigateTo } = useAppNavigation()
 
@@ -14,10 +13,8 @@ function TopBar() {
     <Container fluid className="p-3 bg-white shadow-lg border-top d-flex justify-content-between ">
       {/* 1. LEFT SIDE: Logo and Brand */}
       <h1 className="text-light-navy m-0 d-flex align-items-center fs-3 cursor-pointer" onClick={() => navigateTo(isLoggedIn ? "home" : " ")}>
-        <i className="bi bi-house-check me-2" onClick={() => navigateTo(isLoggedIn ? "home" : " ")}></i>
-        <span className="d-md-inline d-none fw-bold " onClick={() => navigateTo(isLoggedIn ? "home" : " ")}>
-          ChoreMate
-        </span>
+        <i className="bi bi-house-check me-2"></i>
+        <span className="d-md-inline d-none fw-bold ">ChoreMate</span>
       </h1>
 
       {/* 2. MIDDLE: Navigation Links (Wrapped in a responsive div) */}

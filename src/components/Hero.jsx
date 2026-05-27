@@ -1,11 +1,12 @@
 import { Badge, Col, Container, Row } from "react-bootstrap"
 import { useState } from "react"
 import "../css/hero.css"
+import { useAppNavigation } from "../utils/useAppNavigation"
 
 function Hero() {
   // eslint-disable-next-line no-unused-vars
   const [hovered, setHovered] = useState(false)
-
+  const { navigateTo } = useAppNavigation()
   return (
     <>
       <section className=" d-flex py-5 my-5">
@@ -25,13 +26,15 @@ function Hero() {
                 Coordinate household tasks with ease. Track, assign, and manage your LandingPage's daily operations in one central place.
               </p>
 
-              <div className="d-flex flex-wrap gap-3 align-items-center justify-content-center justify-content-md-start">
+              <div className="d-flex flex-wrap gap-3 align-items-center justify-content-center justify-content-md-start" onClick={() => navigateTo("register")}>
                 <button className="btn-primary-custom" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
                   Get started for free
                   <span className="arrow">→</span>
                 </button>
 
-                <button className="btn-outline-custom">Login</button>
+                <button className="btn-outline-custom" onClick={() => navigateTo("register")}>
+                  Login
+                </button>
               </div>
             </Col>
 

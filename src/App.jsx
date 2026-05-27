@@ -5,7 +5,7 @@ import TopBar from "./components/TopBar"
 import Login from "./components/LogIn"
 import Register from "./components/Register"
 import GroceriesView from "./views/GroceriesView"
-import DailyView from "./views/DailyView"
+//import DailyView from "./views/DailyView"
 import WeeklyView from "./views/WeeklyView"
 import CategoryView from "./views/CategoryView"
 import ManageGroupView from "./views/ManageGroupView"
@@ -25,11 +25,11 @@ function App() {
         <Routes>
           <Route path="/register" element={<Register />}></Route>
         </Routes>
-        <Routes>
+        {/* <Routes>
           <Route path="/home" element={<DailyView />}></Route>
-        </Routes>
+        </Routes> */}
         <Routes>
-          <Route path="/weekly" element={<WeeklyView />}></Route>
+          <Route path="/home" element={<WeeklyView />}></Route>
         </Routes>
         <Routes>
           <Route path="/category" element={<CategoryView />}></Route>
@@ -41,7 +41,7 @@ function App() {
           <Route path="/groceries" element={<GroceriesView />}></Route>
         </Routes>
         <Routes>
-          <Route path="/new/task" element={<AddNewTask />}></Route>
+          <Route path="/new-task" element={<AddNewTask />}></Route>
         </Routes>
       </BrowserRouter>
     </>
@@ -49,8 +49,3 @@ function App() {
 }
 
 export default App
-{
-  /*  <Routes>
-          <Route path="/categories/choose" element={<CategoryDashboard />}></Route>
-        </Routes> */
-}

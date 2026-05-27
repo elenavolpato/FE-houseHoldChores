@@ -1,19 +1,11 @@
 import { Col, Container } from "react-bootstrap"
 import "../css/greetingSection.css"
-import { useSelector } from "react-redux"
 
 function GreetingSection() {
   const currentTime = new Date()
   const hours = currentTime.getHours()
 
   const name = "Baba"
-
-  // 1. Pull the chores list from your global Redux state
-  const chores = useSelector((state) => state.chores.list)
-
-  // 2. Dynamically calculate the totals
-  const totalTasks = chores.length
-  const completedTasks = chores.filter((chore) => chore.isComplete).length
 
   return (
     <Container className="py-4">
@@ -22,28 +14,6 @@ function GreetingSection() {
         {hours < 12 && <h1>Good Morning {name}!</h1>}
         {hours >= 12 && hours < 18 && <h1>Good Afternoon {name}!</h1>}
         {hours >= 18 && <h1>Good Evening {name}!</h1>}
-
-        {/* CHANGED FROM <Row> TO A STANDARD <div className="d-flex"> */}
-        <div className="d-flex align-items-center justify-content-between bg-white rounded-3 p-4 my-4 ambient-shadow">
-          <div>
-            <p className="m-0 fs-5">
-              You've completed{" "}
-              <span className="text-light-navy fw-bolder">
-                {completedTasks} of {totalTasks}&nbsp;
-              </span>
-              chores!
-              <br />
-              {completedTasks === 0 && <span className="text-muted small">Let's get started! </span>}
-              {completedTasks < totalTasks && completedTasks !== 0 && <span className="text-muted small">Keep it up! </span>}
-              {completedTasks === totalTasks && <span className="text-muted small">Congratulations! You're done for today.</span>}
-            </p>
-          </div>
-
-          <div>
-            {/* TODO CHANGE THE IMAGE FOR A CIRCLE THAT COMPLETES ITSELF. */}
-            <img src="src/assets/login_house.png" alt="house image" className="tasks-completed" style={{ maxWidth: "80px", height: "auto" }} />
-          </div>
-        </div>
       </Col>
     </Container>
   )

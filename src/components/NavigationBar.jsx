@@ -1,16 +1,27 @@
 import { useDispatch, useSelector } from "react-redux"
 import { setActiveTab } from "../redux/choresSlice"
 
+import { useAppNavigation } from "../utils/useAppNavigation"
+import { useState } from "react"
+import AddOptionsModal from "./AddOptionsModal"
+
 function NavigationBar({ variant = "mobile" }) {
   const activeTab = useSelector((state) => state.chores.activeTab)
   const dispatch = useDispatch()
+  const { navigateTo } = useAppNavigation()
+
+  const [modalOpen, setModalOpen] = useState(false)
+  const handleItemClick = (item) => {
+    dispatch(setActiveTab(item.id))
+    item.goTo !== null ? navigateTo(item.goTo) : setModalOpen(true)
+  }
 
   const navItems = [
-    { id: "today", label: "Today", icon: "fa-regular fa-calendar-check" },
-    { id: "calendar", label: "Calendar", icon: "fa-regular fa-calendar-days" },
-    { id: "add", label: "Add", icon: "fa-regular fa-square-plus" },
-    { id: "groceries", label: "Groceries", icon: "fa-solid fa-cart-shopping" },
-    { id: "group", label: "Group", icon: "fa-solid fa-users" },
+    /*   { id: "today", label: "Today", icon: "fa-regular fa-calendar-check", goTo: "home" }, */
+    { id: "calendar", label: "Chores", icon: "fa-regular fa-calendar-days", goTo: "home" },
+    { id: "add", label: "Add", icon: "fa-regular fa-square-plus", goTo: null },
+    { id: "groceries", label: "Groceries", icon: "fa-solid fa-cart-shopping", goTo: "groceries" },
+    { id: "group", label: "Group", icon: "fa-solid fa-users", goTo: "groups" },
   ]
   if (variant === "desktop") {
     return (
@@ -20,7 +31,7 @@ function NavigationBar({ variant = "mobile" }) {
           return (
             <button
               key={item.id}
-              onClick={() => dispatch(setActiveTab(item.id))}
+              onClick={() => handleItemClick(item)}
               className={`btn border-0 px-3 py-2 rounded-pill d-flex align-items-center gap-2 fw-medium transition-all ${
                 isActive ? "bg-warning text-dark" : "text-secondary"
               }`}
@@ -34,6 +45,7 @@ function NavigationBar({ variant = "mobile" }) {
             </button>
           )
         })}
+        <AddOptionsModal show={modalOpen} handleClose={() => setModalOpen(false)} />
       </div>
     )
   }
@@ -51,7 +63,7 @@ function NavigationBar({ variant = "mobile" }) {
             backgroundColor: "#F1C40F",
             zIndex: 1060,
           }}
-          onClick={() => console.log("Plus clicked")}
+          onClick={() => setModalOpen(true)}
         >
           <i className="fa-solid fa-plus fs-4 text-dark"></i>
         </button>
@@ -63,7 +75,7 @@ function NavigationBar({ variant = "mobile" }) {
             return (
               <button
                 key={item.id}
-                onClick={() => dispatch(setActiveTab(item.id))}
+                onClick={() => handleItemClick(item)}
                 className="btn border-0 d-flex flex-column align-items-center justify-content-center p-0 position-relative"
                 style={{ width: "60px", background: "none" }}
               >
@@ -91,6 +103,7 @@ function NavigationBar({ variant = "mobile" }) {
           })}
         </div>
       </div>
+      <AddOptionsModal show={modalOpen} handleClose={() => setModalOpen(false)} />
     </div>
   )
 }

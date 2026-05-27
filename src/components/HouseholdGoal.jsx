@@ -18,7 +18,7 @@ const HouseholdGoal = () => {
   const motivationalText = percentageDone === 100 ? "Amazing job!" : "Keep going!"
 
   return (
-    <Col md={8} xs={12}>
+    <Col md={8} xs={12} className="mb-3">
       <Card className="goal-card border-0 mx-auto ">
         <Card.Body className="p-4">
           <h3 className="goal-title fw-bold mb-1 text-dark">Household Goal</h3>

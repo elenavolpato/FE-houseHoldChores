@@ -1,5 +1,5 @@
 import { Container } from "react-bootstrap"
-import CreateGroups from "../components/CreateGroup"
+import CreateGroups from "../components/Groups"
 import GroupMembersList from "../components/GroupMemberList"
 import InviteFriendsCard from "../components/InviteFriendsCard"
 import NavigationBar from "../components/NavigationBar"
