@@ -1,0 +1,105 @@
+/* Grocery Progress Widget Frame */
+.grocery-progress-card {
+  border: 1px solid #eef3f7;
+}
+
+.progress-percentage-text {
+  color: #1c668c;
+  font-size: 0.9rem;
+}
+
+.grocery-progress-track {
+  height: 8px !important;
+  background-color: #e9eff4 !important;
+  border-radius: 10px !important;
+}
+
+.grocery-progress-track .progress-bar {
+  background-color: #1c668c !important;
+  border-radius: 10px !important;
+}
+
+/* Custom Interactive Rounded Checkbox Elements */
+.checkbox-round-container {
+  display: block;
+  position: relative;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-round-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 28px;
+  width: 28px;
+  background-color: #ffffff;
+  border: 2px solid #b2c4d1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+/* Hover state styling */
+.checkbox-round-container:hover input ~ .checkmark-circle {
+  border-color: #1c668c;
+}
+
+/* Active checked status styling */
+.checkbox-round-container input:checked ~ .checkmark-circle {
+  background-color: #1c668c;
+  border-color: #1c668c;
+}
+
+/* Hidden icon toggle configuration */
+.checkmark-circle .check-icon {
+  display: none;
+  color: #ffffff;
+  font-size: 11px;
+}
+
+.checkbox-round-container input:checked ~ .checkmark-circle .check-icon {
+  display: block;
+}
+
+/* Highlight Priority Badge Indicator */
+.priority-pill {
+  background-color: #fcd32d;
+  font-size: 0.75rem;
+  letter-spacing: -0.1px;
+}
+
+/* Add Item Floating Action Circle Button */
+.add-action-circle-btn {
+  width: 42px;
+  height: 42px;
+  background-color: #13587a !important;
+  border: none !important;
+  color: #ffffff !important;
+  transition: transform 0.2s;
+}
+
+.add-action-circle-btn:hover {
+  transform: scale(1.05);
+  background-color: #1a688a !important;
+}
+
+/* Universal transition utility */
+.item-row-transition {
+  transition:
+    opacity 0.25s ease,
+    transform 0.2s ease;
+  border: 1px solid #f8fafc;
+}

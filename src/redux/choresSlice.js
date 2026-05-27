@@ -103,6 +103,12 @@ export const choresSlice = createSlice({
         date: "2026-05-29",
       },
     ],
+    groceriesList: [
+      { id: 101, name: "Organic Bananas", quantity: "1 bunch", isHighPriority: true, isComplete: false },
+      { id: 102, name: "Spinach", quantity: "2 bags", isHighPriority: false, isComplete: false },
+      { id: 103, name: "Whole Milk", quantity: "2 Gallons", isHighPriority: false, isComplete: false },
+      { id: 104, name: "Sourdough Bread", quantity: "1 Loaf", isHighPriority: false, isComplete: false },
+    ],
   },
   reducers: {
     toggleChore: (state, action) => {
@@ -111,6 +117,22 @@ export const choresSlice = createSlice({
         chore.isComplete = !chore.isComplete
       }
     },
+    toggleGrocery: (state, action) => {
+      const item = state.groceriesList.find((g) => g.id === action.payload)
+      if (item) {
+        item.isComplete = !item.isComplete
+      }
+    },
+    addGrocery: (state, action) => {
+      // action.payload can be a string name
+      state.groceriesList.push({
+        id: Date.now(),
+        name: action.payload,
+        quantity: "1 unit",
+        isComplete: false,
+      })
+    },
+
     setActiveTab: (state, action) => {
       state.activeTab = action.payload
     },
@@ -128,5 +150,5 @@ export const choresSlice = createSlice({
   },
 })
 
-export const { toggleChore, setActiveTab, setSelectedCategory, updateGroupName, setSelectedDate } = choresSlice.actions
+export const { toggleChore, toggleGrocery, addGrocery, setActiveTab, setSelectedCategory, updateGroupName, setSelectedDate } = choresSlice.actions
 export default choresSlice.reducer
