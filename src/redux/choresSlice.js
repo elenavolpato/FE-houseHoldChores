@@ -18,18 +18,80 @@ export const fetchCategories = createAsyncThunk(
   }
 ) */
 
+const getTodayString = () => {
+  const today = new Date()
+  const offset = today.getTimezoneOffset()
+  const localDate = new Date(today.getTime() - offset * 60 * 1000)
+  return localDate.toISOString().split("T")[0]
+}
+
 export const choresSlice = createSlice({
   name: "chores",
   initialState: {
     activeTab: "today",
     selectedCategory: "Pets", // Tracks which category page the user is viewing
+    selectedDate: getTodayString(),
     list: [
-      { id: 1, name: "Wash Dishes", description: "Keep the sink clear", isComplete: false, icon: "sink", color: "#F1C40F", category: "Kitchen" },
-      { id: 2, name: "Clean Fridge", description: "Check expiration dates", isComplete: false, icon: "sink", color: "#3498DB", category: "Kitchen" },
-      { id: 4, name: "Empty Trash", description: "Take out the recycling too", isComplete: false, icon: "trash-can", color: "#E74C3C", category: "Kitchen" },
-      { id: 5, name: "Sweep Floor", description: "Don't forget the corners", isComplete: false, icon: "broom", color: "#F1C40F", category: "Cleaning" },
-      { id: 3, name: "Walk dog", description: "Around the block", isComplete: true, icon: "paw", color: "#20063B", category: "Pets" },
-      { id: 6, name: "Mop Living Room", description: "Mop", isComplete: false, icon: "broom", color: "#F1C40F", category: "Cleaning" },
+      {
+        id: 1,
+        name: "Wash Dishes",
+        description: "Keep the sink clear",
+        isComplete: false,
+        icon: "sink",
+        color: "#F1C40F",
+        category: "Kitchen",
+        date: "2026-05-27",
+      },
+      {
+        id: 2,
+        name: "Clean Fridge",
+        description: "Check expiration dates",
+        isComplete: false,
+        icon: "sink",
+        color: "#3498DB",
+        category: "Kitchen",
+        date: "2026-05-27",
+      },
+      {
+        id: 4,
+        name: "Empty Trash",
+        description: "Take out the recycling too",
+        isComplete: false,
+        icon: "trash-can",
+        color: "#E74C3C",
+        category: "Kitchen",
+        date: "2026-05-28",
+      },
+      {
+        id: 5,
+        name: "Sweep Floor",
+        description: "Don't forget the corners",
+        isComplete: false,
+        icon: "broom",
+        color: "#F1C40F",
+        category: "Cleaning",
+        date: "2026-05-25",
+      },
+      {
+        id: 3,
+        name: "Walk dog",
+        description: "Around the block",
+        isComplete: true,
+        icon: "paw",
+        color: "#20063B",
+        category: "Pets",
+        date: "2026-05-27",
+      },
+      {
+        id: 6,
+        name: "Mop Living Room",
+        description: "Mop",
+        isComplete: false,
+        icon: "broom",
+        color: "#F1C40F",
+        category: "Cleaning",
+        date: "2026-05-29",
+      },
       {
         id: 7,
         name: "Dust Shelves",
@@ -38,6 +100,7 @@ export const choresSlice = createSlice({
         icon: "broom",
         color: "#F1C40F",
         category: "Cleaning",
+        date: "2026-05-29",
       },
     ],
   },
@@ -54,6 +117,10 @@ export const choresSlice = createSlice({
     setSelectedCategory: (state, action) => {
       state.selectedCategory = action.payload
     },
+    setSelectedDate: (state, action) => {
+      // Expects payload as a sanitized 'YYYY-MM-DD' string format
+      state.selectedDate = action.payload
+    },
     updateGroupName: (state, action) => {
       // action.payload will be the new name string sent from the input field
       state.groupName = action.payload
@@ -61,5 +128,5 @@ export const choresSlice = createSlice({
   },
 })
 
-export const { toggleChore, setActiveTab, setSelectedCategory, updateGroupName } = choresSlice.actions
+export const { toggleChore, setActiveTab, setSelectedCategory, updateGroupName, setSelectedDate } = choresSlice.actions
 export default choresSlice.reducer

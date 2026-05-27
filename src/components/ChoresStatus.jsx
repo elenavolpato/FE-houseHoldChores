@@ -8,11 +8,24 @@ function ChoresStatus({ filterType = "all", categoryName }) {
 
   // Grab state from Redux
   const chores = useSelector((state) => state.chores.list)
+  const selectedDateStr = useSelector((state) => state.chores.selectedDate)
   const reduxCategory = useSelector((state) => state.chores.selectedCategory)
   const activeCategory = categoryName || reduxCategory
+  const activeTab = useSelector((state) => state.chores.activeTab) // "today" or "weekly"
 
-  // 1. First layer of filtering: Decide if we filter by Category or show Dashboard view
-  const displayChores = filterType === "category" ? chores.filter((chore) => chore.category === activeCategory) : chores
+  // eslint-disable-next-line no-useless-assignment
+  let displayChores = chores
+
+  if (filterType === "category") {
+    // Filter purely by category type
+    displayChores = chores.filter((chore) => chore.category === activeCategory)
+  } else if (filterType === "date") {
+    // Filter purely by your Redux calendar sync date string
+    displayChores = chores.filter((chore) => chore.date === selectedDateStr)
+  } else {
+    // "all" falls back to the full structural list
+    displayChores = chores
+  }
 
   const remainingChores = displayChores.filter((chore) => !chore.isComplete)
   const completedChores = displayChores.filter((chore) => chore.isComplete)
@@ -21,7 +34,7 @@ function ChoresStatus({ filterType = "all", categoryName }) {
     <Container className="py-4">
       <Col md={8} className="mx-auto">
         {/* --- REMAINING CHORES SECTION --- */}
-        <h3 className="h5 text-dark fw-bold mb-3">Remaining Chores</h3>
+        <h3 className="h5 text-dark fw-bold mb-3">Remaining Chores {activeTab === "today" ? "— Chosen Day" : "— Full Week"}</h3>
         <div className="d-flex flex-column gap-3 mb-4">
           {remainingChores.length === 0 ? (
             <p className="text-muted fst-italic">No remaining chores!</p>
