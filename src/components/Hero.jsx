@@ -26,13 +26,18 @@ function Hero() {
                 Coordinate household tasks with ease. Track, assign, and manage your LandingPage's daily operations in one central place.
               </p>
 
-              <div className="d-flex flex-wrap gap-3 align-items-center justify-content-center justify-content-md-start" onClick={() => navigateTo("register")}>
-                <button className="btn-primary-custom" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+              <div className="d-flex flex-wrap gap-3 align-items-center justify-content-center justify-content-md-start">
+                <button
+                  className="btn-primary-custom"
+                  onMouseEnter={() => setHovered(true)}
+                  onMouseLeave={() => setHovered(false)}
+                  onClick={() => navigateTo("register")}
+                >
                   Get started for free
                   <span className="arrow">→</span>
                 </button>
 
-                <button className="btn-outline-custom" onClick={() => navigateTo("register")}>
+                <button className="btn-outline-custom" onClick={() => navigateTo("login")}>
                   Login
                 </button>
               </div>

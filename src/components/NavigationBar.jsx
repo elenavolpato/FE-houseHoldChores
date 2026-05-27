@@ -23,7 +23,10 @@ function NavigationBar({ variant = "mobile" }) {
     { id: "groceries", label: "Groceries", icon: "fa-solid fa-cart-shopping", goTo: "groceries" },
     { id: "group", label: "Group", icon: "fa-solid fa-users", goTo: "groups" },
   ]
-  if (variant === "desktop") {
+
+  const urlPath = window.location.pathname
+
+  if (variant === "desktop" && urlPath !== "/" && urlPath !== "/login" && urlPath !== "/register") {
     return (
       <div className="d-flex align-items-center gap-4">
         {navItems.map((item) => {

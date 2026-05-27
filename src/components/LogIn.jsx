@@ -2,9 +2,12 @@ import { useState } from "react"
 import { Container, Form, Alert } from "react-bootstrap"
 import "../css/login.css"
 import { useAppNavigation } from "../utils/useAppNavigation"
+import { useDispatch } from "react-redux"
+import { login } from "../redux/authSlice"
 
 function Login() {
   const { navigateTo } = useAppNavigation()
+  const dispatch = useDispatch()
 
   // 1. Manage form field state
   const [formData, setFormData] = useState({
@@ -49,6 +52,7 @@ function Login() {
       const token = loginData.token || loginData.accessToken
       if (token) {
         localStorage.setItem("token", token)
+        dispatch(login(token))
       } else {
         setError("Authentication token missing from server response.")
         setIsLoading(false)
