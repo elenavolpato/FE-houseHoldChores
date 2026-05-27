@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Container, Row, Col, Badge /* , ButtonGroup, Button  */ } from "react-bootstrap"
+import { Row, Col, Badge /* , ButtonGroup, Button  */ } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import { setSelectedDate /*  setActiveTab */ } from "../redux/choresSlice"
 import "../css/weeklySchedule.css"

@@ -9,6 +9,7 @@ import CategoryTasks from "./views/CategoryTasks"
 import ManageGroup from "./views/ManageGroup"
 import CategoryDashboard from "./views/CategoryDashboard"
 import WeeklyTasks from "./views/WeeklyTasks"
+import GroceriesList from "./views/GroceriesList"
 
 function App() {
   return (
@@ -38,6 +39,9 @@ function App() {
         </Routes>
         <Routes>
           <Route path="/groups" element={<ManageGroup />}></Route>
+        </Routes>
+        <Routes>
+          <Route path="/groceries" element={<GroceriesList />}></Route>
         </Routes>
       </BrowserRouter>
     </>
