@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { Form, Button, ButtonGroup, Col, Row } from "react-bootstrap"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import "../css/createCustomChore.css"
-//import { getTodayString } from "../redux/choresSlice"
+import { addChore } from "../redux/choresSlice"
 
 function CreateCustomChore() {
   const dispatch = useDispatch()
@@ -26,34 +26,33 @@ function CreateCustomChore() {
       setSelectedDays([...selectedDays, day])
     }
   }
+  const currentSelectedDate = useSelector((state) => state.chores.selectedDate)
 
   const handleCreateChore = (e) => {
     e.preventDefault()
     if (!taskName.trim()) return
 
-    const today = new Date().toISOString().slice(0, 10)
-    const newChoreObject = {
-      id: today,
+    const newChorePayload = {
+      id: Date.now(),
       name: taskName,
       description: description,
       category: category,
-      isComplete: false,
       icon: "clipboard-list",
-      color: "#1c668c",
-      timeMode: timeMode, // will be 'daily', 'weekly', or 'custom'
-      // Save specific parameters depending on selection
+      color: category === "Kitchen" ? "#3498DB" : category === "Pets" ? "#20063B" : "#F1C40F", // Dynamic color matching
+      timeMode: timeMode,
       frequencyDays: timeMode === "weekly" ? selectedDays : null,
       customInterval: timeMode === "custom" ? customDays : null,
+      date: currentSelectedDate,
     }
 
-    // Replace with your real dispatch initialization action
-    //dispatch(addChore(newChoreObject))
-    console.log("Saving Custom Chore:", newChoreObject)
+    // Dispatch the clean payload directly to Redux
+    dispatch(addChore(newChorePayload))
 
-    // Clear form fields
+    // Reset form inputs completely
     setTaskName("")
     setDescription("")
     setSelectedDays([])
+    setCustomDays(2)
   }
 
   return (
@@ -160,30 +159,6 @@ function CreateCustomChore() {
             </div>
           )}
         </Form.Group>
-
-        {/* Multi-Day Frequency Customizer (Shows when Weekly is selected) */}
-        {timeMode === "weekly" && (
-          <Form.Group className="mb-4 animate-fade-in">
-            <Form.Label className="fw-semibold text-muted small d-block text-uppercase mb-2">Repeat Frequency (Select more days)</Form.Label>
-            <div className="d-flex justify-content-between gap-1 flex-wrap">
-              {weekdays.map((day) => {
-                const active = selectedDays.includes(day)
-                return (
-                  <Button
-                    key={day}
-                    type="button"
-                    variant="none"
-                    className={`rounded-circle p-0 d-flex align-items-center justify-content-center frequency-bubble-day ${active ? "active" : ""}`}
-                    style={{ width: "40px", height: "40px" }}
-                    onClick={() => handleDayToggle(day)}
-                  >
-                    {day.substring(0, 2)}
-                  </Button>
-                )
-              })}
-            </div>
-          </Form.Group>
-        )}
 
         {/* Submit Action */}
         <Button type="submit" className="w-100 add-action-circle-btn py-2 rounded-3 fw-bold mt-2">

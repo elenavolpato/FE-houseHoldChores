@@ -133,6 +133,22 @@ export const choresSlice = createSlice({
         isComplete: false,
       })
     },
+    addChore: (state, action) => {
+      state.list.push({
+        id: action.payload.id || Date.now(), // Fallback unique ID generation
+        name: action.payload.name,
+        description: action.payload.description,
+        category: action.payload.category,
+        isComplete: false, // Always defaults to false for new items
+        icon: action.payload.icon || "clipboard-list",
+        color: action.payload.color || "#1c668c",
+        timeMode: action.payload.timeMode,
+        frequencyDays: action.payload.frequencyDays,
+        customInterval: action.payload.customInterval,
+        // Ensure it initializes with a date string format so your ChoresStatus component filters it perfectly!
+        date: action.payload.date,
+      })
+    },
 
     setActiveTab: (state, action) => {
       state.activeTab = action.payload
@@ -151,5 +167,5 @@ export const choresSlice = createSlice({
   },
 })
 
-export const { toggleChore, toggleGrocery, addGrocery, setActiveTab, setSelectedCategory, updateGroupName, setSelectedDate } = choresSlice.actions
+export const { toggleChore, toggleGrocery, addGrocery, addChore, setActiveTab, setSelectedCategory, updateGroupName, setSelectedDate } = choresSlice.actions
 export default choresSlice.reducer
