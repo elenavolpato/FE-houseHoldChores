@@ -1,47 +1,59 @@
 import { useState } from "react"
-import { Modal, Button, Form } from "react-bootstrap"
+import { Modal, Button, Form, Alert } from "react-bootstrap" // 👈 Imported Alert cleanly
 import { useDispatch } from "react-redux"
-import { updateGroupName } from "../redux/choresSlice" // Using your existing group naming action
+import { createGroup } from "../services/groupApi"
+import { useAppNavigation } from "../utils/useAppNavigation"
 
 function CreateGroupModal({ show, handleClose }) {
+  const [groupName, setGroupName] = useState("")
+  const [error, setError] = useState("")
+  const { navigateTo } = useAppNavigation()
+
   const dispatch = useDispatch()
-  const [groupNameInput, setGroupNameInput] = useState("")
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if (!groupNameInput.trim()) return
+  const handleSubmit = async (e) => {
+    if (e) e.preventDefault()
 
-    // Dispatch the string name directly to your Redux state
-    dispatch(updateGroupName(groupNameInput.trim()))
+    setError("")
 
-    // Reset local field and shut down the modal window frame
-    setGroupNameInput("")
-    handleClose()
+    try {
+      const result = await dispatch(createGroup(groupName)).unwrap()
+
+      alert("Household created successfully!")
+      setGroupName("")
+      handleClose()
+      navigateTo("groups")
+    } catch (backendError) {
+      setError(backendError || "Failed to create group.")
+    }
   }
 
   return (
     <Modal show={show} onHide={handleClose} centered dialogClassName="custom-popup-dialog" contentClassName="custom-popup-content border-0 p-3 rounded-5">
       <Modal.Header closeButton className="border-0 pb-0">
-        <Modal.Title className="fw-bold text-dark h5 mb-0">Create New Group</Modal.Title>
+        <Modal.Title className="fw-bold text-dark h5 mb-0">Create a new household</Modal.Title>
       </Modal.Header>
 
       <Modal.Body className="pt-4">
+        {error && (
+          <Alert variant="danger" className="py-2 px-3 rounded-3 mb-3">
+            {error}
+          </Alert>
+        )}
+
         <Form onSubmit={handleSubmit} className="d-flex flex-column gap-4">
-          {/* Main Identifier Input Field */}
           <Form.Group controlId="formGroupName">
             <Form.Label className="fw-semibold text-muted small text-uppercase mb-2">Group Name</Form.Label>
             <Form.Control
               type="text"
-              placeholder="e.g., Target Trip, Weekend Chores"
-              value={groupNameInput}
-              onChange={(e) => setGroupNameInput(e.target.value)}
-              autoFocus
+              placeholder="Enter group name"
+              value={groupName}
+              onChange={(e) => setGroupName(e.target.value)}
               required
               className="p-3 rounded-4 bg-light-subtle shadow-sm border-0 input-field-transition"
             />
           </Form.Group>
 
-          {/* Action Submission Trigger */}
           <Button type="submit" className="w-100 create-btn rounded-pill py-3 fw-bold shadow-sm mt-2">
             Create Group
           </Button>
