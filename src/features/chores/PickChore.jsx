@@ -13,7 +13,8 @@ function PickChore() {
 
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState("All")
 
-  const categories = ["All", ...new Set(tasks.map((chore) => chore.categoryName).filter(Boolean))]
+  const allCategories = ["All", ...new Set(tasks.map((chore) => chore.categoryName).filter(Boolean))]
+  const categoriesUsed = allCategories.filter((cat) => cat !== "Groceries")
   const filteredChores = selectedCategoryFilter === "All" ? tasks : tasks.filter((chore) => chore.categoryName === selectedCategoryFilter)
 
   // Modal display coordination handlers
@@ -67,7 +68,7 @@ function PickChore() {
       <h3 className="h5 fw-bold text-dark mb-2">Available Chores</h3>
       {/* categories filter */}
       <div className="d-flex gap-2 overflow-auto pb-3 pt-1 mb-2 no-scrollbar" style={{ whiteSpace: "nowrap" }}>
-        {categories.map((category) => {
+        {categoriesUsed.map((category) => {
           const isActive = selectedCategoryFilter === category
           return (
             <Button

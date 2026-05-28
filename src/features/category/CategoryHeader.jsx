@@ -3,7 +3,7 @@ import { Col, Container } from "react-bootstrap"
 
 const CATEGORY_META = {
   Cleaning: { desc: "General house cleaning tasks", icon: "broom", color: "#E53D00" },
-  Groceries: { desc: "Shopping and food supplies", icon: "cart-shopping", color: "#E53D00" },
+  /*  Groceries: { desc: "Shopping and food supplies", icon: "cart-shopping", color: "#E53D00" },  */
   Laundry: { desc: "Washing, drying, and folding", icon: "shirt", color: "#296EB4" },
   Garden: { desc: "Outdoor maintenance and plants", icon: "leaf", color: "#BA324F" },
   Bills: { desc: "Monthly payments and finances", icon: "money-bills", color: "#8D5A97" },
@@ -30,14 +30,14 @@ function CategoryHeader({ categoryName }) {
     <Container className="py-4">
       <Col md={8} className="mx-auto">
         <div className="d-flex align-items-center justify-content-between mb-4">
-          {/* <button className="btn p-0 border-0 text-dark-navy">
+          <button className="btn p-0 border-0 text-dark-navy">
             <i className="fa-solid fa-arrow-left fs-4"></i>
-          </button> */}
+          </button>
 
-          {/* <div className="d-flex gap-3 text-dark-navy fs-5">
+          <div className="d-flex gap-3 text-dark-navy fs-5">
             <i className="fa-solid fa-user-plus cursor-pointer"></i>
             <i className="fa-regular fa-user cursor-pointer"></i>
-          </div> */}
+          </div>
         </div>
 
         {/* HERO BANNER CARD */}
