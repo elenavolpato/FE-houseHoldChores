@@ -53,35 +53,13 @@ function Login() {
       if (token) {
         localStorage.setItem("token", token)
         dispatch(login(token))
+        navigateTo("home")
       } else {
         setError("Authentication token missing from server response.")
         setIsLoading(false)
         return
       }
-
-      // 3. Immediately fetch the user's group list using the fresh local token
-      const groupsResponse = await fetch("http://localhost:3001/api/users/my-groups", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`, // 👈 Attaching the token!
-          "Content-Type": "application/json",
-        },
-      })
-
-      if (!groupsResponse.ok) {
-        setError("Failed to verify user profile routing details.")
-        setIsLoading(false)
-        return
-      }
-
-      const groupsList = await groupsResponse.json()
-
-      // 4. Group-Routing Rule Engine
-      if (groupsList.length === 0) {
-        navigateTo("groups") // 👈 No group? Redirect to create/join page
-      } else {
-        navigateTo("home") // 👈 Has a household? Go straight dashboard home
-      }
+      // eslint-disable-next-line no-unused-vars
     } catch (err) {
       setError("Cannot connect to the server. Check if your backend is online.")
       setIsLoading(false)

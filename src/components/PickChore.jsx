@@ -1,28 +1,71 @@
-import { useState } from "react"
-import { Row, Col, Card, Button } from "react-bootstrap"
-import { useDispatch, useSelector } from "react-redux"
-import { toggleChore } from "../redux/choresSlice"
+import { useEffect, useState } from "react"
+import { Row, Col, Card, Button, Badge, Spinner } from "react-bootstrap"
+import { useDispatch } from "react-redux"
+import { fetchAvailableTasks } from "../services/taskApi"
+import ModalDueDateSelection from "./ModalDueDateSelection"
 
 function PickChore() {
   const dispatch = useDispatch()
 
-  // Pull the complete array stream straight from Redux
-  const choresList = useSelector((state) => state.chores.list) || []
+  const [tasks, setTasks] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
 
-  // Local state to manage the active category filter text
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState("All")
 
-  // 1. Dynamically extract unique categories present inside your Redux chores list
-  const categories = ["All", ...new Set(choresList.map((chore) => chore.category))]
+  const categories = ["All", ...new Set(tasks.map((chore) => chore.categoryName).filter(Boolean))]
+  const filteredChores = selectedCategoryFilter === "All" ? tasks : tasks.filter((chore) => chore.categoryName === selectedCategoryFilter)
 
-  // 2. Filter the tasks stream depending on what filter button is pressed
-  const filteredChores = selectedCategoryFilter === "All" ? choresList : choresList.filter((chore) => chore.category === selectedCategoryFilter)
+  // Modal display coordination handlers
+  const [showModal, setShowModal] = useState(false)
+  const [activeChore, setActiveChore] = useState(null)
+  const [addedPresetIds, setAddedPresetIds] = useState([])
+
+  useEffect(() => {
+    const getTasks = async () => {
+      try {
+        const data = await dispatch(fetchAvailableTasks()).unwrap()
+        setTasks(data)
+      } catch (err) {
+        setError(err || "Failed to load household task catalog.")
+      } finally {
+        setLoading(false)
+      }
+    }
+    getTasks()
+  }, [dispatch])
+
+  const handleCardClick = (chore) => {
+    if (addedPresetIds.includes(chore.id)) return
+
+    setActiveChore(chore)
+    setShowModal(true)
+  }
+
+  const handleTaskAddedSuccess = (presetId) => {
+    setAddedPresetIds((prev) => [...prev, presetId])
+  }
+
+  if (loading) {
+    return (
+      <Col xs={12} md={8} className="text-center py-5">
+        <Spinner animation="border" variant="warning" className="mb-2" />
+        <p className="text-muted small fw-semibold">Fetching available presets...</p>
+      </Col>
+    )
+  }
+
+  if (error)
+    return (
+      <Col xs={12} md={8}>
+        <div className="alert alert-danger rounded-4 m-2">{error}</div>
+      </Col>
+    )
 
   return (
     <Col xs={12} md={8}>
-      <h3 className="h5 fw-bold text-dark mb-2">Available Chores </h3>
+      <h3 className="h5 fw-bold text-dark mb-2">Available Chores</h3>
 
-      {/* --- DYNAMIC CATEGORIES FILTER ROW --- */}
       <div className="d-flex gap-2 overflow-auto pb-3 pt-1 mb-2 no-scrollbar" style={{ whiteSpace: "nowrap" }}>
         {categories.map((category) => {
           const isActive = selectedCategoryFilter === category
@@ -42,45 +85,55 @@ function PickChore() {
         })}
       </div>
 
-      {/* --- SCROLLABLE CONTAINER CONSTRAINT --- */}
       <div className="overflow-auto pe-1" style={{ maxHeight: "480px", borderRadius: "12px" }}>
         <Row className="g-2 m-0">
           {filteredChores.length === 0 ? (
             <p className="text-muted fst-italic text-center py-4 small">No tasks available in this category.</p>
           ) : (
             filteredChores.map((chore) => {
+              const isAdded = addedPresetIds.includes(chore.id)
+
               return (
                 <Col key={chore.id} xs={12} md={6} lg={4}>
                   <Card
-                    className={`p-3 border-0 rounded-4 shadow-sm cursor-pointer item-row-transition ${chore.isComplete ? "opacity-50" : ""}`}
-                    onClick={() => dispatch(toggleChore(chore.id))}
+                    className={`p-3 border-0 rounded-4 shadow-sm item-row-transition ${isAdded ? "opacity-50" : "cursor-pointer"}`}
+                    onClick={() => handleCardClick(chore)}
                     style={{
-                      borderLeft: `4px solid ${chore.color}`,
+                      borderLeft: `4px solid ${chore.isCustom ? "#0d6efd" : "#FFD700"}`,
                       backgroundColor: "#ffffff",
                     }}
                   >
                     <div className="d-flex align-items-center justify-content-between">
                       <div className="d-flex align-items-center gap-3">
-                        {/* Icon Element Splash */}
                         <div
                           className="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
                           style={{
                             width: "38px",
                             height: "38px",
-                            backgroundColor: `${chore.color}1A`,
-                            color: chore.color,
+                            backgroundColor: chore.isCustom ? "#0d6efd1A" : "#FFD7001A",
+                            color: chore.isCustom ? "#0d6efd" : "#B8860B",
                           }}
                         >
-                          <i className={`fa-solid fa-${chore.icon || "circle-check"}`}></i>
+                          <i className={`fa-solid fa-${chore.isCustom ? "wand-magic-sparkles" : "circle-check"}`}></i>
                         </div>
 
                         <div>
-                          <h4 className={`h6 mb-0 fw-bold text-dark ${chore.isComplete ? "text-decoration-line-through text-muted" : ""}`}>{chore.name}</h4>
+                          <h4 className="h6 mb-0 fw-bold text-dark">{chore.title}</h4>
                           <span className="badge text-uppercase bg-light text-secondary mt-1" style={{ fontSize: "9px", letterSpacing: "0.3px" }}>
-                            {chore.category}
+                            {chore.categoryName || "General"}
                           </span>
                         </div>
                       </div>
+
+                      {isAdded && (
+                        <Badge
+                          bg="success"
+                          className="rounded-pill px-2 py-1 text-uppercase fw-bold shadow-sm align-self-center"
+                          style={{ fontSize: "9px", letterSpacing: "0.5px" }}
+                        >
+                          Added
+                        </Badge>
+                      )}
                     </div>
                   </Card>
                 </Col>
@@ -89,6 +142,17 @@ function PickChore() {
           )}
         </Row>
       </div>
+
+      {/* DUE DATE SELECTION POPUP WINDOW */}
+      <ModalDueDateSelection
+        show={showModal}
+        handleClose={() => {
+          setShowModal(false)
+          setActiveChore(null)
+        }}
+        activeChore={activeChore}
+        onTaskAdded={handleTaskAddedSuccess}
+      />
     </Col>
   )
 }

@@ -1,4 +1,4 @@
-import { Dropdown, Badge } from "react-bootstrap"
+import { Dropdown } from "react-bootstrap"
 
 function GroupHeader({ groups, selectedGroup, onSelectGroup }) {
   if (!selectedGroup) return null
@@ -6,7 +6,6 @@ function GroupHeader({ groups, selectedGroup, onSelectGroup }) {
   return (
     <div className="d-flex justify-content-between align-items-center mb-4 mt-2">
       <div className="d-flex align-items-center">
-        {/* Dynamic Dropdown wrapper mapping across full user lists */}
         <Dropdown onSelect={(index) => onSelectGroup(groups[index])}>
           <Dropdown.Toggle
             variant="link"
@@ -29,6 +28,7 @@ function GroupHeader({ groups, selectedGroup, onSelectGroup }) {
           </Dropdown.Menu>
         </Dropdown>
       </div>
+      te{" "}
     </div>
   )
 }

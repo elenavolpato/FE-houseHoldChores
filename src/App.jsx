@@ -10,8 +10,20 @@ import WeeklyView from "./views/WeeklyView"
 import CategoryView from "./views/CategoryView"
 import ManageGroupView from "./views/ManageGroupView"
 import AddNewTask from "./views/AddNewTaskView"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
+import { fetchCurrentUserProfile } from "./services/authApi"
 
 function App() {
+  const dispatch = useDispatch()
+  const token = useSelector((state) => state.auth.token)
+  const user = useSelector((state) => state.auth.user)
+
+  useEffect(() => {
+    if (token && !user) {
+      dispatch(fetchCurrentUserProfile())
+    }
+  }, [token, user, dispatch])
   return (
     <>
       <BrowserRouter>

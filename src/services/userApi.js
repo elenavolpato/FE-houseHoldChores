@@ -25,6 +25,8 @@ export const fetchMyGroups = createAsyncThunk("user/fetchMyGroups", async (_, th
     }
 
     return data // Returns the List<GroupResponseDTO> array
+
+    // eslint-disable-next-line no-unused-vars
   } catch (error) {
     return thunkAPI.rejectWithValue("Server connection failed.")
   }
