@@ -1,18 +1,23 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Modal, Form, Button } from "react-bootstrap"
 import { useDispatch } from "react-redux"
-import { createTaskFromPreset } from "../services/taskApi"
+import { createTaskFromPreset } from "@/services/taskApi"
+import { getAllGroupMembers } from "@/services/groupApi"
 
-function ModalDueDateSelection({ show, handleClose, activeChore, onTaskAdded }) {
+function ModalTaskSelection({ show, handleClose, activeChore, onTaskAdded }) {
   const dispatch = useDispatch()
 
   // Helper to grab local today date string structure
-  const getTodayDateString = () => {
+  const getDateString = () => {
     const today = new Date()
-    return today.toISOString().split("T")[0]
+    const tomorrow = new Date(today)
+    tomorrow.setDate(today.getDate() + 1)
+    return tomorrow.toISOString().split("T")[0]
   }
 
-  const [dueDate, setDueDate] = useState(getTodayDateString())
+  const [dueDate, setDueDate] = useState(getDateString())
+  const [groupMembers, setGroupMembers] = useState([])
+  const [selectedUser, setSelectedUser] = useState(null)
 
   const handleConfirmAdd = async () => {
     if (!activeChore) return
@@ -30,6 +35,25 @@ function ModalDueDateSelection({ show, handleClose, activeChore, onTaskAdded }) 
     } catch (err) {
       alert(err || "Something went wrong activating that chore configuration.")
     }
+  }
+  useEffect(() => {
+    const getGroupMembers = async () => {
+      try {
+        const data = await dispatch(getAllGroupMembers()).unwrap()
+        setGroupMembers(data)
+      } catch (err) {
+        console.error("Fetch group members failed:", err)
+      }
+    }
+    if (show) {
+      getGroupMembers()
+    }
+  }, [dispatch, show])
+
+  const handleUserSelection = (e) => {
+    const selectedId = e.target.value
+    const foundUser = groupMembers.find((user) => String(user.id) === String(selectedId))
+    setSelectedUser(foundUser || null)
   }
 
   return (
@@ -49,6 +73,22 @@ function ModalDueDateSelection({ show, handleClose, activeChore, onTaskAdded }) 
             required
           />
         </Form.Group>
+        <Form.Group className="mb-4">
+          <Form.Label className="fw-semibold text-muted small text-uppercase">Category </Form.Label>
+          <Form.Select
+            value={selectedUser ? selectedUser.id : ""}
+            className="p-2 rounded-3 bg-light border-0 shadow-sm text-dark"
+            onChange={handleUserSelection}
+            required
+          >
+            <option value="">Assign someone</option>
+            {(groupMembers || []).map((member) => (
+              <option key={member.id} value={member.id}>
+                {member.username}
+              </option>
+            ))}
+          </Form.Select>
+        </Form.Group>
       </Modal.Body>
 
       <Modal.Footer className="border-0 pt-2 d-flex gap-2">
@@ -63,4 +103,4 @@ function ModalDueDateSelection({ show, handleClose, activeChore, onTaskAdded }) 
   )
 }
 
-export default ModalDueDateSelection
+export default ModalTaskSelection

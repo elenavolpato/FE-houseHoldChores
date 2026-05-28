@@ -30,3 +30,38 @@ export const createGroup = createAsyncThunk("group/create", async (groupName, th
     return thunkAPI.rejectWithValue("Server connection failed.")
   }
 })
+
+export const getAllGroupMembers = createAsyncThunk("group/members", async (_, thunkAPI) => {
+  try {
+    const state = thunkAPI.getState()
+    const token = state.auth.token
+
+    const targetGroupId = state.auth.user?.groupId
+
+    if (!token) {
+      return thunkAPI.rejectWithValue("No authentication token found.")
+    }
+    if (!targetGroupId) {
+      return thunkAPI.rejectWithValue("You are not currently linked to a household group.")
+    }
+
+    const response = await fetch(`http://localhost:3001/api/groups/${targetGroupId}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      return thunkAPI.rejectWithValue(data.message || "Failed to retrieve group members.")
+    }
+
+    return data
+    // eslint-disable-next-line no-unused-vars
+  } catch (error) {
+    return thunkAPI.rejectWithValue("Server connection failed.")
+  }
+})

@@ -1,6 +1,6 @@
 import { Container } from "react-bootstrap"
-import GroceriesList from "../components/GroceriesList"
-import NavigationBar from "../components/NavigationBar"
+import GroceriesList from "@/features/groceries/GroceriesList"
+import NavigationBar from "@/components/NavigationBar"
 
 function GroceriesView() {
   return (

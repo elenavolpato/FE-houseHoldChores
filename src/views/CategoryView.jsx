@@ -1,11 +1,10 @@
 import { Container, Nav } from "react-bootstrap"
-import CategoryHeader from "../components/CategoryHeader"
-import ChoresStatus from "../components/ChoresStatus"
+import ChoresStatus from "@/features/chores/ChoresStatus"
 import { useSelector, useDispatch } from "react-redux"
-import { setSelectedCategory } from "../redux/choresSlice"
-import ChoreActionButtons from "../components/ChoreActionButtons"
-import NavigationBar from "../components/NavigationBar"
-
+import { setSelectedCategory } from "@/redux/choresSlice"
+import ChoreActionButtons from "@/features/chores/ChoreActionButtons"
+import NavigationBar from "@/components/NavigationBar"
+import CategoryHeader from "@/features/category/CategoryHeader"
 const AVAILABLE_CATEGORIES = ["Kitchen", "Cleaning", "Pets", "Groceries", "Laundry", "Garden", "Bills"]
 
 function CategoryTasks() {

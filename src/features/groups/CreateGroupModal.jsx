@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { Modal, Button, Form, Alert } from "react-bootstrap" // 👈 Imported Alert cleanly
 import { useDispatch } from "react-redux"
-import { createGroup } from "../services/groupApi"
-import { useAppNavigation } from "../utils/useAppNavigation"
+import { createGroup } from "@/services/groupApi"
+import { useAppNavigation } from "@/utils/useAppNavigation"
 
 function CreateGroupModal({ show, handleClose }) {
   const [groupName, setGroupName] = useState("")

@@ -1,7 +1,7 @@
 import { Badge, Col, Container, Row } from "react-bootstrap"
 import { useState } from "react"
-import "../css/hero.css"
-import { useAppNavigation } from "../utils/useAppNavigation"
+import "/src/css/hero.css"
+import { useAppNavigation } from "/src/utils/useAppNavigation"
 
 function Hero() {
   // eslint-disable-next-line no-unused-vars

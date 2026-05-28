@@ -1,5 +1,5 @@
 import { Col, Container } from "react-bootstrap"
-import "../css/greetingSection.css"
+import "/src/css/greetingSection.css"
 
 function GreetingSection() {
   const currentTime = new Date()

@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux"
-import { setActiveTab } from "../redux/choresSlice"
+import { setActiveTab } from "@/redux/choresSlice"
 
-import { useAppNavigation } from "../utils/useAppNavigation"
+import { useAppNavigation } from "/src/utils/useAppNavigation.jsx"
 import { useState } from "react"
-import AddOptionsModal from "./AddOptionsModal"
+import AddOptionsModal from "/src/components/NavigationAddModal"
 
 function NavigationBar({ variant = "mobile" }) {
   const activeTab = useSelector((state) => state.chores.activeTab)

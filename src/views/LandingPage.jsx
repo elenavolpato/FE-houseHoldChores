@@ -1,7 +1,7 @@
-import Hero from "../components/Hero"
-import BottomCallToAction from "../components/BottomCallToAction"
-import Features from "../components/Features"
-import Footer from "../components/Footer"
+import Hero from "@/features/landing/Hero"
+import BottomCallToAction from "@/features/landing/BottomCallToAction"
+import Features from "@/features/landing/Features"
+import Footer from "@/features/landing/Footer"
 
 function LandingPage() {
   return (

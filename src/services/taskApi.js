@@ -16,7 +16,6 @@ export const fetchAvailableTasks = createAsyncThunk("tasks/fetchTasks", async (_
       },
     })
     const data = await response.json()
-    console.log(data)
 
     if (!response.ok) {
       return thunkAPI.rejectedWithValue(data.message || "Failed to load tasks.")
@@ -70,9 +69,83 @@ export const createTaskFromPreset = createAsyncThunk("task/createTaskFromPreset"
     }
 
     return data
-
-    // eslint-disable-next-line no-unused-vars
   } catch (error) {
+    console.log(error)
+    return thunkAPI.rejectWithValue("Server connectivity lost. Please try again shortly.")
+  }
+})
+
+export const getAllCategories = createAsyncThunk("task/getAllCategories", async (_, thunkAPI) => {
+  try {
+    const state = thunkAPI.getState()
+    const token = state.auth.token
+
+    if (!token) {
+      return thunkAPI.rejectWithValue("Authentication token missing. Please log in again.")
+    }
+
+    const response = await fetch("http://localhost:3001/api/categories", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      return thunkAPI.rejectWithValue(data.message || "Failed to fetch task categories.")
+    }
+    return data // List<CategoryResponseDTO>
+  } catch (error) {
+    console.log(error)
+    return thunkAPI.rejectWithValue("Server connection lost. Could not load categories.")
+  }
+})
+
+export const createPersonalizedTask = createAsyncThunk("task/createPersonalizedTask", async ({ taskName, categoryId, dueDate, frequency }, thunkAPI) => {
+  try {
+    const state = thunkAPI.getState()
+    const token = state.auth.token
+
+    const currentGroupId = thunkAPI.getState().auth.user?.groupId
+
+    if (!token) {
+      return thunkAPI.rejectWithValue("Authentication token missing. Please log in again.")
+    }
+
+    if (!currentGroupId) {
+      return thunkAPI.rejectWithValue("You must join or create a household group before scheduling chores.")
+    }
+
+    const requestBody = {
+      title: taskName,
+      categoryId: categoryId,
+      groupId: currentGroupId,
+      dueDate: dueDate,
+      frequency: frequency,
+      assignedUserId: null,
+    }
+
+    const response = await fetch("http://localhost:3001/api/tasks/create-task", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      return thunkAPI.rejectWithValue(data.message || "Failed to instantiate task from preset template.")
+    }
+
+    return data
+  } catch (error) {
+    console.log(error)
     return thunkAPI.rejectWithValue("Server connectivity lost. Please try again shortly.")
   }
 })

@@ -1,5 +1,5 @@
 import { Alert, Container, Form } from "react-bootstrap"
-import { useAppNavigation } from "../utils/useAppNavigation"
+import { useAppNavigation } from "@/utils/useAppNavigation"
 import { useState } from "react"
 
 function Register() {

@@ -2,8 +2,8 @@ import { Container } from "react-bootstrap"
 import NavigationBar from "./NavigationBar"
 import { useAppNavigation } from "../utils/useAppNavigation"
 import { useDispatch, useSelector } from "react-redux"
-import { selectIsLoggedIn } from "../redux/authSlice"
-import { logout } from "../redux/authSlice"
+import { selectIsLoggedIn } from "@/redux/authSlice"
+import { logout } from "@/redux/authSlice"
 
 function TopBar() {
   const isLoggedIn = useSelector(selectIsLoggedIn)

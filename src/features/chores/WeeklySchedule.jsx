@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
 import { Row, Col, Badge /* , ButtonGroup, Button  */ } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
-import { setSelectedDate /*  setActiveTab */ } from "../redux/choresSlice"
-import "../css/weeklySchedule.css"
+import { setSelectedDate /*  setActiveTab */ } from "/src/redux/choresSlice"
+import "/src/css/weeklySchedule.css"
 
 const WeeklySchedule = () => {
   const dispatch = useDispatch()

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { Row, Col, Card, Button, Badge, Spinner } from "react-bootstrap"
 import { useDispatch } from "react-redux"
-import { fetchAvailableTasks } from "../services/taskApi"
-import ModalDueDateSelection from "./ModalDueDateSelection"
+import { fetchAvailableTasks } from "@/services/taskApi"
+import ModalTaskSelection from "./ModalTaskSelection"
 
 function PickChore() {
   const dispatch = useDispatch()
@@ -144,7 +144,7 @@ function PickChore() {
       </div>
 
       {/* DUE DATE SELECTION POPUP WINDOW */}
-      <ModalDueDateSelection
+      <ModalTaskSelection
         show={showModal}
         handleClose={() => {
           setShowModal(false)

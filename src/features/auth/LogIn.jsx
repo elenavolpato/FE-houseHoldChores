@@ -1,10 +1,10 @@
 import { useState } from "react"
 import { Container, Form, Alert } from "react-bootstrap"
-import "../css/login.css"
-import { useAppNavigation } from "../utils/useAppNavigation"
+import "/src/css/login.css"
+import { useAppNavigation } from "@/utils/useAppNavigation"
 import { useDispatch } from "react-redux"
-import { login } from "../redux/authSlice"
-import { fetchCurrentUserProfile } from "../services/authApi"
+import { login } from "@/redux/authSlice"
+import { fetchCurrentUserProfile } from "@/services/authApi"
 
 function Login() {
   const { navigateTo } = useAppNavigation()

@@ -1,8 +1,7 @@
-//import { useState } from "react"
 import { Col, Container, ProgressBar /*  Button, Form  */ } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
-import { toggleGrocery /* addGrocery */ } from "../redux/choresSlice" // Update path accordingly
-import "../css/groceriesList.css"
+import { toggleGrocery /* addGrocery */ } from "@/redux/choresSlice"
+import "/src/css/groceriesList.css"
 
 function GroceriesList() {
   const dispatch = useDispatch()

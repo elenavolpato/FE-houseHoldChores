@@ -1,7 +1,7 @@
 import { Container } from "react-bootstrap"
-import PickChore from "../components/PickChore"
-import CreateCustomChore from "../components/CreateCustomChore"
-import NavigationBar from "../components/NavigationBar"
+import PickChore from "@/features/chores/PickChore"
+import CreateCustomChore from "@/features/chores/CreateCustomChore"
+import NavigationBar from "@/components/NavigationBar"
 
 function AddNewTask() {
   return (

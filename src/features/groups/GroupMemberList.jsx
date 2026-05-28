@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import { Container, Card } from "react-bootstrap"
 import { useDispatch } from "react-redux"
-import { fetchMyGroups } from "../services/userApi"
-import GroupHeader from "./GroupHeader"
+import { fetchMyGroups } from "@/services/userApi"
+import GroupHeader from "@/features/groups/GroupHeader"
 
 function GroupMembersList() {
   const dispatch = useDispatch()

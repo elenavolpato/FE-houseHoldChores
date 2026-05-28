@@ -1,6 +1,6 @@
 import { Card, Col, ProgressBar } from "react-bootstrap"
 import { useSelector } from "react-redux"
-import "../css/houseHoldGoal.css"
+import "/src/css/houseHoldGoal.css"
 
 const HouseholdGoal = () => {
   //  states from Redux

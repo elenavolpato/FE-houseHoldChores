@@ -1,6 +1,6 @@
 import { Col, Container } from "react-bootstrap"
-import "../css/choresStatus.css"
-import { toggleChore } from "../redux/choresSlice"
+import "/src/css/choresStatus.css"
+import { toggleChore } from "/src/redux/choresSlice"
 import { useDispatch, useSelector } from "react-redux"
 
 function ChoresStatus({ filterType = "all", categoryName }) {

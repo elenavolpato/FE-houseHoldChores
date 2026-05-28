@@ -1,6 +1,6 @@
 import { Modal, Button } from "react-bootstrap"
-import { useAppNavigation } from "../utils/useAppNavigation"
-import "../css/addOptionsModal.css"
+import { useAppNavigation } from "/src/utils/useAppNavigation.jsx"
+import "/src/css/addOptionsModal.css"
 
 function AddOptionsModal({ show, handleClose }) {
   const { navigateTo } = useAppNavigation()

@@ -1,5 +1,5 @@
 import { Col, Container, Row } from "react-bootstrap"
-import "../css/features.css"
+import "/src/css/features.css"
 
 function Features() {
   return (

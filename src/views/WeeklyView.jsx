@@ -1,9 +1,9 @@
 import { Container } from "react-bootstrap"
-import WeeklySchedule from "../components/WeeklySchedule"
-import NavigationBar from "../components/NavigationBar"
-import ChoresStatus from "../components/ChoresStatus"
-import HouseholdGoal from "../components/HouseholdGoal"
-import GreetingSection from "../components/GrettingSection"
+import WeeklySchedule from "@/features/chores/WeeklySchedule"
+import NavigationBar from "@/components/NavigationBar"
+import ChoresStatus from "@/features/chores/ChoresStatus"
+import HouseholdGoal from "@/features/chores/HouseholdGoal"
+import GreetingSection from "@/features/groups/GrettingSection"
 
 function WeeklyTasks() {
   return (

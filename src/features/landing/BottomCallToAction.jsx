@@ -1,6 +1,6 @@
 import { Button, Container } from "react-bootstrap"
-import "../css/bottomCallToAction.css"
-import { useAppNavigation } from "../utils/useAppNavigation"
+import "/src/css/bottomCallToAction.css"
+import { useAppNavigation } from "/src/utils/useAppNavigation"
 
 function BottomCallToAction() {
   const { navigateTo } = useAppNavigation()

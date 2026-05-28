@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { fetchCurrentUserProfile } from "../services/authApi"
+import { fetchCurrentUserProfile } from "@/services/authApi"
 
 const authSlice = createSlice({
   name: "auth",
@@ -46,25 +46,3 @@ export const selectAuthToken = (state) => state.auth.token
 export const { login, logout, updateUserGroup } = authSlice.actions
 
 export default authSlice.reducer
-
-/* const authSlice = createSlice({
-  name: "auth",
-  initialState: {
-    token: localStorage.getItem("token") || null,
-  },
-  reducers: {
-    login(state, action) {
-      const extractedToken = typeof action.payload === "object" ? action.payload.token || action.payload.accessToken : action.payload
-
-      state.token = extractedToken
-      if (extractedToken) {
-        localStorage.setItem("token", extractedToken)
-      }
-    },
-    logout(state) {
-      state.token = null
-      localStorage.removeItem("token")
-    },
-  },
-})
-*/
