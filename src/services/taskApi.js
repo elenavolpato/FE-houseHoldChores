@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 
-export const fetchTasks = createAsyncThunk("tasks/fetchTasks", async (_, thunkAPI) => {
+export const fetchAvailableTasks = createAsyncThunk("tasks/fetchTasks", async (_, thunkAPI) => {
   try {
     const state = thunkAPI.getState()
     const token = state.auth.token
@@ -16,6 +16,7 @@ export const fetchTasks = createAsyncThunk("tasks/fetchTasks", async (_, thunkAP
       },
     })
     const data = await response.json()
+    console.log(data)
 
     if (!response.ok) {
       return thunkAPI.rejectedWithValue(data.message || "Failed to load tasks.")

@@ -1,11 +1,10 @@
 import "./App.css"
-import { BrowserRouter, Route, Routes /* Navigate */ } from "react-router-dom"
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom" // 🚀 Imported Navigate
 import LandingPage from "./views/LandingPage"
 import TopBar from "./components/TopBar"
 import Login from "./components/LogIn"
 import Register from "./components/Register"
 import GroceriesView from "./views/GroceriesView"
-//import DailyView from "./views/DailyView"
 import WeeklyView from "./views/WeeklyView"
 import CategoryView from "./views/CategoryView"
 import ManageGroupView from "./views/ManageGroupView"
@@ -13,6 +12,20 @@ import AddNewTask from "./views/AddNewTaskView"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { fetchCurrentUserProfile } from "./services/authApi"
+
+const ProtectedRoute = ({ token, children }) => {
+  if (!token) {
+    return <Navigate to="/login" replace />
+  }
+  return children
+}
+
+const PublicRoute = ({ token, children }) => {
+  if (token) {
+    return <Navigate to="/home" replace />
+  }
+  return children
+}
 
 function App() {
   const dispatch = useDispatch()
@@ -24,39 +37,81 @@ function App() {
       dispatch(fetchCurrentUserProfile())
     }
   }, [token, user, dispatch])
+
   return (
-    <>
-      <BrowserRouter>
-        <TopBar />
-        <Routes>
-          <Route path="/" element={<LandingPage />}></Route>
-        </Routes>
-        <Routes>
-          <Route path="/login" element={<Login />}></Route>
-        </Routes>
-        <Routes>
-          <Route path="/register" element={<Register />}></Route>
-        </Routes>
-        {/* <Routes>
-          <Route path="/home" element={<DailyView />}></Route>
-        </Routes> */}
-        <Routes>
-          <Route path="/home" element={<WeeklyView />}></Route>
-        </Routes>
-        <Routes>
-          <Route path="/category" element={<CategoryView />}></Route>
-        </Routes>
-        <Routes>
-          <Route path="/groups" element={<ManageGroupView />}></Route>
-        </Routes>
-        <Routes>
-          <Route path="/groceries" element={<GroceriesView />}></Route>
-        </Routes>
-        <Routes>
-          <Route path="/new-task" element={<AddNewTask />}></Route>
-        </Routes>
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      <TopBar />
+      <Routes>
+        {/* Public Landing Page */}
+        <Route path="/" element={<LandingPage />} />
+
+        <Route
+          path="/login"
+          element={
+            <PublicRoute token={token}>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <PublicRoute token={token}>
+              <Register />
+            </PublicRoute>
+          }
+        />
+
+        {/* Require valid !token validation check */}
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute token={token}>
+              <WeeklyView />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/category"
+          element={
+            <ProtectedRoute token={token}>
+              <CategoryView />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/groups"
+          element={
+            <ProtectedRoute token={token}>
+              <ManageGroupView />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/groceries"
+          element={
+            <ProtectedRoute token={token}>
+              <GroceriesView />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/new-task"
+          element={
+            <ProtectedRoute token={token}>
+              <AddNewTask />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Wildcard Fallback redirect */}
+        <Route path="*" element={<Navigate to={token ? "/home" : "/login"} replace />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 

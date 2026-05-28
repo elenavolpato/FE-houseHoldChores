@@ -17,9 +17,6 @@ function GroupMembersList() {
       try {
         const data = await dispatch(fetchMyGroups()).unwrap()
         setGroups(data)
-        if (data && data.length > 0) {
-          setSelectedGroup(data[0]) // Default to their first household group
-        }
       } catch (err) {
         setError(err || "Failed to load household data.")
       } finally {

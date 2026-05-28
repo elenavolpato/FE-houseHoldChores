@@ -7,13 +7,11 @@ import { addChore } from "../redux/choresSlice"
 function CreateCustomChore() {
   const dispatch = useDispatch()
 
-  // Basic Input States
   const [taskName, setTaskName] = useState("")
   const [description, setDescription] = useState("")
   const [category, setCategory] = useState("Cleaning")
   const [customDays, setCustomDays] = useState(2)
 
-  // Custom Frequency Controls
   const [timeMode, setTimeMode] = useState("daily") // 'daily' or 'weekly'
   const [selectedDays, setSelectedDays] = useState([]) // holds picked multiple days numbers: e.g., ['Mon', 'Wed']
 
@@ -38,7 +36,7 @@ function CreateCustomChore() {
       description: description,
       category: category,
       icon: "clipboard-list",
-      color: category === "Kitchen" ? "#3498DB" : category === "Pets" ? "#20063B" : "#F1C40F", // Dynamic color matching
+      color: category.color,
       timeMode: timeMode,
       frequencyDays: timeMode === "weekly" ? selectedDays : null,
       customInterval: timeMode === "custom" ? customDays : null,

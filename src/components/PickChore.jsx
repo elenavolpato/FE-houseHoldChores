@@ -65,7 +65,7 @@ function PickChore() {
   return (
     <Col xs={12} md={8}>
       <h3 className="h5 fw-bold text-dark mb-2">Available Chores</h3>
-
+      {/* categories filter */}
       <div className="d-flex gap-2 overflow-auto pb-3 pt-1 mb-2 no-scrollbar" style={{ whiteSpace: "nowrap" }}>
         {categories.map((category) => {
           const isActive = selectedCategoryFilter === category
@@ -99,7 +99,7 @@ function PickChore() {
                     className={`p-3 border-0 rounded-4 shadow-sm item-row-transition ${isAdded ? "opacity-50" : "cursor-pointer"}`}
                     onClick={() => handleCardClick(chore)}
                     style={{
-                      borderLeft: `4px solid ${chore.isCustom ? "#0d6efd" : "#FFD700"}`,
+                      borderLeft: `4px solid ${chore.colorCode}`,
                       backgroundColor: "#ffffff",
                     }}
                   >
@@ -110,11 +110,11 @@ function PickChore() {
                           style={{
                             width: "38px",
                             height: "38px",
-                            backgroundColor: chore.isCustom ? "#0d6efd1A" : "#FFD7001A",
-                            color: chore.isCustom ? "#0d6efd" : "#B8860B",
+                            backgroundColor: `${chore.colorCode}1A`,
+                            color: chore.colorCode,
                           }}
                         >
-                          <i className={`fa-solid fa-${chore.isCustom ? "wand-magic-sparkles" : "circle-check"}`}></i>
+                          <i className={`fa-solid fa-${chore.icon}`}></i>
                         </div>
 
                         <div>

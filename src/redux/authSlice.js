@@ -5,17 +5,24 @@ const authSlice = createSlice({
   name: "auth",
   initialState: {
     token: localStorage.getItem("token") || null,
-    user: null, // 👈 Starts as null until fetched!
+    user: null,
     loading: false,
     error: null,
   },
   reducers: {
+    login(state, action) {
+      const extractedToken = typeof action.payload === "object" ? action.payload.token || action.payload.accessToken : action.payload
+
+      state.token = extractedToken
+      if (extractedToken) {
+        localStorage.setItem("token", extractedToken)
+      }
+    },
     logout: (state) => {
       localStorage.removeItem("token")
       state.token = null
       state.user = null
     },
-    // Dynamic reducer shortcut to easily attach/patch a group directly
     updateUserGroup: (state, action) => {
       if (state.user) {
         state.user.group = action.payload

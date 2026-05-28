@@ -4,22 +4,20 @@ import "../css/login.css"
 import { useAppNavigation } from "../utils/useAppNavigation"
 import { useDispatch } from "react-redux"
 import { login } from "../redux/authSlice"
+import { fetchCurrentUserProfile } from "../services/authApi"
 
 function Login() {
   const { navigateTo } = useAppNavigation()
   const dispatch = useDispatch()
 
-  // 1. Manage form field state
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   })
 
-  // 2. Manage UI states (errors & loading)
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
-  // Track field inputs dynamically
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
@@ -31,7 +29,6 @@ function Login() {
     setIsLoading(true)
 
     try {
-      // 1. Authenticate and login
       const loginResponse = await fetch("http://localhost:3001/api/auth/login", {
         method: "POST",
         headers: {
@@ -48,19 +45,18 @@ function Login() {
         return
       }
 
-      // 2. Extract and save token securely
       const token = loginData.token || loginData.accessToken
       if (token) {
-        localStorage.setItem("token", token)
         dispatch(login(token))
-        navigateTo("home")
+        await dispatch(fetchCurrentUserProfile()).unwrap()
+        navigateTo("/home")
       } else {
         setError("Authentication token missing from server response.")
         setIsLoading(false)
         return
       }
-      // eslint-disable-next-line no-unused-vars
     } catch (err) {
+      console.log(err)
       setError("Cannot connect to the server. Check if your backend is online.")
       setIsLoading(false)
     }

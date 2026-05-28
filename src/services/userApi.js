@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 
-// Thunk to fetch all groups the logged-in user belongs to
 export const fetchMyGroups = createAsyncThunk("user/fetchMyGroups", async (_, thunkAPI) => {
   try {
     const state = thunkAPI.getState()
