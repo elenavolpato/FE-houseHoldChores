@@ -11,6 +11,8 @@ function TopBar() {
 
   const { navigateTo } = useAppNavigation()
 
+  const showAuthButtons = !isLoggedIn && location.pathname !== "/login" && location.pathname !== "/register"
+
   return (
     <Container fluid className="p-3 bg-white shadow-lg border-top d-flex justify-content-between ">
       <h1 className="text-light-navy m-0 d-flex align-items-center fs-3 cursor-pointer" onClick={() => navigateTo(isLoggedIn ? "home" : " ")}>
@@ -22,7 +24,7 @@ function TopBar() {
         <NavigationBar variant="desktop" />
       </div>
 
-      {!isLoggedIn ? (
+      {showAuthButtons && (
         <div className="d-flex gap-2">
           <button className="btn btn-outline-secondary px-3 rounded-pill fw-medium" onClick={() => navigateTo("login")}>
             Login
@@ -31,7 +33,8 @@ function TopBar() {
             Register
           </button>
         </div>
-      ) : (
+      )}
+      {isLoggedIn && (
         <button className="btn btn-outline-secondary px-3 rounded-pill fw-medium" onClick={() => dispatch(logout())}>
           Log out
         </button>
