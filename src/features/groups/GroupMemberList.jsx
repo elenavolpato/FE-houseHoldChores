@@ -3,6 +3,7 @@ import { Container, Card } from "react-bootstrap"
 import { useDispatch } from "react-redux"
 import { getAllGroupMembers } from "../../services/groupApi"
 import GroupNameChanger from "./GroupNameChanger"
+import { updateGroupName } from "../../redux/choresSlice"
 
 function GroupMembersList() {
   const dispatch = useDispatch()
@@ -11,6 +12,7 @@ function GroupMembersList() {
   const [groupMembers, setGroupMembers] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
+  const [groupName, setGroupName] = useState("")
 
   useEffect(() => {
     const getGroups = async () => {
@@ -18,6 +20,11 @@ function GroupMembersList() {
         const data = await dispatch(getAllGroupMembers()).unwrap()
         setGroupMembers(data)
         console.log(data)
+        if (data && data.length > 0 && data[0].group) {
+          const fetchedName = data[0].group.groupName || "My Household"
+          setGroupName(fetchedName)
+          dispatch(updateGroupName(fetchedName))
+        }
       } catch (err) {
         setError(err || "Failed to load household data.")
       } finally {
@@ -32,7 +39,7 @@ function GroupMembersList() {
 
   return (
     <Container className="py-3 px-3" style={{ maxWidth: "500px" }}>
-      <GroupNameChanger />
+      <GroupNameChanger groupName={groupName} />
       <div className="d-flex flex-column gap-3">
         {groupMembers.map((member) => {
           return (

@@ -91,7 +91,6 @@ export const updateGroupNameApi = createAsyncThunk("group/updateGroupNameApi", a
     }
 
     return data
-    // eslint-disable-next-line no-unused-vars
   } catch (error) {
     console.log(error)
     return thunkAPI.rejectWithValue("Server connection failed.")

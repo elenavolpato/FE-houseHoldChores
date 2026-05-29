@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from "react-redux"
 import { updateGroupNameApi } from "../../services/groupApi"
 import { updateGroupName } from "../../redux/choresSlice"
 
-function GroupNameChanger() {
+function GroupNameChanger({ groupName }) {
   const dispatch = useDispatch()
-
+  console.log("hahahaha", groupName)
   // read the current group data from Redux store
   const reduxGroupName = useSelector((state) => state.chores.groupName || "My Household")
   const groupId = useSelector((state) => state.auth.user?.groupId)
@@ -23,6 +23,7 @@ function GroupNameChanger() {
   // keep the local text field synced whenever Redux changes
   useEffect(() => {
     if (!isEditing) {
+      // eslint-disable-next-line
       setLocalNameInput(safeGroupName)
     }
   }, [safeGroupName, isEditing])
@@ -91,8 +92,8 @@ function GroupNameChanger() {
           </Button>
         </Form>
       ) : (
-        <div className="d-flex align-items-center justify-content-between bg-light p-2 rounded-4 border border-light-subtle">
-          <h3 className="h5 fw-bold text-dark mb-0 px-2">{safeGroupName}</h3>
+        <div className="d-flex align-items-center justify-content-between p-2">
+          <h2 className="h3 fw-bold mb-0 custom-navy-title">{safeGroupName}</h2>
           <Button variant="link" className="text-secondary text-decoration-none py-0 small fw-semibold" onClick={() => setIsEditing(true)}>
             <i className="fa-solid fa-pen-to-square me-1"></i> Rename
           </Button>

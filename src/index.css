@@ -80,3 +80,7 @@ h3 {
 .ambient-shadow {
   box-shadow: 0px 4px 20px rgba(0, 101, 141, 0.05);
 }
+
+.custom-navy-title {
+  color: var(--teal);
+}

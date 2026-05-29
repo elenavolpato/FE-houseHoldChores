@@ -14,7 +14,7 @@ export const choresSlice = createSlice({
     activeTab: "today",
     selectedCategory: "",
     selectedDate: getTodayString(),
-    groupName: "Casa da Baunilha",
+    groupName: "",
     list: [],
     groceriesList: [],
     loading: false,
