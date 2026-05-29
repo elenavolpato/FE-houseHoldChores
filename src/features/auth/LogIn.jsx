@@ -57,7 +57,7 @@ function Login() {
       }
     } catch (err) {
       console.log(err)
-      setError("Cannot connect to the server. Check if your backend is online.")
+      setError("Cannot connect to the server. Check if backend is online.")
       setIsLoading(false)
     }
   }
@@ -67,7 +67,7 @@ function Login() {
       <header className="text-center mb-4">
         <img src="src/assets/login_house.png" alt="illustration of a house with a smile" />
         <h1 className="text-light-navy">Welcome back</h1>
-        <p className="fw-semibold">Tackle your household tasks with joy and ease</p>
+        <p className="fw-semibold">Tackle household tasks with joy and ease</p>
       </header>
 
       {/* Render error banner if login fails */}
@@ -88,7 +88,7 @@ function Login() {
             placeholder="Enter email"
             required
           />
-          <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
+          <Form.Text className="text-muted">We'll never share email with anyone else.</Form.Text>
         </Form.Group>
 
         <Form.Group className="mb-3 position-relative" controlId="formBasicPassword">

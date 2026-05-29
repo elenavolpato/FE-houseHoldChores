@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { fetchAvailableTasks } from "../services/taskApi"
 
 const getTodayString = () => {
   const today = new Date()
@@ -11,87 +12,13 @@ export const choresSlice = createSlice({
   name: "chores",
   initialState: {
     activeTab: "today",
-    selectedCategory: "Pets",
+    selectedCategory: "",
     selectedDate: getTodayString(),
     groupName: "Casa da Baunilha",
-    list: [
-      {
-        id: 1,
-        name: "Wash Dishes",
-        description: "Keep the sink clear",
-        isComplete: false,
-        icon: "sink",
-        color: "#F1C40F",
-        category: "Kitchen",
-        date: "2026-05-27",
-      },
-      {
-        id: 2,
-        name: "Clean Fridge",
-        description: "Check expiration dates",
-        isComplete: false,
-        icon: "sink",
-        color: "#3498DB",
-        category: "Kitchen",
-        date: "2026-05-27",
-      },
-      {
-        id: 4,
-        name: "Empty Trash",
-        description: "Take out the recycling too",
-        isComplete: false,
-        icon: "trash-can",
-        color: "#E74C3C",
-        category: "Kitchen",
-        date: "2026-05-28",
-      },
-      {
-        id: 5,
-        name: "Sweep Floor",
-        description: "Don't forget the corners",
-        isComplete: false,
-        icon: "broom",
-        color: "#F1C40F",
-        category: "Cleaning",
-        date: "2026-05-25",
-      },
-      {
-        id: 3,
-        name: "Walk dog",
-        description: "Around the block",
-        isComplete: true,
-        icon: "paw",
-        color: "#20063B",
-        category: "Pets",
-        date: "2026-05-27",
-      },
-      {
-        id: 6,
-        name: "Mop Living Room",
-        description: "Mop",
-        isComplete: false,
-        icon: "broom",
-        color: "#F1C40F",
-        category: "Cleaning",
-        date: "2026-05-29",
-      },
-      {
-        id: 7,
-        name: "Dust Shelves",
-        description: "remove all objects from their places",
-        isComplete: false,
-        icon: "broom",
-        color: "#F1C40F",
-        category: "Cleaning",
-        date: "2026-05-29",
-      },
-    ],
-    groceriesList: [
-      { id: 101, name: "Organic Bananas", quantity: "1 bunch", isHighPriority: true, isComplete: false },
-      { id: 102, name: "Spinach", quantity: "2 bags", isHighPriority: false, isComplete: false },
-      { id: 103, name: "Whole Milk", quantity: "2 Gallons", isHighPriority: false, isComplete: false },
-      { id: 104, name: "Sourdough Bread", quantity: "1 Loaf", isHighPriority: false, isComplete: false },
-    ],
+    list: [],
+    groceriesList: [],
+    loading: false,
+    error: null,
   },
   reducers: {
     toggleChore: (state, action) => {
@@ -127,7 +54,7 @@ export const choresSlice = createSlice({
         timeMode: action.payload.timeMode,
         frequencyDays: action.payload.frequencyDays,
         customInterval: action.payload.customInterval,
-        // Ensure it initializes with a date string format so your ChoresStatus component filters it perfectly!
+        // Ensure it initializes with a date string format so ChoresStatus component filters it perfectly!
         date: action.payload.date,
       })
     },
@@ -144,6 +71,21 @@ export const choresSlice = createSlice({
     updateGroupName: (state, action) => {
       state.groupName = action.payload
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchAvailableTasks.pending, (state) => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(fetchAvailableTasks.fulfilled, (state, action) => {
+        state.loading = false
+        state.list = action.payload
+      })
+      .addCase(fetchAvailableTasks.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
   },
 })
 

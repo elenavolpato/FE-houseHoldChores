@@ -3,7 +3,7 @@ import WeeklySchedule from "@/features/chores/WeeklySchedule"
 import NavigationBar from "@/components/NavigationBar"
 import ChoresStatus from "@/features/chores/ChoresStatus"
 import HouseholdGoal from "@/features/chores/HouseholdGoal"
-import GreetingSection from "@/features/groups/GrettingSection"
+import GreetingSection from "../features/chores/GreetingSection"
 
 function WeeklyTasks() {
   return (

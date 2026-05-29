@@ -9,7 +9,7 @@ function GroceriesList() {
 
   // Grab data dynamically from Redux
   const groceries = useSelector((state) => state.chores.groceriesList) || []
-  const groupName = useSelector((state) => state.chores.groupName) || "Your group"
+  const groupName = useSelector((state) => state.chores.groupName) || "group"
 
   // Metrics calculation
   const totalItems = groceries.length

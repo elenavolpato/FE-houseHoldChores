@@ -2,7 +2,7 @@
 import { useDispatch } from "react-redux"
 import { setSelectedCategory } from "@/redux/choresSlice"
 
-// Mock array of user options for your UI grid
+// Mock array of user options for UI grid
 const CHORE_CATEGORIES = ["Cleaning", "Groceries", "Laundry", "Garden", "Bills", "Kitchen", "Pets"]
 
 function CategoryDashboard({ onViewChange }) {

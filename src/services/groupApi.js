@@ -65,3 +65,35 @@ export const getAllGroupMembers = createAsyncThunk("group/members", async (_, th
     return thunkAPI.rejectWithValue("Server connection failed.")
   }
 })
+
+export const updateGroupNameApi = createAsyncThunk("group/updateGroupNameApi", async ({ groupId, newGroupName }, thunkAPI) => {
+  try {
+    const state = thunkAPI.getState()
+    const token = state.auth.token
+    console.log(groupId, "here", newGroupName)
+    if (!token) {
+      return thunkAPI.rejectWithValue("No authentication token found.")
+    }
+
+    const response = await fetch(`http://localhost:3001/api/groups/${groupId}/rename`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ newGroupName }),
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      return thunkAPI.rejectWithValue(data.message || "Failed to rename.")
+    }
+
+    return data
+    // eslint-disable-next-line no-unused-vars
+  } catch (error) {
+    console.log(error)
+    return thunkAPI.rejectWithValue("Server connection failed.")
+  }
+})

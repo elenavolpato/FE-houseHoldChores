@@ -20,7 +20,7 @@ function ChoresStatus({ filterType = "all", categoryName }) {
     // Filter purely by category type
     displayChores = chores.filter((chore) => chore.category === activeCategory)
   } else if (filterType === "date") {
-    // Filter purely by your Redux calendar sync date string
+    // Filter purely by Redux calendar sync date string
     displayChores = chores.filter((chore) => chore.date === selectedDateStr)
   } else {
     // "all" falls back to the full structural list

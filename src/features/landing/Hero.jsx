@@ -19,11 +19,11 @@ function Hero() {
               </Badge>
 
               <h1 className="hero-title mt-4 mt-md-0">
-                The chore list your family will <span className="underline-accent">actually</span> use
+                The chore list family will <span className="underline-accent">actually</span> use
               </h1>
 
               <p className="hero-subtitle">
-                Coordinate household tasks with ease. Track, assign, and manage your LandingPage's daily operations in one central place.
+                Coordinate household tasks with ease. Track, assign, and manage LandingPage's daily operations in one central place.
               </p>
 
               <div className="d-flex flex-wrap gap-3 align-items-center justify-content-center justify-content-md-start">

@@ -1,7 +1,7 @@
 //import Goal from "@/components/Goal"
-import GreetingSection from "@/components/GrettingSection"
-import NavigationBar from "@/components/NavigationBar"
-import ChoresStatus from "@/components/ChoresStatus"
+import GreetingSection from "../features/chores/GreetingSection"
+import NavigationBar from "../components/NavigationBar"
+import ChoresStatus from "../features/chores/ChoresStatus"
 
 function DailyTasks() {
   return (

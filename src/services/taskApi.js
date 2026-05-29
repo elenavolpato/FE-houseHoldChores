@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 
-export const fetchAvailableTasks = createAsyncThunk("tasks/fetchTasks", async (_, thunkAPI) => {
+export const fetchAvailableTasks = createAsyncThunk("tasks/fetchAvailableTasks", async (_, thunkAPI) => {
   try {
     const state = thunkAPI.getState()
     const token = state.auth.token
@@ -21,9 +21,8 @@ export const fetchAvailableTasks = createAsyncThunk("tasks/fetchTasks", async (_
       return thunkAPI.rejectedWithValue(data.message || "Failed to load tasks.")
     }
     return data
-
-    // eslint-disable-next-line no-unused-vars
   } catch (error) {
+    console.log(error)
     return thunkAPI.rejectWithValue("Server connection failed")
   }
 })

@@ -52,7 +52,7 @@ function Register() {
       const data = await response.json()
 
       if (!response.ok) {
-        // 4. Handle errors thrown by your ExceptionsHandler
+        // 4. Handle errors thrown by ExceptionsHandler
         if (data.errors) {
           // Captures PayloadValidation / MethodArgumentNotValid arrays
           setErrors(data.errors)
@@ -70,7 +70,7 @@ function Register() {
       alert("Account created successfully! Please sign in.")
       navigateTo("login")
     } catch (error) {
-      setErrors(["Cannot connect to the server. Is your Spring Boot app running?"])
+      setErrors(["Cannot connect to the server. Is Spring Boot app running?"])
       setIsLoading(false)
     }
   }
@@ -108,7 +108,7 @@ function Register() {
         <Form.Group className="mb-3" controlId="formEmail">
           <Form.Label className="fw-semibold">Email address</Form.Label>
           <Form.Control type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Enter email" required />
-          <Form.Text className="text-muted">We'll never share your email with anyone else.</Form.Text>
+          <Form.Text className="text-muted">We'll never share email with anyone else.</Form.Text>
         </Form.Group>
 
         <Form.Group className="mb-3 position-relative" controlId="formPassword">

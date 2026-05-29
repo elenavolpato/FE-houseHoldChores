@@ -1,7 +1,7 @@
 {
   "name": "ChoreMate",
   "short_name": "ChoreMate",
-  "description": "Simplify your household management with shared chores and grocery lists.",
+  "description": "Simplify household management with shared chores and grocery lists.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f4fafd",
