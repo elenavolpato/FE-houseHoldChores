@@ -1,15 +1,31 @@
-import { Container } from "react-bootstrap"
-import CreateGroups from "@/features/groups/CreateGroups"
+import { Col, Container } from "react-bootstrap"
 import GroupMembersList from "@/features/groups/GroupMemberList"
 import InviteFriendsCard from "@/features/groups/InviteFriendsCard"
 import NavigationBar from "@/components/NavigationBar"
+import CreateGroups from "../features/groups/CreateGroups"
+import { useSelector } from "react-redux"
 
 function ManageGroup() {
+  const groupId = useSelector((state) => state.auth.user?.groupId)
+  const hasGroup = Boolean(groupId)
+
   return (
-    <Container>
-      <CreateGroups />
-      <GroupMembersList />
-      <InviteFriendsCard />
+    <Container className="d-flex justify-content-center align-items-center flex-column my-3">
+      <Col md={6}>
+        {/* create groups only shows when user has no groups yet */}
+        {!hasGroup && (
+          <>
+            <CreateGroups />{" "}
+          </>
+        )}
+        {/* member list only show when user is already in a group */}
+        {hasGroup && (
+          <>
+            <GroupMembersList />
+            <InviteFriendsCard />
+          </>
+        )}
+      </Col>
       <NavigationBar variant="mobile" />
     </Container>
   )

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Container, Card } from "react-bootstrap"
+import { Card, Col } from "react-bootstrap"
 import { useDispatch } from "react-redux"
 import { getAllGroupMembers } from "../../services/groupApi"
 import GroupNameChanger from "./GroupNameChanger"
@@ -38,7 +38,7 @@ function GroupMembersList() {
   if (error) return <div className="alert alert-danger m-3 rounded-4">{error}</div>
 
   return (
-    <Container className="py-3 px-3" style={{ maxWidth: "500px" }}>
+    <Col className="mx-3">
       <GroupNameChanger groupName={groupName} />
       <div className="d-flex flex-column gap-3">
         {groupMembers.map((member) => {
@@ -71,7 +71,7 @@ function GroupMembersList() {
                   <div>
                     <h4 className="h6 fw-bold mb-0 text-dark">{member.username}</h4>
                     <span className="text-muted small" style={{ fontSize: "13px" }}>
-                      {member.username.toLowerCase()}@flat.com
+                      {member.email}
                     </span>
                   </div>
                 </div>
@@ -93,7 +93,7 @@ function GroupMembersList() {
 
         {groupMembers.length === 0 && <p className="text-center text-muted small mt-4">No household members mapped to this active group.</p>}
       </div>
-    </Container>
+    </Col>
   )
 }
 

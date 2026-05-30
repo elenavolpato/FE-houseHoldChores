@@ -84,3 +84,18 @@ h3 {
 .custom-navy-title {
   color: var(--teal);
 }
+
+.icon-bg {
+  background-color: #00baff;
+}
+
+.icon-bg-yellow {
+  background-color: #fed800;
+}
+
+.text-gold {
+  color: #6f5d00;
+}
+.bg-light-gray {
+  background-color: #e8eff1;
+}

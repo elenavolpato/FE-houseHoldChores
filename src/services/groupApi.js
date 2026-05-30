@@ -70,7 +70,6 @@ export const updateGroupNameApi = createAsyncThunk("group/updateGroupNameApi", a
   try {
     const state = thunkAPI.getState()
     const token = state.auth.token
-    console.log(groupId, "here", newGroupName)
     if (!token) {
       return thunkAPI.rejectWithValue("No authentication token found.")
     }
@@ -88,6 +87,36 @@ export const updateGroupNameApi = createAsyncThunk("group/updateGroupNameApi", a
 
     if (!response.ok) {
       return thunkAPI.rejectWithValue(data.message || "Failed to rename.")
+    }
+
+    return data
+  } catch (error) {
+    console.log(error)
+    return thunkAPI.rejectWithValue("Server connection failed.")
+  }
+})
+
+export const findGroupByAdminEmail = createAsyncThunk("group/findGroupByAdminEmail", async (email, thunkAPI) => {
+  try {
+    const state = thunkAPI.getState()
+    const token = state.auth.token
+
+    if (!token) {
+      return thunkAPI.rejectWithValue("No authentication token found.")
+    }
+
+    const response = await fetch(`http://localhost:3001/api/groups/find-by-email/${email}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      return thunkAPI.rejectWithValue(data.message || "Failed to search for group.")
     }
 
     return data

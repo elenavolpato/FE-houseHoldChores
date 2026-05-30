@@ -4,9 +4,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { updateGroupNameApi } from "../../services/groupApi"
 import { updateGroupName } from "../../redux/choresSlice"
 
-function GroupNameChanger({ groupName }) {
+function GroupNameChanger() {
   const dispatch = useDispatch()
-  console.log("hahahaha", groupName)
   // read the current group data from Redux store
   const reduxGroupName = useSelector((state) => state.chores.groupName || "My Household")
   const groupId = useSelector((state) => state.auth.user?.groupId)
