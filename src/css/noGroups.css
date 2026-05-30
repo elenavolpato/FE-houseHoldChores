@@ -1,0 +1,49 @@
+.empty-state-card {
+  background-color: #f4f9fc;
+  max-width: 450px;
+}
+
+.graphic-container {
+  width: 200px;
+  height: 200px;
+}
+
+.main-icon-ring {
+  width: 160px;
+  height: 160px;
+  background: #ffffff;
+  border: 8px solid transparent;
+  background-image: linear-gradient(#fff, #fff), linear-gradient(135deg, #bfe3e8, #f7df79);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+.accent-dot-blue {
+  width: 45px;
+  height: 45px;
+  background-color: #7cd6fc;
+  bottom: 15px;
+  left: 5px;
+}
+
+.accent-dot-yellow {
+  width: 30px;
+  height: 30px;
+  background-color: #ffd400;
+  top: 5px;
+  right: 15px;
+}
+
+.btn-custom-primary {
+  background-color: #006687 !important;
+  border-color: #006687 !important;
+}
+
+.btn-custom-primary:hover {
+  background-color: #004d66 !important;
+  border-color: #004d66 !important;
+}
+
+.max-w-text {
+  max-width: 340px;
+}
