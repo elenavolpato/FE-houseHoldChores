@@ -8,7 +8,7 @@ export const getAllGroupMembers = createAsyncThunk("group/getAllGroupMembers", a
     if (!token) return thunkAPI.rejectWithValue("No token found.")
 
     // Point this directly to your Java server group endpoints
-    const response = await fetch("http://localhost:3001/api/groups/members", {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/groups/members`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

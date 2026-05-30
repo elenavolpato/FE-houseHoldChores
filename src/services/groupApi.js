@@ -9,7 +9,7 @@ export const createGroup = createAsyncThunk("group/create", async (groupName, th
       return thunkAPI.rejectWithValue("No authentication token found.")
     }
 
-    const response = await fetch("http://localhost:3001/api/groups/create", {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/groups/create`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -45,7 +45,7 @@ export const getAllGroupMembers = createAsyncThunk("group/members", async (_, th
       return thunkAPI.rejectWithValue("You are not currently linked to a household group.")
     }
 
-    const response = await fetch(`http://localhost:3001/api/groups/${targetGroupId}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/groups/${targetGroupId}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -74,7 +74,7 @@ export const updateGroupNameApi = createAsyncThunk("group/updateGroupNameApi", a
       return thunkAPI.rejectWithValue("No authentication token found.")
     }
 
-    const response = await fetch(`http://localhost:3001/api/groups/${groupId}/rename`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/groups/${groupId}/rename`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -105,7 +105,7 @@ export const findGroupByAdminEmail = createAsyncThunk("group/findGroupByAdminEma
       return thunkAPI.rejectWithValue("No authentication token found.")
     }
 
-    const response = await fetch(`http://localhost:3001/api/groups/find-by-email/${email}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/groups/find-by-email/${email}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

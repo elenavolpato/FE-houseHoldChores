@@ -10,7 +10,7 @@ export const sendGroupInvitation = createAsyncThunk("group/sendGroupInvitation",
       return thunkAPI.rejectWithValue("No authentication token found.")
     }
 
-    const response = await fetch("http://localhost:3001/api/invitations/send", {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/invitations/send`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
