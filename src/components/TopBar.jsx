@@ -6,6 +6,7 @@ import { selectIsLoggedIn, logout } from "@/redux/authSlice"
 import { useEffect, useState } from "react"
 import { deleteUserAccount } from "../services/authApi"
 import { getAllGroupMembers } from "../services/groupApi"
+import { Link } from "react-router-dom"
 
 function TopBar() {
   const isLoggedIn = useSelector(selectIsLoggedIn)
@@ -60,10 +61,10 @@ function TopBar() {
   return (
     <>
       <Container fluid className="p-3 bg-white shadow-lg border-top d-flex justify-content-between align-items-center">
-        <h1 className="text-light-navy m-0 d-flex align-items-center fs-3 cursor-pointer" onClick={() => navigateTo(isLoggedIn ? "home" : " ")}>
-          <i className="bi bi-house-check me-2"></i>
-          <span className="d-md-inline d-none fw-bold ">ChoreMate</span>
-        </h1>
+        <Link to={isLoggedIn ? "home" : " "} className="text-light-navy m-0 d-flex align-items-center fs-3 text-decoration-none">
+          <i className="bi bi-house-check me-2 fs-1 "></i>
+          <h1 className="d-md-inline fw-bold mt-3">ChoreMate</h1>
+        </Link>
 
         <div className="d-none d-lg-block z-3">
           <NavigationBar variant="desktop" />
