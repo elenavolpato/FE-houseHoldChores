@@ -8,7 +8,7 @@ function InviteFriendsCard() {
   const [searchResult, setSearchResult] = useState(null)
 
   return (
-    <Container className="py-3 px-3">
+    <Container className="py-3 px-3 mt-4">
       <div
         className="rounded-4 p-4 text-center d-flex flex-column align-items-center"
         style={{
@@ -25,18 +25,16 @@ function InviteFriendsCard() {
             height: "56px",
           }}
         >
-          <i className="fa-solid fa-share-nodes fs-4"></i>
+          <i className="fa-solid fa-people-roof fs-4"></i>
         </div>
 
         {/* Dynamic Promotional Subtext Details */}
-        <h2 className="h4 fw-bold mb-1" style={{ color: "#9E2A2B" }}>
+        <h2 className="h4 fw-bold mb-3" style={{ color: "#9E2A2B" }}>
           Invite more friends to your group
         </h2>
-        <p className="text-muted small mb-4">
-          Sharing chores is <strong>2x faster!</strong>
-        </p>
+
         <div className="d-flex w-100 justify-content-between">
-          <Col xs={9}>
+          <Col xs={12}>
             <InputSearchByEmail
               placeholder={"Email of the person you want to invite"}
               onLoadingChange={setIsLoading}

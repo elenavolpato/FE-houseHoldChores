@@ -1,11 +1,15 @@
 import { Alert, Container, Form } from "react-bootstrap"
 import { useAppNavigation } from "@/utils/useAppNavigation"
 import { useState } from "react"
+import { useSearchParams } from "react-router-dom"
 
 function Register() {
   const { navigateTo } = useAppNavigation()
+  const [searchParams] = useSearchParams()
+  const token = searchParams.get("token")
 
-  // 1. Manage form state fields
+  console.log(token)
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -13,22 +17,19 @@ function Register() {
     confirmPassword: "",
   })
 
-  // 2. Manage error and loading states
   const [errors, setErrors] = useState([])
   const [isLoading, setIsLoading] = useState(false)
 
-  // Update input data dynamically
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
+  const greetings = !token ? "Create account" : "Join group"
 
-  // 3. Handle Form Submission
-  const handleSubmit = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault()
-    setErrors([]) // Reset errors across attempts
+    setErrors([])
 
-    // Frontend validation check
     if (formData.password !== formData.confirmPassword) {
       setErrors(["Passwords do not match."])
       return
@@ -36,28 +37,34 @@ function Register() {
 
     setIsLoading(true)
 
+    const endpoint = token ? "register-with-invite" : "register"
+    // conditional payload
+    const payload = {
+      username: formData.username,
+      email: formData.email,
+      password: formData.password,
+    }
+
+    // attach the token key if it is actually present
+    if (token) {
+      payload.token = token
+    }
+
     try {
-      const response = await fetch("http://localhost:3001/api/auth/register", {
+      const response = await fetch(`http://localhost:3001/api/auth/${endpoint}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          username: formData.username,
-          email: formData.email,
-          password: formData.password,
-        }),
+        body: JSON.stringify(payload),
       })
 
       const data = await response.json()
 
       if (!response.ok) {
-        // 4. Handle errors thrown by ExceptionsHandler
         if (data.errors) {
-          // Captures PayloadValidation / MethodArgumentNotValid arrays
           setErrors(data.errors)
         } else if (data.message) {
-          // Captures standard ExceptionDTO issues like EmailAlreadyExistsException
           setErrors([data.message])
         } else {
           setErrors(["An unexpected error occurred."])
@@ -66,10 +73,10 @@ function Register() {
         return
       }
 
-      // Success! Move user to login
       alert("Account created successfully! Please sign in.")
       navigateTo("login")
     } catch (error) {
+      console.log(error)
       setErrors(["Cannot connect to the server. Is Spring Boot app running?"])
       setIsLoading(false)
     }
@@ -80,9 +87,8 @@ function Register() {
       <header className="text-center mb-4">
         {/* todo change image */}
         <img src="src/assets/login_house.png" alt="illustration of a house with a smile" />
-        <h1 className="text-light-navy">Create account</h1>
+        <h1 className="text-light-navy">{greetings}</h1>
       </header>
-      {/* 5. Render active alert lists if validation fails */}
       {errors.length > 0 && (
         <Alert variant="danger" className="rounded-3">
           <ul className="mb-0">
@@ -92,7 +98,7 @@ function Register() {
           </ul>
         </Alert>
       )}
-      <Form className="rounded-4 bg-white py-5 px-4" onSubmit={handleSubmit}>
+      <Form className="rounded-4 bg-white py-5 px-4" onSubmit={handleRegister}>
         <Form.Group className="mb-3" controlId="formUsername">
           <Form.Label className="fw-semibold">Username</Form.Label>
           <Form.Control

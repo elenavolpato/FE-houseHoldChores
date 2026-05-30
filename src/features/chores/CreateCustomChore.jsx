@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
 import { Form, Button, Col, Row, Alert } from "react-bootstrap"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import "/src/css/createCustomChore.css"
 import { createPersonalizedTask, getAllCategories } from "@/services/taskApi"
-import { getAllGroupMembers } from "@/services/groupApi"
+import { getAllGroupMembers } from "../../services/groupApi"
 
 function CreateCustomChore() {
   const dispatch = useDispatch()
+  const groupMembers = useSelector((state) => state.group.roommates || [])
 
   // Helper to safely grab tomorrow's date string format (YYYY-MM-DD)
   const getTomorrowDateString = () => {
@@ -22,13 +23,11 @@ function CreateCustomChore() {
   const [selectedCategory, setSelectedCategory] = useState(null)
   const [customDays, setCustomDays] = useState(2)
   const [assignedMember, setAssignedMember] = useState("")
-
   const [dueDate, setDueDate] = useState(getTomorrowDateString())
 
   const [uiError, setUiError] = useState("")
   const [isSaving, setIsSaving] = useState(false)
   const [uiSuccess, setUiSuccess] = useState("")
-  const [groupMembers, setGroupMembers] = useState([])
 
   useEffect(() => {
     const loadCategories = async () => {
@@ -45,8 +44,7 @@ function CreateCustomChore() {
   useEffect(() => {
     const getGroupMembers = async () => {
       try {
-        const data = await dispatch(getAllGroupMembers()).unwrap()
-        setGroupMembers(data)
+        dispatch(getAllGroupMembers())
       } catch (err) {
         console.error("Fetch group members failed:", err)
       }

@@ -6,7 +6,6 @@ import Login from "@/features/auth/LogIn"
 import Register from "@/features/auth/Register"
 import GroceriesView from "@/views/GroceriesView"
 import WeeklyView from "@/views/WeeklyView"
-import CategoryView from "@/views/CategoryView"
 import ManageGroupView from "@/views/ManageGroupView"
 import AddNewTask from "@/views/AddNewTaskView"
 import { useDispatch, useSelector } from "react-redux"
@@ -61,6 +60,7 @@ function App() {
             </PublicRoute>
           }
         />
+        <Route path="/register-with-invite" element={<Register />} />
 
         {/* Require valid !token validation check */}
         <Route
@@ -68,15 +68,6 @@ function App() {
           element={
             <ProtectedRoute token={token}>
               <WeeklyView />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/category"
-          element={
-            <ProtectedRoute token={token}>
-              <CategoryView />
             </ProtectedRoute>
           }
         />

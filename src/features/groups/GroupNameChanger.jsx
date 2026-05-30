@@ -9,6 +9,7 @@ function GroupNameChanger() {
   // read the current group data from Redux store
   const reduxGroupName = useSelector((state) => state.chores.groupName || "My Household")
   const groupId = useSelector((state) => state.auth.user?.groupId)
+  const userRole = useSelector((state) => state.auth.user.role)
 
   // safe name to prevent undefined to slip in
   const safeGroupName = reduxGroupName || "My Household"
@@ -93,9 +94,16 @@ function GroupNameChanger() {
       ) : (
         <div className="d-flex align-items-center justify-content-between p-2">
           <h2 className="h3 fw-bold mb-0 custom-navy-title">{safeGroupName}</h2>
-          <Button variant="link" className="text-secondary text-decoration-none py-0 small fw-semibold" onClick={() => setIsEditing(true)}>
-            <i className="fa-solid fa-pen-to-square me-1"></i> Rename
-          </Button>
+          <div>
+            <Button variant="link" className="text-secondary text-decoration-none py-0 small fw-semibold" onClick={() => setIsEditing(true)}>
+              <i className="fa-solid fa-pen-to-square me-1"></i>
+            </Button>
+            {userRole === "ADMIN" && (
+              <Button variant="link" className=" py-0 small fw-semibold" onClick={() => setIsEditing(true)}>
+                <i className="fa-solid fa-right-from-bracket color-danger"></i>
+              </Button>
+            )}
+          </div>
         </div>
       )}
     </div>

@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import { getAllGroupMembers } from "../services/groupApi"
 
 export const sendGroupInvitation = createAsyncThunk("group/sendGroupInvitation", async ({ recipientEmail, recipientName }, thunkAPI) => {
   try {
@@ -38,6 +39,7 @@ export const groupSlice = createSlice({
   name: "group",
   initialState: {
     groupDetails: null,
+    roommates: [],
     loading: false,
     error: null,
     inviteSuccess: false,
@@ -64,6 +66,17 @@ export const groupSlice = createSlice({
       .addCase(sendGroupInvitation.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload || "An error occurred while sending the invite."
+      })
+      .addCase(getAllGroupMembers.pending, (state) => {
+        state.loading = true
+      })
+      .addCase(getAllGroupMembers.fulfilled, (state, action) => {
+        state.loading = false
+        state.roommates = action.payload
+      })
+      .addCase(getAllGroupMembers.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
       })
   },
 })

@@ -23,3 +23,31 @@ export const fetchCurrentUserProfile = createAsyncThunk("auth/fetchCurrentUserPr
     return thunkAPI.rejectWithValue("Failed to sync profile.")
   }
 })
+
+export const deleteUserAccount = createAsyncThunk("auth/deleteUserAccount", async (successorId, thunkAPI) => {
+  try {
+    const state = thunkAPI.getState()
+    const token = state.auth.token
+
+    if (!token) return thunkAPI.rejectWithValue("No auth token found.")
+
+    // 🚀 Append query parameter if a successor was selected
+    const url = successorId ? `http://localhost:3001/api/users/delete?successorId=${successorId}` : "http://localhost:3001/api/users/delete"
+
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+
+    const data = await response.json()
+    if (!response.ok) return thunkAPI.rejectWithValue(data.message)
+
+    return data
+  } catch (error) {
+    console.log(error)
+    return thunkAPI.rejectWithValue("Server connection failed.")
+  }
+})

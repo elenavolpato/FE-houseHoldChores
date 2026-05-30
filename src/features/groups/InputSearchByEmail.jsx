@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { InputGroup, Form, Alert } from "react-bootstrap"
+import { InputGroup, Form, Alert, Col } from "react-bootstrap"
 import { useDispatch } from "react-redux"
 //import { findGroupByAdminEmail } from "../../services/groupApi"
 import { sendGroupInvitation } from "../../redux/groupSlice"
@@ -68,18 +68,21 @@ function InputSearchByEmail({ onLoadingChange, placeholder, isInvite }) {
   return (
     <>
       {error && <Alert variant="danger">{error}</Alert>}
-      {inviteSuccess && <Alert variant="success">An invitation was sent to the email</Alert>}
-      <Form onSubmit={isInvite ? handleInvitationSend : handleGroupSearch}>
-        <InputGroup>
-          <Form.Control type="text" placeholder="Username" value={recipientName} onChange={(e) => setRecipientName(e.target.value)} />
-        </InputGroup>
-        <InputGroup>
-          <Form.Control type="email" placeholder={placeholder} value={recipientEmail} onChange={(e) => setRecipientEmail(e.target.value)} />
-        </InputGroup>
-
-        <button className="btn btn-danger" type="submit">
-          Send invite
-        </button>
+      {inviteSuccess && <Alert variant="success">Invitation send!</Alert>}
+      <Form onSubmit={isInvite ? handleInvitationSend : handleGroupSearch} className="ps-3 d-flex gap-3">
+        <Col xs={8}>
+          <InputGroup className="mb-2">
+            <Form.Control type="text" placeholder="Username" value={recipientName} onChange={(e) => setRecipientName(e.target.value)} />
+          </InputGroup>
+          <InputGroup>
+            <Form.Control type="email" placeholder={placeholder} value={recipientEmail} onChange={(e) => setRecipientEmail(e.target.value)} />
+          </InputGroup>
+        </Col>
+        <Col xs={4} className="d-flex align-content-stretch my-2">
+          <button className="btn btn-danger" type="submit">
+            Send invite
+          </button>
+        </Col>
       </Form>
     </>
   )

@@ -1,15 +1,14 @@
-/* import { createAsyncThunk } from "@reduxjs/toolkit"
+import { createAsyncThunk } from "@reduxjs/toolkit"
 
-export const fetchGroupMembers = createAsyncThunk("user/fetchMyGroups", async (_, thunkAPI) => {
+export const getAllGroupMembers = createAsyncThunk("group/getAllGroupMembers", async (_, thunkAPI) => {
   try {
     const state = thunkAPI.getState()
-    const token = state.auth.token
+    const token = state.auth?.token
 
-    if (!token) {
-      return thunkAPI.rejectWithValue("No authentication token found.")
-    }
+    if (!token) return thunkAPI.rejectWithValue("No token found.")
 
-    const response = await fetch(`http://localhost:3001/api/groups/${}`, {
+    // Point this directly to your Java server group endpoints
+    const response = await fetch("http://localhost:3001/api/groups/members", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -18,15 +17,11 @@ export const fetchGroupMembers = createAsyncThunk("user/fetchMyGroups", async (_
     })
 
     const data = await response.json()
+    if (!response.ok) return thunkAPI.rejectWithValue(data.message)
 
-    if (!response.ok) {
-      return thunkAPI.rejectWithValue(data.message || "Failed to load groups.")
-    }
-
-    return data // Returns the List<GroupResponseDTO> array
-
-    // eslint-disable-next-line no-unused-vars
+    return data // This becomes the action.payload
   } catch (error) {
+    console.log(error)
     return thunkAPI.rejectWithValue("Server connection failed.")
-  } 
-})*/
+  }
+})
