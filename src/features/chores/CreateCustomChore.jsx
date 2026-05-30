@@ -97,9 +97,9 @@ function CreateCustomChore() {
   }
 
   return (
-    <Col md={8} xs={12}>
+    <Col md={8} xs={12} className="pb-5">
       <Form onSubmit={handleCreateChore} className="bg-white p-4 rounded-4 shadow-sm border my-5">
-        <h3 className="h5 fw-bold text-dark mb-4">Custom Parameters</h3>
+        <h3 className="h5 fw-bold text-dark mb-4">Add a custom chore</h3>
 
         {uiError && (
           <Alert variant="danger" className="py-2 small rounded-3">

@@ -19,7 +19,7 @@ function NavigationBar({ variant = "mobile" }) {
   const navItems = [
     /*   { id: "today", label: "Today", icon: "fa-regular fa-calendar-check", goTo: "home" }, */
     { id: "today", label: "Chores", icon: "fa-regular fa-calendar-days", goTo: "home" },
-    { id: "add", label: "Add", icon: "fa-regular fa-square-plus", goTo: null },
+    { id: "add", label: "Add", icon: "fa-regular fa-square-plus", goTo: "new-task" },
     { id: "groceries", label: "Groceries", icon: "fa-solid fa-cart-shopping", goTo: "groceries" },
     { id: "group", label: "Group", icon: "fa-solid fa-users", goTo: "groups" },
   ]

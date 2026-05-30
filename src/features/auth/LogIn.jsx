@@ -1,14 +1,16 @@
 import { useState } from "react"
-import { Container, Form, Alert } from "react-bootstrap"
+import { Container, Form, Alert, InputGroup, Button } from "react-bootstrap"
 import "/src/css/login.css"
 import { useAppNavigation } from "@/utils/useAppNavigation"
 import { useDispatch } from "react-redux"
 import { login } from "@/redux/authSlice"
 import { fetchCurrentUserProfile } from "@/services/authApi"
+import { Link } from "react-router-dom"
 
 function Login() {
   const { navigateTo } = useAppNavigation()
   const dispatch = useDispatch()
+  const [show, setShow] = useState(false)
 
   const [formData, setFormData] = useState({
     email: "",
@@ -93,7 +95,19 @@ function Login() {
 
         <Form.Group className="mb-3 position-relative" controlId="formBasicPassword">
           <Form.Label className="fw-semibold">Password</Form.Label>
-          <Form.Control type="password" name="password" value={formData.password} onChange={handleChange} placeholder="Password" required />
+          <InputGroup>
+            <Form.Control
+              type={show ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter password"
+              required
+            />
+            <Button variant="outline-secondary" onClick={() => setShow((prev) => !prev)} tabIndex={-1}>
+              <i className={` ${show ? "fa-eye-slash" : "fa-eye"} fa-solid`}></i>
+            </Button>
+          </InputGroup>
           <a href="#" className="forgot-password text-light-navy fw-semibold position-absolute text-decoration-none">
             Forgot password?
           </a>
@@ -106,9 +120,9 @@ function Login() {
 
       <div className="d-flex justify-content-center mt-5">
         <p>New to the household? </p>
-        <a className="text-light-navy fw-bolder text-decoration-none cursor-pointer" onClick={() => navigateTo("register")}>
+        <Link to="/register" className="text-light-navy fw-bolder text-decoration-none cursor-pointer">
           &nbsp; Sign up
-        </a>
+        </Link>
       </div>
     </Container>
   )

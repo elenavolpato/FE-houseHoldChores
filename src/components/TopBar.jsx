@@ -15,7 +15,6 @@ function TopBar() {
   const navigateTo = useAppNavigation()
 
   const roommates = useSelector((state) => state.group?.roommates || [])
-  console.log(roommates)
 
   const eligibleSuccessors = roommates.filter((r) => r.id !== user?.id)
 
@@ -54,7 +53,6 @@ function TopBar() {
       dispatch(getAllGroupMembers())
     }
   }, [dispatch, isLoggedIn])
-  console.log(roommates)
 
   const showAuthButtons = !isLoggedIn && location.pathname !== "/login" && location.pathname !== "/register"
 

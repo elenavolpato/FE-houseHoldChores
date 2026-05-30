@@ -65,7 +65,8 @@ function PickChore() {
 
   return (
     <Col xs={12} md={8}>
-      <h3 className="h5 fw-bold text-dark mb-2">Available Chores</h3>
+      <h3 className="h2 fw-bold text-dark mb-2">Available Chores</h3>
+      <p>Choose from the preset chores, or create a custom one below</p>
       {/* categories filter */}
       <div className="d-flex gap-2 overflow-auto pb-3 pt-1 mb-2 no-scrollbar" style={{ whiteSpace: "nowrap" }}>
         {categoriesUsed.map((category) => {

@@ -1,10 +1,10 @@
 import { Alert, Button, Container, Form, InputGroup } from "react-bootstrap"
 import { useAppNavigation } from "@/utils/useAppNavigation"
 import { useState } from "react"
-import { useSearchParams } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 
 function Register() {
-  const navigateTo = useAppNavigation()
+  const { navigateTo } = useAppNavigation()
   const [searchParams] = useSearchParams()
   const token = searchParams.get("token")
 
@@ -147,10 +147,9 @@ function Register() {
 
       <div className="d-flex justify-content-center mt-5">
         <p>Already have an account? </p>
-        <a className="text-light-navy fw-bolder text-decoration-none cursor-pointer" onClick={() => navigateTo("login")}>
-          {" "}
+        <Link to="/login" className="text-light-navy fw-bolder text-decoration-none cursor-pointer">
           &nbsp; Login
-        </a>
+        </Link>
       </div>
     </Container>
   )

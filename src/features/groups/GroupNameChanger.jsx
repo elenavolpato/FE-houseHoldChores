@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Form, Button } from "react-bootstrap"
+import { Form, Button, Tooltip, OverlayTrigger } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import { updateGroupNameApi } from "../../services/groupApi"
 import { updateGroupName } from "../../redux/choresSlice"
@@ -9,7 +9,7 @@ function GroupNameChanger() {
   // read the current group data from Redux store
   const reduxGroupName = useSelector((state) => state.chores.groupName || "My Household")
   const groupId = useSelector((state) => state.auth.user?.groupId)
-  const userRole = useSelector((state) => state.auth.user.role)
+  //const userRole = useSelector((state) => state.auth.user.role)
 
   // safe name to prevent undefined to slip in
   const safeGroupName = reduxGroupName || "My Household"
@@ -61,6 +61,12 @@ function GroupNameChanger() {
     }
   }
 
+  const renderTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      Rename group
+    </Tooltip>
+  )
+
   return (
     <div className="mb-4">
       {error && <div className="alert alert-danger py-2 small rounded-3 mb-2">{error}</div>}
@@ -95,14 +101,11 @@ function GroupNameChanger() {
         <div className="d-flex align-items-center justify-content-between p-2">
           <h2 className="h3 fw-bold mb-0 custom-navy-title">{safeGroupName}</h2>
           <div>
-            <Button variant="link" className="text-secondary text-decoration-none py-0 small fw-semibold" onClick={() => setIsEditing(true)}>
-              <i className="fa-solid fa-pen-to-square me-1"></i>
-            </Button>
-            {userRole === "ADMIN" && (
-              <Button variant="link" className=" py-0 small fw-semibold" onClick={() => setIsEditing(true)}>
-                <i className="fa-solid fa-right-from-bracket color-danger"></i>
+            <OverlayTrigger placement="right" delay={{ show: 250, hide: 400 }} overlay={renderTooltip}>
+              <Button variant="link" className="text-secondary text-decoration-none py-0 small fw-semibold" onClick={() => setIsEditing(true)}>
+                <i className="fa-solid fa-pen-to-square me-0"></i>
               </Button>
-            )}
+            </OverlayTrigger>
           </div>
         </div>
       )}

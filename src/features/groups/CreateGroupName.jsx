@@ -19,7 +19,7 @@ function CreateGroupName() {
 
       alert("Household created successfully!")
       setGroupName("")
-      navigateTo("groups")
+      navigateTo("new-task")
       console.log(result)
     } catch (backendError) {
       setError(backendError || "Failed to create group.")

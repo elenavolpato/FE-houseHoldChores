@@ -11,6 +11,7 @@ import AddNewTask from "@/views/AddNewTaskView"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { fetchCurrentUserProfile } from "@/services/authApi"
+import ResetPassword from "./features/auth/ResetPassword"
 
 const ProtectedRoute = ({ token, children }) => {
   if (!token) {
@@ -52,6 +53,7 @@ function App() {
             </PublicRoute>
           }
         />
+
         <Route
           path="/register"
           element={
@@ -60,6 +62,7 @@ function App() {
             </PublicRoute>
           }
         />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/register-with-invite" element={<Register />} />
 
         {/* Require valid !token validation check */}
