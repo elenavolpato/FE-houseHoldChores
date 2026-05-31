@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Form, Button, Col, Row, Alert } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import "/src/css/createCustomChore.css"
-import { createPersonalizedTask, getAllCategories } from "@/services/taskApi"
+import { createPersonalizedTask, getAllCategories } from "@/services/choreApi"
 import { getAllGroupMembers } from "../../services/groupApi"
 
 function CreateCustomChore() {

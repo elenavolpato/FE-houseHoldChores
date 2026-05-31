@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Row, Col, Card, Button, Badge, Spinner } from "react-bootstrap"
 import { useDispatch } from "react-redux"
-import { fetchAvailableTasks } from "@/services/taskApi"
+import { fetchAvailableTasks } from "@/services/choreApi"
 import ModalTaskSelection from "./ModalTaskSelection"
 
 function PickChore() {

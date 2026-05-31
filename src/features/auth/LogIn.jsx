@@ -57,8 +57,8 @@ function Login() {
         setIsLoading(false)
         return
       }
-    } catch (err) {
-      console.log(err)
+    } catch (error) {
+      console.error(error)
       setError("Cannot connect to the server. Check if backend is online.")
       setIsLoading(false)
     }

@@ -47,7 +47,7 @@ export const deleteUserAccount = createAsyncThunk("auth/deleteUserAccount", asyn
 
     return data
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return thunkAPI.rejectWithValue("Server connection failed.")
   }
 })

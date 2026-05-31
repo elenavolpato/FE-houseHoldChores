@@ -76,7 +76,7 @@ function Register() {
       alert("Account created successfully! Please sign in.")
       navigateTo("login")
     } catch (error) {
-      console.log(error)
+      console.error(error)
       setErrors(["Cannot connect to the server. Is Spring Boot app running?"])
       setIsLoading(false)
     }

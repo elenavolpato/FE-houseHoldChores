@@ -22,7 +22,34 @@ export const fetchAvailableTasks = createAsyncThunk("tasks/fetchAvailableTasks",
     }
     return data
   } catch (error) {
-    console.log(error)
+    console.error(error)
+    return thunkAPI.rejectWithValue("Server connection failed")
+  }
+})
+
+export const fetchGroupTasks = createAsyncThunk("tasks/fetchGroupTasks", async ({ startDate, endDate }, thunkAPI) => {
+  try {
+    const state = thunkAPI.getState()
+    const token = state.auth.token
+    if (!token) {
+      return thunkAPI.rejectWithValue("No authentication token found")
+    }
+
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/group/week?start=${startDate}&end=${endDate}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-type": "application/json",
+      },
+    })
+    const data = await response.json()
+
+    if (!response.ok) {
+      return thunkAPI.rejectedWithValue(data.message || "Failed to load group tasks.")
+    }
+    return data
+  } catch (error) {
+    console.error(error)
     return thunkAPI.rejectWithValue("Server connection failed")
   }
 })
@@ -69,7 +96,7 @@ export const createTaskFromPreset = createAsyncThunk("task/createTaskFromPreset"
 
     return data
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return thunkAPI.rejectWithValue("Server connectivity lost. Please try again shortly.")
   }
 })
@@ -98,7 +125,7 @@ export const getAllCategories = createAsyncThunk("task/getAllCategories", async 
     }
     return data // List<CategoryResponseDTO>
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return thunkAPI.rejectWithValue("Server connection lost. Could not load categories.")
   }
 })
@@ -144,7 +171,45 @@ export const createPersonalizedTask = createAsyncThunk("task/createPersonalizedT
 
     return data
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return thunkAPI.rejectWithValue("Server connectivity lost. Please try again shortly.")
+  }
+})
+
+export const setChoreCompletionStatus = createAsyncThunk("tasks/setChoreCompletionStatus", async (choreId, thunkAPI) => {
+  try {
+    const state = thunkAPI.getState()
+    const token = state.auth.token
+
+    // Find the specific chore in your state to get its current status
+    const chore = state.chores.list.find((c) => c.taskId === choreId)
+    console.log("CHORE API", chore)
+    if (!chore) {
+      return thunkAPI.rejectWithValue("Chore not found in local state")
+    }
+
+    // Flip the status for the backend payload
+    const updatedStatus = !chore.isCompleted
+
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/${choreId}/complete`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ isCompleted: updatedStatus }),
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      return thunkAPI.rejectWithValue(data.message || "Failed to update chore status.")
+    }
+
+    // Return the updated task object from the backend
+    return data
+  } catch (error) {
+    console.error(error)
+    return thunkAPI.rejectWithValue("Server connection failed")
   }
 })

@@ -99,3 +99,12 @@ h3 {
 .bg-light-gray {
   background-color: #e8eff1;
 }
+
+.arrow-btn-left {
+  left: 0;
+  top: 50%;
+}
+.arrow-btn-right {
+  right: 0;
+  top: 50%;
+}

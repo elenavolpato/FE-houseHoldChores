@@ -21,7 +21,7 @@ export const getAllGroupMembers = createAsyncThunk("group/getAllGroupMembers", a
 
     return data // This becomes the action.payload
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return thunkAPI.rejectWithValue("Server connection failed.")
   }
 })

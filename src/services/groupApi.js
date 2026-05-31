@@ -91,7 +91,7 @@ export const updateGroupNameApi = createAsyncThunk("group/updateGroupNameApi", a
 
     return data
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return thunkAPI.rejectWithValue("Server connection failed.")
   }
 })
@@ -121,7 +121,7 @@ export const findGroupByAdminEmail = createAsyncThunk("group/findGroupByAdminEma
 
     return data
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return thunkAPI.rejectWithValue("Server connection failed.")
   }
 })

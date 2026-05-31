@@ -1,60 +1,17 @@
-import { useState, useEffect } from "react"
-import { Row, Col, Badge /* , ButtonGroup, Button  */ } from "react-bootstrap"
+import { Row, Col, Badge, Button } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
-import { setSelectedDate /*  setActiveTab */ } from "/src/redux/choresSlice"
+import { setSelectedDate } from "/src/redux/choresSlice"
 import "/src/css/weeklySchedule.css"
+import { navigateWeek } from "../../redux/choresSlice"
 
 const WeeklySchedule = () => {
   const dispatch = useDispatch()
 
-  // 1. Grab global states from Redux
+  // 1. Pull everything straight from Redux global state layout
   const selectedDateStr = useSelector((state) => state.chores.selectedDate)
-  //const activeTab = useSelector((state) => state.chores.activeTab)
-
-  const [daysOfWeek, setDaysOfWeek] = useState([])
-  const [todayStr, setTodayStr] = useState("")
-  const [currentMonth, setCurrentMonth] = useState("")
-
-  const formatDateString = (dateObj) => {
-    const offset = dateObj.getTimezoneOffset()
-    const localDate = new Date(dateObj.getTime() - offset * 60 * 1000)
-    return localDate.toISOString().split("T")[0]
-  }
-
-  useEffect(() => {
-    const generateFullWeek = () => {
-      const today = new Date()
-      const currentDay = today.getDay()
-      const formattedToday = formatDateString(today)
-
-      setTodayStr(formattedToday)
-
-      // Compute how many days to subtract to go back to Monday
-      const daysToMonday = currentDay === 0 ? -6 : 1 - currentDay
-      const monday = new Date(today)
-      monday.setDate(today.getDate() + daysToMonday)
-
-      const weekArray = []
-      const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-
-      // Loop 7 times for a complete Mon - Sun week structure
-      for (let i = 0; i < 7; i++) {
-        const nextDay = new Date(monday)
-        nextDay.setDate(monday.getDate() + i)
-
-        weekArray.push({
-          dayName: dayNames[i],
-          dateNumber: nextDay.getDate(),
-          isoString: formatDateString(nextDay),
-        })
-      }
-
-      setDaysOfWeek(weekArray)
-      setCurrentMonth(today.toLocaleString("default", { month: "long" }))
-    }
-
-    generateFullWeek()
-  }, [])
+  const daysOfWeek = useSelector((state) => state.chores.daysOfWeek)
+  const todayStr = useSelector((state) => state.chores.todayStr)
+  const currentMonth = useSelector((state) => state.chores.currentMonth)
 
   const handleDaySelect = (isoString) => {
     dispatch(setSelectedDate(isoString))
@@ -62,17 +19,36 @@ const WeeklySchedule = () => {
 
   return (
     <Col md={8} xs={12}>
-      <div className="schedule-card">
+      <div className="schedule-card position-relative">
         {/* Header Section */}
         <div className="d-flex justify-content-between align-items-center mb-4">
           <h4 className="fw-bold mb-0 text-dark">Weekly Schedule</h4>
-          <Badge bg="none" className="month-badge px-3 py-2 fs-6 text-capitalize">
-            {currentMonth}
-          </Badge>
+          {/* Navigation Controls Wrapper */}
+          <div className="d-flex align-items-center gap-2">
+            <Badge bg="none" className="month-badge px-3 py-2 fs-6 text-capitalize border text-dark">
+              {currentMonth}
+            </Badge>
+          </div>
+          <Button
+            variant="link"
+            className="text-dark p-1 link-underline-opacity-0 position-absolute arrow-btn-left"
+            onClick={() => dispatch(navigateWeek(-1))}
+            title="Previous Week"
+          >
+            <i className="fa-solid fa-chevron-left fs-5"></i>
+          </Button>
+          <Button
+            variant="link"
+            className="text-dark p-1 link-underline-opacity-0 position-absolute arrow-btn-right"
+            onClick={() => dispatch(navigateWeek(1))}
+            title="Next Week"
+          >
+            <i className="fa-solid fa-chevron-right fs-5"></i>
+          </Button>
         </div>
 
         {/* 7 Days Grid Ribbon Layout */}
-        <Row className="g-1 justify-content-between mb-4 mx-0 flex-nowrap overflow-visible">
+        <Row className="g-1 justify-content-between mb-4 mx-0 flex-nowrap overflow-visible position-relative">
           {daysOfWeek.map((item) => {
             const isSelected = selectedDateStr === item.isoString
             const isToday = todayStr === item.isoString
@@ -84,29 +60,17 @@ const WeeklySchedule = () => {
                   ${isSelected ? "selected" : ""} 
                   ${isToday ? "is-today" : ""}`}
                 onClick={() => handleDaySelect(item.isoString)}
+                style={{ cursor: "pointer" }}
               >
                 <span className={`text-muted small ${isSelected || isToday ? "fw-bold text-dark" : ""}`}>{item.dayName}</span>
                 <span className="fs-4 fw-bold my-1 text-dark">{item.dateNumber}</span>
                 <div>
-                  {/* The dot is explicitly linked to 'isToday' so it never jumps with clicks */}
                   <i className="fa-solid fa-circle indicator-dot" style={{ opacity: isToday ? 1 : 0 }}></i>
                 </div>
               </Col>
             )
           })}
         </Row>
-
-        {/* Bottom Toggle View Switcher */}
-        {/* <div className="d-flex align-items-center justify-content-center toggle-container">
-          <ButtonGroup className="w-100">
-            <Button className={`toggle-btn ${activeTab === "today" ? "active" : "inactive"}`} onClick={() => dispatch(setActiveTab("today"))}>
-              Daily View
-            </Button>
-            <Button className={`toggle-btn ${activeTab === "weekly" ? "active" : "inactive"}`} onClick={() => dispatch(setActiveTab("weekly"))}>
-              Weekly Grid
-            </Button>
-          </ButtonGroup>
-        </div> */}
       </div>
     </Col>
   )

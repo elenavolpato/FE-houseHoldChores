@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Modal, Form, Button } from "react-bootstrap"
 import { useDispatch } from "react-redux"
-import { createTaskFromPreset } from "@/services/taskApi"
+import { createTaskFromPreset } from "@/services/choreApi"
 import { getAllGroupMembers } from "@/services/groupApi"
 
 function ModalTaskSelection({ show, handleClose, activeChore, onTaskAdded }) {

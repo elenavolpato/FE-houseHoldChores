@@ -1,52 +1,61 @@
 import { Col, Container } from "react-bootstrap"
 import "/src/css/choresStatus.css"
-import { toggleChore } from "/src/redux/choresSlice"
+
 import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
+import { fetchGroupTasks, setChoreCompletionStatus } from "../../services/choreApi"
 
 function ChoresStatus({ filterType = "all", categoryName }) {
   const dispatch = useDispatch()
 
-  // Grab state from Redux
+  // Grab states from Redux
   const chores = useSelector((state) => state.chores.list)
-  const selectedDateStr = useSelector((state) => state.chores.selectedDate)
   const reduxCategory = useSelector((state) => state.chores.selectedCategory)
   const activeCategory = categoryName || reduxCategory
-  const activeTab = useSelector((state) => state.chores.activeTab) // "today" or "weekly"
 
-  // eslint-disable-next-line no-useless-assignment
+  const weekStart = useSelector((state) => state.chores.weekStartIso)
+  const weekEnd = useSelector((state) => state.chores.weekEndIso)
+
+  useEffect(() => {
+    dispatch(fetchGroupTasks({ startDate: weekStart, endDate: weekEnd }))
+  }, [dispatch, weekStart, weekEnd])
+
+  // filter local display dataset
   let displayChores = chores
+  console.log(chores)
 
   if (filterType === "category") {
-    // Filter purely by category type
-    displayChores = chores.filter((chore) => chore.category === activeCategory)
-  } else if (filterType === "date") {
-    // Filter purely by Redux calendar sync date string
-    displayChores = chores.filter((chore) => chore.date === selectedDateStr)
-  } else {
-    // "all" falls back to the full structural list
-    displayChores = chores
+    displayChores = chores.filter((chore) => {
+      const nameToCheck = typeof chore.category === "object" ? chore.category?.name : chore.category
+      return nameToCheck === activeCategory
+    })
   }
 
-  const remainingChores = displayChores.filter((chore) => !chore.isComplete)
-  const completedChores = displayChores.filter((chore) => chore.isComplete)
+  // separate by task complete attributes
+  const remainingChores = displayChores.filter((chore) => !chore.isCompleted)
+  const completedChores = displayChores.filter((chore) => chore.isCompleted)
 
   return (
     <Container className="py-4">
       <Col md={8} className="mx-auto">
         {/* --- REMAINING CHORES SECTION --- */}
-        <h3 className="h5 text-dark fw-bold mb-3">Remaining Chores {activeTab === "today" ? "— Chosen Day" : "— Full Week"}</h3>
+        <h3 className="h5 text-dark fw-bold mb-3">Remaining Chores</h3>
         <div className="d-flex flex-column gap-3 mb-4">
           {remainingChores.length === 0 ? (
             <p className="text-muted fst-italic">No remaining chores!</p>
           ) : (
             remainingChores.map((chore) => {
+              const uiColor = chore.colorCode || "#6c757d"
+              const uiIcon = chore.icon || "thumbtack"
+              const catName = chore.categoryName || "GENERAL"
+
               return (
                 <div
-                  key={chore.id}
-                  className="d-flex align-items-center justify-content-between bg-white p-3 rounded-3 shadow-sm "
+                  key={chore.taskId}
+                  className="d-flex align-items-center justify-content-between bg-white p-3 rounded-3 shadow-sm"
                   style={{
                     transition: "transform 0.2s",
-                    borderLeft: `4px solid ${chore.color}`, // Dynamically sets the side accent color
+                    borderLeft: `4px solid ${uiColor}`,
                   }}
                 >
                   <div className="d-flex align-items-center gap-3">
@@ -56,27 +65,33 @@ function ChoresStatus({ filterType = "all", categoryName }) {
                       style={{
                         width: "48px",
                         height: "48px",
-                        color: chore.color, // Sets the icon color
-                        backgroundColor: `${chore.color}1A`, // '1A' for a 10% opacity background splash
+                        color: uiColor,
+                        backgroundColor: `${uiColor}1A`,
                       }}
                     >
-                      <i className={`fa-solid fa-${chore.icon} fs-4`}></i>
+                      <i className={`fa-solid fa-${uiIcon} fs-4`}></i>
                     </div>
 
-                    {/* Title */}
+                    {/* Title & Category Badge */}
                     <div>
-                      <h4 className="h5 text-dark mb-1 fw-normal">{chore.name}</h4>
+                      <h4 className="h5 text-dark mb-1 fw-normal">{chore.title}</h4>
                       <span className="badge text-uppercase px-2 py-1 bg-light text-dark fw-lighter" style={{ fontSize: "10px", letterSpacing: "0.5px" }}>
-                        {chore.category}
+                        {catName}
                       </span>
                     </div>
                   </div>
 
-                  {/* Empty Visual Checkbox Control */}
+                  {/* Checkbox Control */}
                   <label className="position-relative d-flex align-items-center" style={{ cursor: "pointer" }}>
-                    <input className="visually-hidden" type="checkbox" checked={chore.isComplete} onChange={() => dispatch(toggleChore(chore.id))} />
-                    {/* Gray circular border acting as the empty checkbox */}
-                    <div className="rounded-circle border border-2 border-secondary-subtle" style={{ width: "32px", height: "32px" }}></div>
+                    <input
+                      className="visually-hidden chore-checkbox"
+                      type="checkbox"
+                      checked={chore.isCompleted}
+                      onChange={() => dispatch(setChoreCompletionStatus(chore.taskId))}
+                    />
+
+                    {/* Visual Custom Circle */}
+                    <div className="rounded-circle border border-2 border-secondary-subtle checkbox-visual" style={{ width: "32px", height: "32px" }}></div>
                   </label>
                 </div>
               )
@@ -89,39 +104,48 @@ function ChoresStatus({ filterType = "all", categoryName }) {
         {completedChores.length === 0 ? (
           <p className="text-gray-400 italic">No completed chores yet.</p>
         ) : (
-          completedChores.map((chore) => (
-            <div className="d-flex align-items-center justify-content-between bg-light p-3 rounded-3 opacity-75 mb-3">
-              <div className="d-flex align-items-center gap-3">
-                {/* Icon Container */}
-                <div
-                  key={chore.id}
-                  className="rounded-circle bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center"
-                  style={{ width: "48px", height: "48px" }}
-                >
-                  <i className={`fa-solid fa-${chore.icon}`}></i>
+          completedChores.map((chore) => {
+            const uiIcon = chore.icon || "thumbtack"
+            const catName = chore.categoryName || "GENERAL"
+
+            return (
+              <div key={chore.taskId} className="d-flex align-items-center justify-content-between bg-light p-3 rounded-3 opacity-75 mb-3">
+                <div className="d-flex align-items-center gap-3">
+                  {/* Icon Container */}
+                  <div
+                    className="rounded-circle bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center"
+                    style={{ width: "48px", height: "48px" }}
+                  >
+                    <i className={`fa-solid fa-${uiIcon} text-secondary`}></i>
+                  </div>
+
+                  {/* Text and Badge */}
+                  <div>
+                    <h4 className="h5 text-secondary text-decoration-line-through mb-0">{chore.title}</h4>
+                    <span className="badge text-uppercase px-2 py-1 bg-light text-dark fw-lighter" style={{ fontSize: "10px", letterSpacing: "0.5px" }}>
+                      {catName || "General"}
+                    </span>
+                  </div>
                 </div>
 
-                {/* Text and Badge */}
-                <div>
-                  <h4 className="h5 text-secondary text-decoration-line-through mb-0">{chore.name}</h4>
-                  <span className="badge text-uppercase px-2 py-1 bg-light text-dark fw-lighter" style={{ fontSize: "10px", letterSpacing: "0.5px" }}>
-                    {chore.category}
-                  </span>
-                </div>
+                {/* Checkmark Container */}
+                <label className="position-relative d-flex align-items-center cursor-pointer" style={{ cursor: "pointer" }}>
+                  <input
+                    className="visually-hidden chore-checkbox"
+                    type="checkbox"
+                    checked={chore.isCompleted}
+                    onChange={() => dispatch(setChoreCompletionStatus(chore.taskId))}
+                  />
+                  <div
+                    className="rounded-circle bg-warning d-flex align-items-center justify-content-center text-dark"
+                    style={{ width: "32px", height: "32px" }}
+                  >
+                    <i className="fa-solid fa-check"></i>
+                  </div>
+                </label>
               </div>
-
-              {/* Checkmark Container */}
-              <label className="position-relative d-flex align-items-center cursor-pointer">
-                {/* The actual checkbox is hidden but handles the click/state change */}
-                <input className="visually-hidden" type="checkbox" checked={chore.isComplete} onChange={() => dispatch(toggleChore(chore.id))} />
-
-                {/* Visual Yellow Round Button */}
-                <div className="rounded-circle bg-warning d-flex align-items-center justify-content-center text-dark" style={{ width: "32px", height: "32px" }}>
-                  <i class="fa-solid fa-check"></i>
-                </div>
-              </label>
-            </div>
-          ))
+            )
+          })
         )}
       </Col>
     </Container>
