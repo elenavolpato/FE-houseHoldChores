@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { fetchCurrentUserProfile } from "@/services/authApi"
 import ResetPassword from "./features/auth/ResetPassword"
+import ForgotPassword from "./features/auth/ForgotPassword"
 
 const ProtectedRoute = ({ token, children }) => {
   if (!token) {
@@ -64,6 +65,7 @@ function App() {
         />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/register-with-invite" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />}></Route>
 
         {/* Require valid !token validation check */}
         <Route

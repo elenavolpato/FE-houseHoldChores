@@ -5,14 +5,10 @@ import "/src/css/houseHoldGoal.css"
 const HouseholdGoal = () => {
   //  states from Redux
   const chores = useSelector((state) => state.chores.list)
-  const activeTab = useSelector((state) => state.chores.activeTab) // "today" or "weekly"
-  const selectedDateStr = useSelector((state) => state.chores.selectedDate) // "YYYY-MM-DD"
 
   // filter list based on active tab before calculating percentages
-  const filteredChores = activeTab === "today" ? chores.filter((chore) => chore.date === selectedDateStr) : chores // "weekly" view counts all chores currently in the list
-
-  const totalTasks = filteredChores.length
-  const completedTasks = filteredChores.filter((chore) => chore.isComplete).length
+  const completedTasks = chores.filter((chore) => chore.isCompleted).length
+  const totalTasks = chores.length
   const percentageDone = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0
 
   const motivationalText = percentageDone === 100 ? "Amazing job!" : "Keep going!"
@@ -24,7 +20,7 @@ const HouseholdGoal = () => {
           <h3 className="goal-title fw-bold mb-1 text-dark">Household Goal</h3>
 
           <p className="goal-subtitle text-muted mb-4">
-            {completedTasks} of {totalTasks} tasks completed {activeTab === "today" ? "today" : "this week"}
+            {completedTasks} of {totalTasks} tasks completed this week
           </p>
 
           <ProgressBar now={percentageDone} className="goal-progress-bar mb-3" />

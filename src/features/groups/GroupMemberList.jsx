@@ -19,7 +19,6 @@ function GroupMembersList() {
       try {
         const data = await dispatch(getAllGroupMembers()).unwrap()
         setGroupMembers(data)
-        console.log(data)
         if (data && data.length > 0 && data[0].group) {
           const fetchedName = data[0].group.groupName || "My Household"
           setGroupName(fetchedName)

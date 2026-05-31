@@ -115,17 +115,22 @@ export const choresSlice = createSlice({
       state.groupName = action.payload
     },
     navigateWeek: (state, action) => {
-      // action.payload will be either 1 (next week) or -1 (prev week)
-      const direction = action.payload
-      const currentDate = new Date(state.selectedDate)
+      const direction = action.payload // 1 or -1
 
-      // Shift the date by exactly 7 days forward or backward
-      currentDate.setDate(currentDate.getDate() + direction * 7)
-      const newDateStr = currentDate.toISOString().split("T")[0]
+      // 1. Always start shifting from the current week's Monday date string
+      // state.weekStartIso looks like "2026-06-01T00:00:00" -> split string to get "2026-06-01"
+      const currentMondayStr = state.weekStartIso.split("T")[0]
+      const currentMonday = new Date(currentMondayStr)
 
-      // Reuse your wonderful week-generation math!
-      state.selectedDate = newDateStr
-      const updatedWeek = generateWeekData(newDateStr)
+      // 2. Add or subtract exactly 7 days from Monday
+      currentMonday.setDate(currentMonday.getDate() + direction * 7)
+      const targetMondayStr = currentMonday.toISOString().split("T")[0]
+
+      // 3. Save this target Monday as the active selected date
+      state.selectedDate = targetMondayStr
+
+      // 4. Regenerate whole week dataset around it
+      const updatedWeek = generateWeekData(targetMondayStr)
       state.daysOfWeek = updatedWeek.daysOfWeek
       state.currentMonth = updatedWeek.currentMonth
       state.weekStartIso = updatedWeek.weekStartIso

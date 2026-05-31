@@ -108,9 +108,9 @@ function Login() {
               <i className={` ${show ? "fa-eye-slash" : "fa-eye"} fa-solid`}></i>
             </Button>
           </InputGroup>
-          <a href="#" className="forgot-password text-light-navy fw-semibold position-absolute text-decoration-none">
+          <Link to="/forgot-password" href="#" className="forgot-password text-light-navy fw-semibold position-absolute text-decoration-none">
             Forgot password?
-          </a>
+          </Link>
         </Form.Group>
 
         <button className="btn-primary-custom login-btn w-100 mt-4" type="submit" disabled={isLoading}>

@@ -183,7 +183,6 @@ export const setChoreCompletionStatus = createAsyncThunk("tasks/setChoreCompleti
 
     // Find the specific chore in your state to get its current status
     const chore = state.chores.list.find((c) => c.taskId === choreId)
-    console.log("CHORE API", chore)
     if (!chore) {
       return thunkAPI.rejectWithValue("Chore not found in local state")
     }

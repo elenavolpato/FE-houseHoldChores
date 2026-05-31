@@ -15,12 +15,10 @@ function CreateGroupName() {
     if (e) e.preventDefault()
 
     try {
-      const result = await dispatch(createGroup(groupName)).unwrap()
-
+      await dispatch(createGroup(groupName)).unwrap()
       alert("Household created successfully!")
       setGroupName("")
       navigateTo("new-task")
-      console.log(result)
     } catch (backendError) {
       setError(backendError || "Failed to create group.")
     }

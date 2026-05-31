@@ -1,6 +1,5 @@
 import { Col, Container } from "react-bootstrap"
 import "/src/css/choresStatus.css"
-
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 import { fetchGroupTasks, setChoreCompletionStatus } from "../../services/choreApi"
@@ -13,6 +12,8 @@ function ChoresStatus({ filterType = "all", categoryName }) {
   const reduxCategory = useSelector((state) => state.chores.selectedCategory)
   const activeCategory = categoryName || reduxCategory
 
+  // track the active day selection
+  const selectedDateStr = useSelector((state) => state.chores.selectedDate)
   const weekStart = useSelector((state) => state.chores.weekStartIso)
   const weekEnd = useSelector((state) => state.chores.weekEndIso)
 
@@ -21,7 +22,11 @@ function ChoresStatus({ filterType = "all", categoryName }) {
   }, [dispatch, weekStart, weekEnd])
 
   // filter local display dataset
-  let displayChores = chores
+  let displayChores = chores.filter((chore) => {
+    if (!chore.dueDate) return false
+    const choreDatePart = chore.dueDate.split("T")[0]
+    return choreDatePart === selectedDateStr
+  })
 
   if (filterType === "category") {
     displayChores = chores.filter((chore) => {
@@ -77,6 +82,14 @@ function ChoresStatus({ filterType = "all", categoryName }) {
                       <span className="badge text-uppercase px-2 py-1 bg-light text-dark fw-lighter" style={{ fontSize: "10px", letterSpacing: "0.5px" }}>
                         {catName}
                       </span>
+
+                      <span
+                        className=" px-2 py-1 text-dark text-uppercase bg-light fw-lighter rounded-4 ms-2"
+                        style={{ fontSize: "10px", letterSpacing: "0.5px" }}
+                      >
+                        <img src={chore.avatarUrl} alt="user avatar" className="" style={{ height: "25px" }} />
+                        {chore.assignedTo}
+                      </span>
                     </div>
                   </div>
 
@@ -123,6 +136,13 @@ function ChoresStatus({ filterType = "all", categoryName }) {
                     <h4 className="h5 text-secondary text-decoration-line-through mb-0">{chore.title}</h4>
                     <span className="badge text-uppercase px-2 py-1 bg-light text-dark fw-lighter" style={{ fontSize: "10px", letterSpacing: "0.5px" }}>
                       {catName || "General"}
+                    </span>
+                    <span
+                      className=" px-2 py-1 text-dark text-uppercase bg-light fw-lighter rounded-4 ms-2"
+                      style={{ fontSize: "10px", letterSpacing: "0.5px" }}
+                    >
+                      <img src={chore.avatarUrl} alt="user avatar" className="" style={{ height: "25px" }} />
+                      {chore.assignedTo}
                     </span>
                   </div>
                 </div>
