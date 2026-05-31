@@ -22,7 +22,6 @@ function ChoresStatus({ filterType = "all", categoryName }) {
 
   // filter local display dataset
   let displayChores = chores
-  console.log(chores)
 
   if (filterType === "category") {
     displayChores = chores.filter((chore) => {
@@ -129,7 +128,7 @@ function ChoresStatus({ filterType = "all", categoryName }) {
                 </div>
 
                 {/* Checkmark Container */}
-                <label className="position-relative d-flex align-items-center cursor-pointer" style={{ cursor: "pointer" }}>
+                <label className="position-relative d-flex align-items-center" style={{ cursor: "pointer" }}>
                   <input
                     className="visually-hidden chore-checkbox"
                     type="checkbox"
