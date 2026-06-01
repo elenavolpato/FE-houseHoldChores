@@ -55,16 +55,17 @@ export const updateAvatar = createAsyncThunk("auth/updateAvatar", async ({ file 
   }
 })
 
-export const updateUsername = createAsyncThunk("auth/updateUsername", async (username, thunkAPI) => {
+export const updateUsernameApi = createAsyncThunk("auth/updateUsername", async (newUsername, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token
 
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/me/email`, {
-      method: "PAtch",
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/me/username`, {
+      method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-type": "application/json",
       },
-      body: { username: username },
+      body: JSON.stringify({ username: newUsername }),
     })
 
     if (!response.ok) {

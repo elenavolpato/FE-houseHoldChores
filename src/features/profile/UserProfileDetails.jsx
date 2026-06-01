@@ -1,14 +1,17 @@
 import { useSelector, useDispatch } from "react-redux"
-import { Container, Row, Col, Button, Form } from "react-bootstrap"
+import { Container, Row, Col, Button, Form, Alert } from "react-bootstrap"
 import DeleteAccountModal from "./DeleteAccountModal"
 import { useState, useEffect } from "react"
 import { updateGroupNameApi } from "../../services/groupApi"
 import { updateGroupName } from "../../redux/groupSlice"
+import { updateUsernameApi } from "../../services/userApi"
+import { updateUsername } from "../../redux/authSlice"
 
 const UserProfileDetails = () => {
   const user = useSelector((state) => state.auth.user)
   const dispatch = useDispatch()
 
+  const [error, setError] = useState("")
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
 
@@ -16,10 +19,12 @@ const UserProfileDetails = () => {
   const [isEditingGroup, setIsEditingGroup] = useState(false)
 
   const reduxGroupName = useSelector((state) => state.group.groupName)
-  console.log(reduxGroupName)
   const safeGroupName = reduxGroupName || "My Household"
-  const [usernameInput, setUsernameInput] = useState(safeGroupName)
-  const [groupNameInput, setGroupNameInput] = useState("")
+  const [groupNameInput, setGroupNameInput] = useState(safeGroupName)
+
+  const reduxUsername = useSelector((state) => state.auth.user?.username)
+  const safeUsername = reduxUsername || "Guest User"
+  const [usernameInput, setUsernameInput] = useState(safeUsername)
 
   useEffect(() => {
     if (user) {
@@ -36,12 +41,19 @@ const UserProfileDetails = () => {
       setIsEditingUsername(false)
       return
     }
-
+    if (!user?.username) {
+      console.error("No user profile found")
+      return
+    }
     setIsSaving(true)
     try {
+      // api endpoint update
+      await dispatch(updateUsernameApi(usernameInput.trim())).unwrap()
+      // store update
+      dispatch(updateUsername(usernameInput.trim()))
       setIsEditingUsername(false)
     } catch (err) {
-      console.error("Failed to update username:", err)
+      setError("Failed to update username:", err)
     } finally {
       setIsSaving(false)
     }
@@ -87,7 +99,7 @@ const UserProfileDetails = () => {
       <Container className="py-2">
         {/* --- DISPLAY NAME SECTION --- */}
         <p className="text-muted small fw-semibold mb-1">Display Name</p>
-
+        {error && <Alert variant="danger">{error}</Alert>}
         {isEditingUsername ? (
           <Form onSubmit={executeUsernameUpdate} className="d-flex gap-2 mb-4">
             <Form.Control

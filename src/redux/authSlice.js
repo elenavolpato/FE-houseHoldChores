@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import { fetchCurrentUserProfile } from "@/services/authApi"
 import { deleteUserAccount } from "../services/authApi"
 import { updateAvatar } from "../services/userApi"
+import { updateGroupNameApi } from "../services/groupApi"
 
 const authSlice = createSlice({
   name: "auth",
@@ -30,6 +31,11 @@ const authSlice = createSlice({
         state.user.group = action.payload
       }
     },
+    updateUsername: (state, action) => {
+      if (state.user) {
+        state.user.username = action.payload
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -47,7 +53,6 @@ const authSlice = createSlice({
       })
       .addCase(deleteUserAccount.fulfilled, (state) => {
         state.loading = false
-        // Purge state data completely since their account is deleted
         localStorage.removeItem("token")
         state.token = null
         state.user = null
@@ -63,16 +68,35 @@ const authSlice = createSlice({
       })
       .addCase(updateAvatar.fulfilled, (state, action) => {
         state.loading = false
-        state.user.avatarUrl = action.payload
+        if (state.user) {
+          state.user.avatarUrl = action.payload
+        }
       })
       .addCase(updateAvatar.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
       })
+
+      .addCase(updateGroupNameApi.pending, (state) => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(updateGroupNameApi.fulfilled, (state, action) => {
+        state.loading = false
+        if (state.user) {
+          state.user.groupName = action.payload.name || action.payload.newGroupName || action.meta.arg.newGroupName
+        }
+      })
+      .addCase(updateGroupNameApi.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
+      })
   },
 })
+
 export const selectIsLoggedIn = (state) => state.auth.token !== null
 export const selectAuthToken = (state) => state.auth.token
-export const { login, logout, updateUserGroup } = authSlice.actions
+
+export const { login, logout, updateUserGroup, updateUsername } = authSlice.actions
 
 export default authSlice.reducer
