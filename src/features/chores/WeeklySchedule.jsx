@@ -1,21 +1,24 @@
 import { Row, Col, Badge, Button } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import { setSelectedDate } from "/src/redux/choresSlice"
-import "/src/css/weeklySchedule.css"
 import { navigateWeek } from "../../redux/choresSlice"
+import "/src/css/weeklySchedule.css"
 
 const WeeklySchedule = () => {
   const dispatch = useDispatch()
 
-  // 1. Pull everything straight from Redux global state layout
+  // pull everything straight from Redux global state
   const selectedDateStr = useSelector((state) => state.chores.selectedDate)
   const daysOfWeek = useSelector((state) => state.chores.daysOfWeek)
   const todayStr = useSelector((state) => state.chores.todayStr)
   const currentMonth = useSelector((state) => state.chores.currentMonth)
+  const chores = useSelector((state) => state.chores.list)
 
   const handleDaySelect = (isoString) => {
     dispatch(setSelectedDate(isoString))
   }
+
+  const datesWithTasks = new Set(chores.filter((c) => c.dueDate).map((c) => c.dueDate.split("T")[0]))
 
   return (
     <Col md={8} xs={12}>
@@ -65,7 +68,7 @@ const WeeklySchedule = () => {
                 <span className={`text-muted small ${isSelected || isToday ? "fw-bold text-dark" : ""}`}>{item.dayName}</span>
                 <span className="fs-4 fw-bold my-1 text-dark">{item.dateNumber}</span>
                 <div>
-                  <i className="fa-solid fa-circle indicator-dot" style={{ opacity: isToday ? 1 : 0 }}></i>
+                  <i className="fa-solid fa-circle indicator-dot" style={{ opacity: datesWithTasks.has(item.isoString) ? 1 : 0 }}></i>
                 </div>
               </Col>
             )
