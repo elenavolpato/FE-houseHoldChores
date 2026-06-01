@@ -1,6 +1,5 @@
 import { Container, Dropdown, Modal, Form, Button } from "react-bootstrap"
 import NavigationBar from "./NavigationBar"
-import { useAppNavigation } from "../utils/useAppNavigation"
 import { useDispatch, useSelector } from "react-redux"
 import { selectIsLoggedIn, logout } from "@/redux/authSlice"
 import { useEffect, useState } from "react"
@@ -12,7 +11,6 @@ function TopBar() {
   const isLoggedIn = useSelector(selectIsLoggedIn)
   const dispatch = useDispatch()
   const user = useSelector((state) => state.auth.user)
-  const navigateTo = useAppNavigation()
 
   const roommates = useSelector((state) => state.group?.roommates || [])
 
@@ -70,12 +68,14 @@ function TopBar() {
 
         {showAuthButtons && (
           <div className="d-flex gap-2">
-            <button className="btn btn-outline-secondary px-3 rounded-pill fw-medium" onClick={() => navigateTo("login")}>
-              Login
-            </button>
-            <button className="btn btn-warning px-3 rounded-pill fw-medium" style={{ backgroundColor: "#F1C40F" }} onClick={() => navigateTo("register")}>
-              Register
-            </button>
+            <Link to="/login">
+              <button className="btn btn-outline-secondary px-3 rounded-pill fw-medium">Login</button>
+            </Link>
+            <Link to="/register">
+              <button className="btn btn-warning px-3 rounded-pill fw-medium" style={{ backgroundColor: "#F1C40F" }}>
+                Register
+              </button>
+            </Link>
           </div>
         )}
 

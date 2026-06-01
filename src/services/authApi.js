@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
+import { logout } from "../redux/authSlice"
 
 export const fetchCurrentUserProfile = createAsyncThunk("auth/fetchCurrentUserProfile", async (_, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token
-
     if (!token) return thunkAPI.rejectWithValue("No token found")
 
     const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/me`, {
@@ -14,13 +14,18 @@ export const fetchCurrentUserProfile = createAsyncThunk("auth/fetchCurrentUserPr
       },
     })
 
+    if (response.status === 401 || response.status === 403) {
+      thunkAPI.dispatch(logout())
+      return thunkAPI.rejectWithValue("Session expired. Please log in again.")
+    }
+
     const data = await response.json()
     if (!response.ok) return thunkAPI.rejectWithValue(data.message)
-
     return data
+
     // eslint-disable-next-line no-unused-vars
-  } catch (error) {
-    return thunkAPI.rejectWithValue("Failed to sync profile.")
+  } catch (_) {
+    return thunkAPI.rejectWithValue("Network error. Please try again.")
   }
 })
 

@@ -16,7 +16,7 @@ import ForgotPassword from "./features/auth/ForgotPassword"
 
 const ProtectedRoute = ({ token, children }) => {
   if (!token) {
-    return <Navigate to="/login" replace />
+    return <Navigate to="/" replace />
   }
   return children
 }
@@ -44,8 +44,14 @@ function App() {
       <TopBar />
       <Routes>
         {/* Public Landing Page */}
-        <Route path="/" element={<LandingPage />} />
-
+        <Route
+          path="/"
+          element={
+            <PublicRoute token={token}>
+              <LandingPage />
+            </PublicRoute>
+          }
+        />
         <Route
           path="/login"
           element={
@@ -105,7 +111,7 @@ function App() {
         />
 
         {/* Wildcard Fallback redirect */}
-        <Route path="*" element={<Navigate to={token ? "/home" : "/login"} replace />} />
+        <Route path="*" element={<Navigate to={token ? "/home" : "/"} replace />} />
       </Routes>
     </BrowserRouter>
   )
