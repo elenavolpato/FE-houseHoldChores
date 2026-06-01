@@ -21,7 +21,7 @@ function TopBar() {
 
   return (
     <>
-      <Container fluid className="p-3 bg-white shadow-lg border-top d-flex justify-content-between align-items-center">
+      <Container fluid className="p-3 bg-white shadow-lg border-top d-flex justify-content-between align-items-center sticky-top">
         <Link to={isLoggedIn ? "home" : " "} className="text-light-navy m-0 d-flex align-items-center fs-3 text-decoration-none">
           <i className="bi bi-house-check me-2 fs-1 "></i>
           <h1 className="d-md-inline fw-bold mt-3">ChoreMate</h1>

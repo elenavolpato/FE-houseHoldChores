@@ -7,7 +7,7 @@ import GreetingSection from "../features/chores/GreetingSection"
 
 function WeeklyTasks() {
   return (
-    <Container className="d-flex justify-content-center align-items-center flex-column my-3">
+    <Container className="d-flex justify-content-center align-items-center flex-column my-3 pb-5 mb-5">
       <GreetingSection />
       <WeeklySchedule />
       <ChoresStatus filterType="date" />

@@ -35,12 +35,7 @@ function InviteFriendsCard() {
 
         <div className="d-flex w-100 justify-content-between">
           <Col xs={12}>
-            <InputSearchByEmail
-              placeholder={"Email of the person you want to invite"}
-              onLoadingChange={setIsLoading}
-              onResponse={searchResult}
-              isInvite={true}
-            />
+            <InputSearchByEmail placeholder={"Email"} onLoadingChange={setIsLoading} onResponse={searchResult} isInvite={true} />
           </Col>
         </div>
         {searchResult && (

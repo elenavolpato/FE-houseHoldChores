@@ -72,7 +72,7 @@ function InputSearchByEmail({ onLoadingChange, placeholder, isInvite }) {
       <Form onSubmit={isInvite ? handleInvitationSend : handleGroupSearch} className="ps-3 d-flex gap-3">
         <Col xs={8}>
           <InputGroup className="mb-2">
-            <Form.Control type="text" placeholder="Username" value={recipientName} onChange={(e) => setRecipientName(e.target.value)} />
+            <Form.Control type="text" placeholder="First name" value={recipientName} onChange={(e) => setRecipientName(e.target.value)} />
           </InputGroup>
           <InputGroup>
             <Form.Control type="email" placeholder={placeholder} value={recipientEmail} onChange={(e) => setRecipientEmail(e.target.value)} />

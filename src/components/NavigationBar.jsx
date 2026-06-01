@@ -20,7 +20,7 @@ function NavigationBar({ variant = "mobile" }) {
     /*   { id: "today", label: "Today", icon: "fa-regular fa-calendar-check", goTo: "home" }, */
     { id: "today", label: "Chores", icon: "fa-regular fa-calendar-days", goTo: "home" },
     { id: "add", label: "Add", icon: "fa-regular fa-square-plus", goTo: "new-task" },
-    { id: "groceries", label: "Groceries", icon: "fa-solid fa-cart-shopping", goTo: "groceries" },
+    /* { id: "groceries", label: "Groceries", icon: "fa-solid fa-cart-shopping", goTo: "groceries" }, */
     { id: "group", label: "Group", icon: "fa-solid fa-users", goTo: "groups" },
   ]
 
@@ -28,7 +28,7 @@ function NavigationBar({ variant = "mobile" }) {
 
   if (variant === "desktop" && urlPath !== "/" && urlPath !== "/login" && urlPath !== "/register" && urlPath !== "/register-with-invite") {
     return (
-      <div className="d-flex align-items-center gap-4">
+      <div className="d-flex align-items-center gap-4 " style={{ position: "sticky" }}>
         {navItems.map((item) => {
           const isActive = activeTab === item.id
           return (
