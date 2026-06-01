@@ -54,3 +54,28 @@ export const updateAvatar = createAsyncThunk("auth/updateAvatar", async ({ file 
     return thunkAPI.rejectWithValue("Upload failed. Please try again.")
   }
 })
+
+export const updateUsername = createAsyncThunk("auth/updateUsername", async (username, thunkAPI) => {
+  try {
+    const token = thunkAPI.getState().auth.token
+
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/me/email`, {
+      method: "PAtch",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: { username: username },
+    })
+
+    if (!response.ok) {
+      const err = await response.text()
+      return thunkAPI.rejectWithValue(err || "Update failed.")
+    }
+
+    const avatarUrl = await response.text()
+    return avatarUrl
+    // eslint-disable-next-line no-unused-vars
+  } catch (_) {
+    return thunkAPI.rejectWithValue("Upload failed. Please try again.")
+  }
+})

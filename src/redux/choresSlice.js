@@ -111,9 +111,7 @@ export const choresSlice = createSlice({
     setSelectedCategory: (state, action) => {
       state.selectedCategory = action.payload
     },
-    updateGroupName: (state, action) => {
-      state.groupName = action.payload
-    },
+
     navigateWeek: (state, action) => {
       const direction = action.payload // 1 or -1
 
@@ -177,5 +175,5 @@ export const choresSlice = createSlice({
   },
 })
 
-export const { toggleGrocery, addGrocery, addChore, setActiveTab, setSelectedCategory, updateGroupName, setSelectedDate, navigateWeek } = choresSlice.actions
+export const { toggleGrocery, addGrocery, addChore, setActiveTab, setSelectedCategory, setSelectedDate, navigateWeek } = choresSlice.actions
 export default choresSlice.reducer

@@ -3,7 +3,7 @@ import { Card, Col } from "react-bootstrap"
 import { useDispatch } from "react-redux"
 import { getAllGroupMembers } from "../../services/groupApi"
 import GroupNameChanger from "./GroupNameChanger"
-import { updateGroupName } from "../../redux/choresSlice"
+import { updateGroupName } from "../../redux/groupSlice"
 
 function GroupMembersList() {
   const dispatch = useDispatch()

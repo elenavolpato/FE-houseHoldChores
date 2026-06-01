@@ -2,25 +2,20 @@ import { useState, useEffect } from "react"
 import { Form, Button, Tooltip, OverlayTrigger } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import { updateGroupNameApi } from "../../services/groupApi"
-import { updateGroupName } from "../../redux/choresSlice"
+import { updateGroupName } from "../../redux/groupSlice"
 
 function GroupNameChanger() {
   const dispatch = useDispatch()
-  // read the current group data from Redux store
-  const reduxGroupName = useSelector((state) => state.chores.groupName || "My Household")
+  const reduxGroupName = useSelector((state) => state.group.groupName || "My Household")
   const groupId = useSelector((state) => state.auth.user?.groupId)
-  //const userRole = useSelector((state) => state.auth.user.role)
 
-  // safe name to prevent undefined to slip in
   const safeGroupName = reduxGroupName || "My Household"
   const [localNameInput, setLocalNameInput] = useState(safeGroupName)
 
-  // local editing states
   const [isEditing, setIsEditing] = useState(false)
   const [isUpdatingName, setIsUpdatingName] = useState(false)
   const [error, setError] = useState("")
 
-  // keep the local text field synced whenever Redux changes
   useEffect(() => {
     if (!isEditing) {
       // eslint-disable-next-line

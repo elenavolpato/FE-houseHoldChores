@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { getAllGroupMembers, sendGroupInvitation } from "../services/groupApi"
+import { getAllGroupMembers, sendGroupInvitation, updateGroupNameApi } from "../services/groupApi"
 
 export const groupSlice = createSlice({
   name: "group",
   initialState: {
+    groupName: "My household",
     groupDetails: null,
     roommates: [],
     loading: false,
@@ -16,6 +17,9 @@ export const groupSlice = createSlice({
     },
     resetInviteStatus: (state) => {
       state.inviteSuccess = false
+    },
+    updateGroupName: (state, action) => {
+      state.groupName = action.payload
     },
   },
   extraReducers: (builder) => {
@@ -44,8 +48,13 @@ export const groupSlice = createSlice({
         state.loading = false
         state.error = action.payload
       })
+      .addCase(updateGroupNameApi.fulfilled, (state, action) => {
+        if (state.user) {
+          state.groupName = action.payload.name || action.payload.newGroupName || action.meta.arg.newGroupName
+        }
+      })
   },
 })
 
-export const { clearGroupError, resetInviteStatus } = groupSlice.actions
+export const { clearGroupError, resetInviteStatus, updateGroupName } = groupSlice.actions
 export default groupSlice.reducer
