@@ -2,7 +2,7 @@ import { useState } from "react"
 import { InputGroup, Form, Alert, Col } from "react-bootstrap"
 import { useDispatch } from "react-redux"
 //import { findGroupByAdminEmail } from "../../services/groupApi"
-import { sendGroupInvitation } from "../../redux/groupSlice"
+import { sendGroupInvitation } from "../../services/groupApi"
 
 function InputSearchByEmail({ onLoadingChange, placeholder, isInvite }) {
   const [recipientEmail, setRecipientEmail] = useState("")

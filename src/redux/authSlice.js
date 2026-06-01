@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { fetchCurrentUserProfile } from "@/services/authApi"
 import { deleteUserAccount } from "../services/authApi"
+import { updateAvatar } from "../services/userApi"
 
 const authSlice = createSlice({
   name: "auth",
@@ -54,6 +55,19 @@ const authSlice = createSlice({
       .addCase(deleteUserAccount.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload || "An error occurred during deletion."
+      })
+
+      .addCase(updateAvatar.pending, (state) => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(updateAvatar.fulfilled, (state, action) => {
+        state.loading = false
+        state.user.avatarUrl = action.payload
+      })
+      .addCase(updateAvatar.rejected, (state, action) => {
+        state.loading = false
+        state.error = action.payload
       })
   },
 })

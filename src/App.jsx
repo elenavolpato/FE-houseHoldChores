@@ -13,6 +13,7 @@ import { useEffect } from "react"
 import { fetchCurrentUserProfile } from "@/services/authApi"
 import ResetPassword from "./features/auth/ResetPassword"
 import ForgotPassword from "./features/auth/ForgotPassword"
+import ProfileView from "./views/ProfileView"
 
 const ProtectedRoute = ({ token, children }) => {
   if (!token) {
@@ -106,6 +107,15 @@ function App() {
           element={
             <ProtectedRoute token={token}>
               <AddNewTask />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/me"
+          element={
+            <ProtectedRoute token={token}>
+              <ProfileView />
             </ProtectedRoute>
           }
         />

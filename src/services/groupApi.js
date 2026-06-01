@@ -125,3 +125,37 @@ export const findGroupByAdminEmail = createAsyncThunk("group/findGroupByAdminEma
     return thunkAPI.rejectWithValue("Server connection failed.")
   }
 })
+
+export const sendGroupInvitation = createAsyncThunk("group/sendGroupInvitation", async ({ recipientEmail, recipientName }, thunkAPI) => {
+  try {
+    const state = thunkAPI.getState()
+    const token = state.auth?.token
+
+    if (!token) {
+      return thunkAPI.rejectWithValue("No authentication token found.")
+    }
+
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/invitations/send`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        recipientEmail,
+        recipientName,
+      }),
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      return thunkAPI.rejectWithValue(data.message || "Failed to send invitation.")
+    }
+
+    return data
+  } catch (error) {
+    console.error("Invitation Dispatch Error:", error)
+    return thunkAPI.rejectWithValue("Server connection failed.")
+  }
+})
