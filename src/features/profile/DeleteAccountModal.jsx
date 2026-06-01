@@ -81,7 +81,8 @@ const DeleteAccountModal = ({ show, onHide }) => {
 
         {isGroupAdmin && eligibleSuccessors.length === 0 && (
           <div className="alert alert-secondary small mt-2">
-            <i className="bi bi-info-circle me-1"></i> You are the only person left in this household. The group record will be fully closed upon deletion.
+            <i className="bi bi-info-circle me-1"></i> You are the only person left in this household, so you cannot delete your account. Add another user to
+            the group, and try to delete then.
           </div>
         )}
 
@@ -92,7 +93,7 @@ const DeleteAccountModal = ({ show, onHide }) => {
         <Button variant="secondary" onClick={handleHide} disabled={isDeleting}>
           Cancel
         </Button>
-        <Button variant="danger" onClick={handleConfirm} disabled={isDeleting}>
+        <Button variant="danger" onClick={handleConfirm} disabled={isDeleting || (isGroupAdmin && eligibleSuccessors.length === 0)}>
           {isDeleting ? "Processing Deletion..." : "Permanently Delete Account"}
         </Button>
       </Modal.Footer>
