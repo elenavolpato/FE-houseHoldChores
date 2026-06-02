@@ -129,4 +129,4 @@ const headers = {
 - JSON Payloads: Plain payload parameters are serialized through standard JSON.stringify structures.
 
 - Multipart Payloads: Image file buffer streams (such as user avatar updates) utilize native FormData streams. For these, the "Content-Type" header is intentionally left empty so the browser can calculate the correct multi-part request boundaries natively.
-````
+
