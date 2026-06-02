@@ -20,21 +20,26 @@ Welcome to the frontend documentation for the Household Chores management platfo
 Create a .env file in the root directory of your project to point the application to your local Spring Boot backend resource instances:
 Code snippet
 
-`VITE_API_URL=http://localhost:8080`
+```env
+VITE_API_URL=http://localhost:8080
+```
 
 ##### 2. Dependency Installation
 
 Run the following package script to download and structure the node module dependencies:
-Bash
 
-`npm install`
+
+```bash
+npm install
+```
 
 ##### 3. Execution Launcher
 
 Launch the local Hot-Module-Replacement (HMR) development server container:
-Bash
 
-`npm run dev`
+```bash
+npm run dev
+```
 
 ### 📂 Architecture & Directory Layout
 
@@ -132,7 +137,9 @@ const headers = {
 
 - Multipart Payloads: Image file buffer streams (such as user avatar updates) utilize native FormData streams. For these, the "Content-Type" header is intentionally left empty so the browser can calculate the correct multi-part request boundaries natively.
 
-# Documentazione Frontend — App per le Faccende Domestiche
+---
+
+# Documentazione Frontend — App Household Chores
 
 Benvenuto nella documentazione frontend della piattaforma di gestione delle faccende domestiche. Questa applicazione è sviluppata come una Single-Page Application (SPA) altamente interattiva e responsive utilizzando React, Redux Toolkit e Bootstrap. Consente agli utenti di monitorare le attività, organizzare i coinquilini, gestire le metriche del profilo domestico e sincronizzare i programmi in tempo reale.
 
@@ -143,7 +150,7 @@ Benvenuto nella documentazione frontend della piattaforma di gestione delle facc
 - **Gestione dello Stato:** Redux Toolkit (architettura basata su Slice)
 - **Recupero Dati:** API Fetch nativa di JavaScript (con ottimizzazione degli interceptor Bearer Token)
 
----
+
 
 # 🚀 Per Iniziare
 
@@ -170,8 +177,6 @@ Avvia il server di sviluppo locale con Hot Module Replacement (HMR):
 ```bash
 npm run dev
 ```
-
----
 
 # 📂 Architettura e Struttura delle Directory
 
@@ -201,7 +206,6 @@ src/
 └── index.css           # File CSS principale con alcune classi condivise
 ```
 
----
 
 # 🧠 Architettura della Gestione dello Stato
 
@@ -226,8 +230,6 @@ const currentUser = useSelector((state) => state.auth.user)
 // ✅ Utilizza il dominio dedicato ai parametri del gruppo domestico
 const groupName = useSelector((state) => state.group.groupName)
 ```
-
----
 
 # 🎨 Pattern di Progettazione dei Componenti
 
@@ -262,8 +264,6 @@ const executeUpdate = async (e) => {
 }
 ```
 
----
-
 # 🔒 Sicurezza e Autorizzazione
 
 Tutte le operazioni di rete che modificano dati passano attraverso utility di sicurezza che inoltrano automaticamente gli header di autenticazione:
@@ -277,10 +277,6 @@ const headers = {
 }
 ```
 
-### Payload JSON
+* Payload JSON: I parametri vengono serializzati utilizzando le strutture standard `JSON.stringify`.
 
-I parametri vengono serializzati utilizzando le strutture standard `JSON.stringify`.
-
-### Payload Multipart
-
-I flussi di file immagine (come l'aggiornamento dell'avatar utente) utilizzano oggetti `FormData` nativi. In questi casi, l'header `"Content-Type"` viene intenzionalmente lasciato vuoto affinché il browser possa calcolare automaticamente i corretti confini della richiesta multipart.
+* Payload Multipart: I flussi di file immagine (come l'aggiornamento dell'avatar utente) utilizzano oggetti `FormData` nativi. In questi casi, l'header `"Content-Type"` viene intenzionalmente lasciato vuoto affinché il browser possa calcolare automaticamente i corretti confini della richiesta multipart.
