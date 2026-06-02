@@ -43,15 +43,23 @@ Bash
 │   ├── UserProfileDetails.jsx   # Interactive inline-profile edit dashboard
 │   ├── GroupNameChanger.jsx     # Header widget utility for instant rename tracking
 │   └── ConfirmationModal.jsx    # Standard reuse popup framework
+     ...
+├── features/              # Redux Toolkit global store slices
+│   ├── auth/        # Global Redux central nexus configuration
+│   ├── chores/   # Session management, authorization state, user profile caching
+│   └── groups/
+     ... 
 ├── redux/              # Redux Toolkit global store slices
 │   ├── store.js        # Global Redux central nexus configuration
 │   ├── authSlice.js    # Session management, authorization state, user profile caching
 │   └── groupSlice.js   # Household group identities, roommates array tracking
+    ...
 ├── services/           # Network abstraction boundaries (Native Fetch logic handles)
 │   ├── authApi.js      # Session access workers (Login, Logout, Signup queries)
 │   ├── userApi.js      # Core User mutations (Username changes, Profile updates)
 │   └── groupApi.js     # Enterprise Group mutations (Group renaming thunks)
 └── App.jsx             # Main router core and layout structure definitions
+└── index.css           # main css file with a few shared classes    
 ```
 
 ### 🧠 Application State Management Architecture
