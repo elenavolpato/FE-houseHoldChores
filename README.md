@@ -3,13 +3,13 @@
 Welcome to the frontend documentation for the Household Chores management platform. This application is built as a highly interactive, responsive single-page application (SPA) using React, Redux Toolkit, and Bootstrap. It allows users to track tasks, organize roommates, manage household profile metrics, and sync schedules in real time.
 🛠️ Tech Stack & Key Libraries
 
-#### Framework: React 18+ (Vite Build Tool)
+- #### Framework: React 18+ (Vite Build Tool)
 
-#### Styling & UI: React-Bootstrap (Bootstrap 5) / FontAwesome v6
+- #### Styling & UI: React-Bootstrap (Bootstrap 5) / FontAwesome v6
 
-#### State Management: Redux Toolkit (Slice-based architecture)
+- #### State Management: Redux Toolkit (Slice-based architecture)
 
-#### Data Fetching: Native JavaScript Fetch API (with Bearer Token intercept optimization)
+- #### Data Fetching: Native JavaScript Fetch API (with Bearer Token intercept optimization)
 
 ### 🚀 Getting Started
 
@@ -36,7 +36,8 @@ Bash
 
 ### 📂 Architecture & Directory Layout
 
-`src/
+````Plaintxt
+ src/
 ├── assets/             # Static files, global design imagery, fallback profile icons
 ├── components/         # Shared presentation elements (Modals, Form inputs, Wrappers)
 │   ├── UserProfileDetails.jsx   # Interactive inline-profile edit dashboard
@@ -50,7 +51,7 @@ Bash
 │   ├── authApi.js      # Session access workers (Login, Logout, Signup queries)
 │   ├── userApi.js      # Core User mutations (Username changes, Profile updates)
 │   └── groupApi.js     # Enterprise Group mutations (Group renaming thunks)
-└── App.jsx             # Main router core and layout structure definitions`
+└── App.jsx             # Main router core and layout structure definitions```
 
 ### 🧠 Application State Management Architecture
 
@@ -77,7 +78,8 @@ Inline Editing Workflows (No-Modal UX Strategy)
 
 To optimize data entry workflows, form sections (like changing a username or group name) utilize inline edit states. Clicking the view text toggles the UI branch directly into an HTML input form container.
 
-`const executeUpdate = async (e) => {
+```Javascript
+const executeUpdate = async (e) => {
 e.preventDefault(); // 💡 Prevents layout refresh cycles
 if (!input.trim() || input === originalValue) {
 setIsEditing(false);
@@ -100,20 +102,22 @@ setLocalInput(originalValue);
 setIsSaving(false);
 }
 };
-`
+```
 
 ### 🔒 Security & Authorization
 
 #### All data-mutating network operations route through security utility loops to automatically forward authentication data headers securely:
 
-JavaScript
+```JavaScript
 
-`const token = localStorage.getItem("token");
+const token = localStorage.getItem("token");
 const headers = {
 "Authorization": `Bearer ${token}`,
 "Content-Type": "application/json"
-};`
+};
+```
 
 - JSON Payloads: Plain payload parameters are serialized through standard JSON.stringify structures.
 
 - Multipart Payloads: Image file buffer streams (such as user avatar updates) utilize native FormData streams. For these, the "Content-Type" header is intentionally left empty so the browser can calculate the correct multi-part request boundaries natively.
+````
