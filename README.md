@@ -51,7 +51,8 @@ Bash
 │   ├── authApi.js      # Session access workers (Login, Logout, Signup queries)
 │   ├── userApi.js      # Core User mutations (Username changes, Profile updates)
 │   └── groupApi.js     # Enterprise Group mutations (Group renaming thunks)
-└── App.jsx             # Main router core and layout structure definitions```
+└── App.jsx             # Main router core and layout structure definitions
+```
 
 ### 🧠 Application State Management Architecture
 
@@ -80,27 +81,27 @@ To optimize data entry workflows, form sections (like changing a username or gro
 
 ```Javascript
 const executeUpdate = async (e) => {
-e.preventDefault(); // 💡 Prevents layout refresh cycles
-if (!input.trim() || input === originalValue) {
-setIsEditing(false);
-return;
-}
+ e.preventDefault(); // 💡 Prevents layout refresh cycles
+ if (!input.trim() || input === originalValue) {
+ setIsEditing(false);
+ return;
+ }
+ 
+ setIsSaving(true);
+ try {
+ // 1. Commit network change across the server database
+ await dispatch(updateThunkWorkerAction({ payload })).unwrap();
+ 
+     // 2. Reflect change immediately inside local cache layers
+     dispatch(localSyncAction(input.trim()));
+     setIsEditing(false);
 
-setIsSaving(true);
-try {
-// 1. Commit network change across the server database
-await dispatch(updateThunkWorkerAction({ payload })).unwrap();
-
-    // 2. Reflect change immediately inside local cache layers
-    dispatch(localSyncAction(input.trim()));
-    setIsEditing(false);
-
-} catch (err) {
-// 3. Gracefully handle errors and revert the visual input
-setLocalInput(originalValue);
-} finally {
-setIsSaving(false);
-}
+ } catch (err) {
+ // 3. Gracefully handle errors and revert the visual input
+ setLocalInput(originalValue);
+ } finally {
+ setIsSaving(false);
+ }
 };
 ```
 
