@@ -36,7 +36,7 @@ Bash
 
 ### 📂 Architecture & Directory Layout
 
-````Plaintxt
+```Plaintext
  src/
 ├── assets/             # Static files, global design imagery, fallback profile icons
 ├── components/         # Shared presentation elements (Modals, Form inputs, Wrappers)
