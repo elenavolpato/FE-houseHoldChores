@@ -2,7 +2,7 @@
 
 (Italiano sotto)
 
-Welcome to the frontend documentation for the Household Chores management platform. This application is built as a highly interactive, responsive single-page application (SPA) using React, Redux Toolkit, and Bootstrap. It allows users to track tasks, organize roommates, manage household profile metrics, and sync schedules in real time.
+Welcome to the frontend documentation for the Household Chores management platform. This application is built as an interactive, responsive single-page application (SPA) using React, Redux Toolkit, and Bootstrap. It allows users to track tasks, create tasks, invite roommates and assign tasks to yourself or other in your group. The app was planned for mobile as the primary use, but the interface is also responsive and easily usable in desktop resolutions.
 🛠️ Tech Stack & Key Libraries
 
 - #### Framework: React 18+ (Vite Build Tool)
@@ -12,6 +12,12 @@ Welcome to the frontend documentation for the Household Chores management platfo
 - #### State Management: Redux Toolkit (Slice-based architecture)
 
 - #### Data Fetching: Native JavaScript Fetch API (with Bearer Token intercept optimization)
+
+# Version planning
+
+- **Version 1.0:** create tasks, assign tasks, invite users, assign tasks to users, delete account.
+- **Version 1.1:** create a groceries list, create new categories, translation to italian(i18next)
+- **Version 1.2:** create multiple groceries list (archives lists), save pattern groceries list - the items that repeat often (more than 3 times) will automatically be suggested as standard list to the user, i.e.: for 3 weeks a user buys 2l milk, 10 eggs and 1 loaf of bread. Then the app will suggest these 3 items as basic standard item in his next groceries list.
 
 ### 🚀 Getting Started
 
@@ -27,7 +33,6 @@ VITE_API_URL=http://localhost:8080
 ##### 2. Dependency Installation
 
 Run the following package script to download and structure the node module dependencies:
-
 
 ```bash
 npm install
@@ -141,7 +146,7 @@ const headers = {
 
 # Documentazione Frontend — App Household Chores
 
-Benvenuto nella documentazione frontend della piattaforma di gestione delle faccende domestiche. Questa applicazione è sviluppata come una Single-Page Application (SPA) altamente interattiva e responsive utilizzando React, Redux Toolkit e Bootstrap. Consente agli utenti di monitorare le attività, organizzare i coinquilini, gestire le metriche del profilo domestico e sincronizzare i programmi in tempo reale.
+Benvenuto nella documentazione frontend della piattaforma di gestione delle faccende domestiche. Questa applicazione è sviluppata come una Single-Page Application (SPA) altamente interattiva e responsive utilizzando React, Redux Toolkit e Bootstrap. Consente agli utenti di monitorare le attività, organizzare i coinquilini, gestire le metriche del profilo domestico e sincronizzare i programmi in tempo reale. L'app è stata progettata principalmente per l'uso su dispositivi mobili, ma l'interfaccia è anche reattiva e facilmente utilizzabile con le risoluzioni dei computer desktop.
 
 ## 🛠️ Stack Tecnologico e Librerie Principali
 
@@ -150,7 +155,13 @@ Benvenuto nella documentazione frontend della piattaforma di gestione delle facc
 - **Gestione dello Stato:** Redux Toolkit (architettura basata su Slice)
 - **Recupero Dati:** API Fetch nativa di JavaScript (con ottimizzazione degli interceptor Bearer Token)
 
+# Pianificazione delle versioni
 
+- **Versione 1.0:** creare attività, assegnare attività, invitare utenti, assegnare attività agli utenti, eliminare account.
+- **Versione 1.1:** creare una lista della spesa, creare nuove categorie, traduzione in italiano(i18next).
+- **Versione 1.2:** creare più liste della spesa (liste archiviate), salvare modelli di lista della spesa - gli articoli che si ripetono spesso (più di 3 volte) verranno automaticamente suggeriti all'utente come lista standard, ad esempio: per 3 settimane un utente acquista 2 litri di latte, 10 uova e 1 pagnotta di pane. Quindi l'app suggerirà questi 3 articoli come articoli standard di base nella sua prossima lista della spesa.
+
+Tradotto con DeepL.com (versione gratuita)
 
 # 🚀 Per Iniziare
 
@@ -206,7 +217,6 @@ src/
 └── index.css           # File CSS principale con alcune classi condivise
 ```
 
-
 # 🧠 Architettura della Gestione dello Stato
 
 Il frontend utilizza un'architettura a doppia sincronizzazione per garantire latenza zero nell'interfaccia durante gli eventi di modifica dei dati.
@@ -235,7 +245,7 @@ const groupName = useSelector((state) => state.group.groupName)
 
 ## Flussi di Modifica Inline (Strategia UX Senza Modali)
 
-Per ottimizzare i flussi di inserimento dati, le sezioni dei moduli (come il cambio del nome utente o del nome del gruppo) utilizzano stati di modifica inline. Facendo clic sul testo visualizzato, l'interfaccia passa direttamente a un campo di input HTML.
+Per ottimizzare i flussi di inserimento dati, le sezioni dei moduli (come il cambio del nome utente o del nome del gruppo) utilizzano stati di modifica inline. Facendo clic sul testo visualizzato, l'interfaccia passa direttamente a un campo di input HTML. Ci cono un modale per conferma di
 
 ```javascript
 const executeUpdate = async (e) => {
@@ -277,6 +287,6 @@ const headers = {
 }
 ```
 
-* Payload JSON: I parametri vengono serializzati utilizzando le strutture standard `JSON.stringify`.
+- Payload JSON: I parametri vengono serializzati utilizzando le strutture standard `JSON.stringify`.
 
-* Payload Multipart: I flussi di file immagine (come l'aggiornamento dell'avatar utente) utilizzano oggetti `FormData` nativi. In questi casi, l'header `"Content-Type"` viene intenzionalmente lasciato vuoto affinché il browser possa calcolare automaticamente i corretti confini della richiesta multipart.
+- Payload Multipart: I flussi di file immagine (come l'aggiornamento dell'avatar utente) utilizzano oggetti `FormData` nativi. In questi casi, l'header `"Content-Type"` viene intenzionalmente lasciato vuoto affinché il browser possa calcolare automaticamente i corretti confini della richiesta multipart.
