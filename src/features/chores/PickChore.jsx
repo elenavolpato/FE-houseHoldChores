@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
-import { Row, Col, Card, Button, Badge, Spinner } from "react-bootstrap"
-import { useDispatch } from "react-redux"
+import { Row, Col, Card, Button, Badge, Spinner, Alert, Modal } from "react-bootstrap"
+import { useDispatch, useSelector } from "react-redux"
 import { fetchAvailableTasks } from "@/services/choreApi"
 import ModalTaskSelection from "./ModalTaskSelection"
+import { useAppNavigation } from "../../utils/useAppNavigation"
 
 function PickChore() {
   const dispatch = useDispatch()
@@ -21,6 +22,8 @@ function PickChore() {
   const [showModal, setShowModal] = useState(false)
   const [activeChore, setActiveChore] = useState(null)
   const [addedPresetIds, setAddedPresetIds] = useState([])
+  const userGroup = useSelector((state) => state.auth.user?.groupId)
+  const { navigateTo } = useAppNavigation()
 
   useEffect(() => {
     const getTasks = async () => {
@@ -33,8 +36,13 @@ function PickChore() {
         setLoading(false)
       }
     }
-    getTasks()
-  }, [dispatch])
+    if (userGroup) {
+      getTasks()
+    } else {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setLoading(false)
+    }
+  }, [dispatch, userGroup])
 
   const handleCardClick = (chore) => {
     if (addedPresetIds.includes(chore.id)) return
@@ -65,85 +73,91 @@ function PickChore() {
 
   return (
     <Col xs={12} md={8}>
-      <h3 className="h2 fw-bold text-dark mb-2">Available Chores</h3>
-      <p>Choose from the preset chores, or create a custom one below</p>
-      {/* categories filter */}
-      <div className="d-flex gap-2 overflow-auto pb-3 pt-1 mb-2 no-scrollbar" style={{ whiteSpace: "nowrap" }}>
-        {categoriesUsed.map((category) => {
-          const isActive = selectedCategoryFilter === category
-          return (
-            <Button
-              key={category}
-              variant="none"
-              onClick={() => setSelectedCategoryFilter(category)}
-              className={`px-3 py-1 rounded-pill fw-semibold btn-sm transition-all border ${
-                isActive ? "bg-warning border-warning text-dark shadow-sm fw-bold" : "bg-white border-light-subtle text-secondary"
-              }`}
-              style={{ transition: "all 0.15s ease" }}
-            >
-              {category}
-            </Button>
-          )
-        })}
-      </div>
+      {userGroup ? (
+        <>
+          <h3 className="h2 fw-bold text-dark mb-2">Available Chores</h3>
+          <p>Choose from the preset chores, or create a custom one below</p>
 
-      <div className="overflow-auto pe-1" style={{ maxHeight: "480px", borderRadius: "12px" }}>
-        <Row className="g-2 m-0">
-          {filteredChores.length === 0 ? (
-            <p className="text-muted fst-italic text-center py-4 small">No tasks available in this category.</p>
-          ) : (
-            filteredChores.map((chore) => {
-              const isAdded = addedPresetIds.includes(chore.id)
-
+          {/* categories filter */}
+          <div className="d-flex gap-2 overflow-auto pb-3 pt-1 mb-2 no-scrollbar" style={{ whiteSpace: "nowrap" }}>
+            {categoriesUsed.map((category) => {
+              const isActive = selectedCategoryFilter === category
               return (
-                <Col key={chore.id} xs={12} md={6} lg={4}>
-                  <Card
-                    className={`p-3 border-0 rounded-4 shadow-sm item-row-transition ${isAdded ? "opacity-50" : "cursor-pointer"}`}
-                    onClick={() => handleCardClick(chore)}
-                    style={{
-                      borderLeft: `4px solid ${chore.colorCode}`,
-                      backgroundColor: "#ffffff",
-                    }}
-                  >
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div className="d-flex align-items-center gap-3">
-                        <div
-                          className="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
-                          style={{
-                            width: "38px",
-                            height: "38px",
-                            backgroundColor: `${chore.colorCode}1A`,
-                            color: chore.colorCode,
-                          }}
-                        >
-                          <i className={`fa-solid fa-${chore.icon}`}></i>
-                        </div>
-
-                        <div>
-                          <h4 className="h6 mb-0 fw-bold text-dark">{chore.title}</h4>
-                          <span className="badge text-uppercase bg-light text-secondary mt-1" style={{ fontSize: "9px", letterSpacing: "0.3px" }}>
-                            {chore.categoryName || "General"}
-                          </span>
-                        </div>
-                      </div>
-
-                      {isAdded && (
-                        <Badge
-                          bg="success"
-                          className="rounded-pill px-2 py-1 text-uppercase fw-bold shadow-sm align-self-center"
-                          style={{ fontSize: "9px", letterSpacing: "0.5px" }}
-                        >
-                          Added
-                        </Badge>
-                      )}
-                    </div>
-                  </Card>
-                </Col>
+                <Button
+                  key={category}
+                  variant="none"
+                  onClick={() => setSelectedCategoryFilter(category)}
+                  className={`px-3 py-1 rounded-pill fw-semibold btn-sm transition-all border ${
+                    isActive ? "bg-warning border-warning text-dark shadow-sm fw-bold" : "bg-white border-light-subtle text-secondary"
+                  }`}
+                  style={{ transition: "all 0.15s ease" }}
+                >
+                  {category}
+                </Button>
               )
-            })
-          )}
-        </Row>
-      </div>
+            })}
+          </div>
+
+          <div className="overflow-auto pe-1" style={{ maxHeight: "480px", borderRadius: "12px" }}>
+            <Row className="g-2 m-0">
+              {filteredChores.length === 0 ? (
+                <p className="text-muted fst-italic text-center py-4 small">No tasks available in this category.</p>
+              ) : (
+                filteredChores.map((chore) => {
+                  const isAdded = addedPresetIds.includes(chore.id)
+                  return (
+                    <Col key={chore.id} xs={12} md={6} lg={4}>
+                      <Card
+                        className={`p-3 border-0 rounded-4 shadow-sm item-row-transition ${isAdded ? "opacity-50" : "cursor-pointer"}`}
+                        onClick={() => handleCardClick(chore)}
+                        style={{
+                          borderLeft: `4px solid ${chore.colorCode}`,
+                          backgroundColor: "#ffffff",
+                        }}
+                      >
+                        <div className="d-flex align-items-center justify-content-between">
+                          <div className="d-flex align-items-center gap-3">
+                            <div
+                              className="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
+                              style={{
+                                width: "38px",
+                                height: "38px",
+                                backgroundColor: `${chore.colorCode}1A`,
+                                color: chore.colorCode,
+                              }}
+                            >
+                              <i className={`fa-solid fa-${chore.icon}`}></i>
+                            </div>
+                            <div>
+                              <h4 className="h6 mb-0 fw-bold text-dark">{chore.title}</h4>
+                              <span className="badge text-uppercase bg-light text-secondary mt-1" style={{ fontSize: "9px", letterSpacing: "0.3px" }}>
+                                {chore.categoryName || "General"}
+                              </span>
+                            </div>
+                          </div>
+                          {isAdded && (
+                            <Badge
+                              bg="success"
+                              className="rounded-pill px-2 py-1 text-uppercase fw-bold shadow-sm align-self-center"
+                              style={{ fontSize: "9px", letterSpacing: "0.5px" }}
+                            >
+                              Added
+                            </Badge>
+                          )}
+                        </div>
+                      </Card>
+                    </Col>
+                  )
+                })
+              )}
+            </Row>
+          </div>
+        </>
+      ) : (
+        <Alert variant="warning" className="mt-5">
+          Create a group first to view the preset tasks
+        </Alert>
+      )}
 
       {/* DUE DATE SELECTION POPUP WINDOW */}
       <ModalTaskSelection
@@ -155,6 +169,20 @@ function PickChore() {
         activeChore={activeChore}
         onTaskAdded={handleTaskAddedSuccess}
       />
+
+      <Modal show={!userGroup} backdrop="static" keyboard={false} centered>
+        <Modal.Header>
+          <Modal.Title className="fw-bold">No Group Found</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p className="text-muted">You need to create or join a group before you can add tasks.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="warning" className="fw-semibold" onClick={() => navigateTo("groups")}>
+            Go to Groups
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Col>
   )
 }
