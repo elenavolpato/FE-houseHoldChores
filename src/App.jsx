@@ -34,7 +34,6 @@ function App() {
   const token = useSelector((state) => state.auth.token)
   const user = useSelector((state) => state.auth.user)
   const isProfileLoading = useSelector((state) => state.auth.loading)
-  console.log(user)
 
   useEffect(() => {
     if (token && !user) {
