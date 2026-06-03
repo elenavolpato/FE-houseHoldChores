@@ -47,12 +47,11 @@ function GroupMembersList() {
               <Card.Body className="p-3 d-flex align-items-center justify-content-between">
                 <div className="d-flex align-items-center gap-3">
                   <div className="position-relative">
-                    <img
-                      src={member.avatarUrl || "src/assets/login_house.png"}
-                      alt={member.username}
-                      className="rounded-circle object-fit-cover"
-                      style={{ width: "54px", height: "54px" }}
-                    />
+                    {member.avatarUrl ? (
+                      <img src={member.avatarUrl} alt={member.username} className="rounded-circle object-fit-cover" style={{ width: "54px", height: "54px" }} />
+                    ) : (
+                      <i className="fa-solid fa-circle-user fs-1  text-secondary "></i>
+                    )}
 
                     <span
                       className="position-absolute bottom-0 end-0 rounded-circle d-flex align-items-center justify-content-center shadow-sm"

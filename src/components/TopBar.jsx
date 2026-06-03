@@ -47,7 +47,11 @@ function TopBar() {
         {isLoggedIn && (
           <Dropdown align="end">
             <Dropdown.Toggle as="div" className="d-flex align-items-center gap-1 cursor-pointer border rounded-pill px-3 py-1 bg-light shadow-sm">
-              <img src={user?.avatarUrl} alt="avatar" className="rounded-circle" style={{ width: "32px", height: "32px" }} />
+              {user.avatarUrl ? (
+                <img src={user.avatarUrl} alt={user.username} className="rounded-circle object-fit-cover" style={{ width: "54px", height: "54px" }} />
+              ) : (
+                <i className="fa-solid fa-circle-user text-secondary fs-2 b"></i>
+              )}
               <span className="fw-medium text-secondary m-1">{user?.username}</span>
             </Dropdown.Toggle>
 
