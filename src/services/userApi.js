@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
+import API_BASE_URL from "@/api"
 
 export const getAllGroupMembers = createAsyncThunk("group/getAllGroupMembers", async (_, thunkAPI) => {
   try {
@@ -8,7 +9,7 @@ export const getAllGroupMembers = createAsyncThunk("group/getAllGroupMembers", a
     if (!token) return thunkAPI.rejectWithValue("No token found.")
 
     // Point this directly to your Java server group endpoints
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/groups/members`, {
+    const response = await fetch(`${API_BASE_URL}/api/groups/members`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -34,7 +35,7 @@ export const updateAvatar = createAsyncThunk("auth/updateAvatar", async ({ file 
     const formData = new FormData()
     formData.append("file", file)
 
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/${userId}/avatar`, {
+    const response = await fetch(`${API_BASE_URL}/api/users/${userId}/avatar`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -59,7 +60,7 @@ export const updateUsernameApi = createAsyncThunk("auth/updateUsername", async (
   try {
     const token = thunkAPI.getState().auth.token
 
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/me/username`, {
+    const response = await fetch(`${API_BASE_URL}/api/users/me/username`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,

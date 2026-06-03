@@ -1,12 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { logout } from "../redux/authSlice"
+import API_BASE_URL from "@/api"
 
 export const fetchCurrentUserProfile = createAsyncThunk("auth/fetchCurrentUserProfile", async (_, thunkAPI) => {
   try {
     const token = thunkAPI.getState().auth.token
     if (!token) return thunkAPI.rejectWithValue("No token found")
 
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/users/me`, {
+    const response = await fetch(`${API_BASE_URL}/api/users/me`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -37,7 +38,7 @@ export const deleteUserAccount = createAsyncThunk("auth/deleteUserAccount", asyn
     if (!token) return thunkAPI.rejectWithValue("No auth token found.")
 
     // 🚀 Append query parameter if a successor was selected
-    const url = successorId ? `${import.meta.env.VITE_API_URL}/api/users/delete?successorId=${successorId}` : `${import.meta.env.VITE_API_URL}/api/users/delete`
+    const url = successorId ? `${API_BASE_URL}/api/users/delete?successorId=${successorId}` : `${API_BASE_URL}/api/users/delete`
 
     const response = await fetch(url, {
       method: "DELETE",

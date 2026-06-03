@@ -28,7 +28,7 @@ function NavigationBar({ variant = "mobile" }) {
 
   if (variant === "desktop" && urlPath !== "/" && urlPath !== "/login" && urlPath !== "/register" && urlPath !== "/register-with-invite") {
     return (
-      <div className="d-flex align-items-center gap-4 " style={{ position: "sticky" }}>
+      <div className="d-flex align-items-center gap-4 ">
         {navItems.map((item) => {
           const isActive = activeTab === item.id
           return (

@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux"
 import { login } from "@/redux/authSlice"
 import { fetchCurrentUserProfile } from "@/services/authApi"
 import { Link } from "react-router-dom"
+import API_BASE_URL from "@/api"
 
 function Login() {
   const { navigateTo } = useAppNavigation()
@@ -31,7 +32,7 @@ function Login() {
     setIsLoading(true)
 
     try {
-      const loginResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/login`, {
+      const loginResponse = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -2,6 +2,7 @@ import { Alert, Button, Container, Form, InputGroup } from "react-bootstrap"
 import { useAppNavigation } from "@/utils/useAppNavigation"
 import { useState } from "react"
 import { Link, useSearchParams } from "react-router-dom"
+import API_BASE_URL from "@/api"
 
 function Register() {
   const { navigateTo } = useAppNavigation()
@@ -51,7 +52,7 @@ function Register() {
     }
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/${endpoint}`, {
+      const response = await fetch(`${API_BASE_URL}/api/auth/${endpoint}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

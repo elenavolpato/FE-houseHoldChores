@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
+import API_BASE_URL from "@/api"
 
 export const fetchAvailableTasks = createAsyncThunk("tasks/fetchAvailableTasks", async (_, thunkAPI) => {
   try {
@@ -8,7 +9,7 @@ export const fetchAvailableTasks = createAsyncThunk("tasks/fetchAvailableTasks",
       return thunkAPI.rejectedWithValue("No authentication token found")
     }
 
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/presets`, {
+    const response = await fetch(`${API_BASE_URL}/api/tasks/presets`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -35,7 +36,7 @@ export const fetchGroupTasks = createAsyncThunk("tasks/fetchGroupTasks", async (
       return thunkAPI.rejectWithValue("No authentication token found")
     }
 
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/group/week?start=${startDate}&end=${endDate}`, {
+    const response = await fetch(`${API_BASE_URL}/api/tasks/group/week?start=${startDate}&end=${endDate}`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -79,7 +80,7 @@ export const createTaskFromPreset = createAsyncThunk("task/createTaskFromPreset"
       frequency: 0,
     }
 
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/create-from-preset`, {
+    const response = await fetch(`${API_BASE_URL}/api/tasks/create-from-preset`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -110,7 +111,7 @@ export const getAllCategories = createAsyncThunk("task/getAllCategories", async 
       return thunkAPI.rejectWithValue("Authentication token missing. Please log in again.")
     }
 
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/categories`, {
+    const response = await fetch(`${API_BASE_URL}/api/categories`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -154,7 +155,7 @@ export const createPersonalizedTask = createAsyncThunk("task/createPersonalizedT
       assignedUserId: null,
     }
 
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/create-task`, {
+    const response = await fetch(`${API_BASE_URL}/api/tasks/create-task`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -190,7 +191,7 @@ export const setChoreCompletionStatus = createAsyncThunk("tasks/setChoreCompleti
     // Flip the status for the backend payload
     const updatedStatus = !chore.isCompleted
 
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/tasks/${choreId}/complete`, {
+    const response = await fetch(`${API_BASE_URL}/api/tasks/${choreId}/complete`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,

@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Container, Form, Alert } from "react-bootstrap"
 import "/src/css/login.css"
 import { useAppNavigation } from "@/utils/useAppNavigation"
+import API_BASE_URL from "@/api"
 
 function ForgotPassword() {
   const { navigateTo } = useAppNavigation()
@@ -25,7 +26,7 @@ function ForgotPassword() {
     setSuccessMessage("")
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/forgot-password`, {
+      const res = await fetch(`${API_BASE_URL}/api/auth/forgot-password`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
