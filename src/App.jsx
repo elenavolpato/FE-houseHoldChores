@@ -15,6 +15,7 @@ import ResetPassword from "./features/auth/ResetPassword"
 import ForgotPassword from "./features/auth/ForgotPassword"
 import ProfileView from "./views/ProfileView"
 import { Spinner } from "react-bootstrap"
+import PrivacyPolicy from "./static/PrivacyPolicy"
 
 const PublicRoute = ({ token, user, isProfileLoading, children }) => {
   if (token) {
@@ -73,6 +74,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/register-with-invite" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
         {/* Protected routes */}
         <Route

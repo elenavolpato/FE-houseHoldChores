@@ -6,7 +6,7 @@ function Footer() {
       <Container>
         <Row>
           {/* Brand */}
-          <Col xs={12} md={3} className="mb-4 mb-md-0">
+          <Col xs={12} md={4} className="mb-4 mb-md-0">
             <div
               className="d-flex align-items-center text-md-start text-center justify-content-center justify-content-md-start fw-semibold mb-2 "
               style={{ color: "#1a6e7a" }}
@@ -18,57 +18,18 @@ function Footer() {
             </p>
           </Col>
 
-          {/* Platform */}
-          <Col xs={6} md={3} className="mb-4 mb-md-0">
-            <p className="fw-semibold small mb-3">Platform</p>
-            <ul className="list-unstyled mb-0">
-              <li className="mb-2">
-                <a href="#" className="text-secondary text-decoration-none small">
-                  Dashboard
-                </a>
-              </li>
-              <li className="mb-2">
-                <a href="#" className="text-secondary text-decoration-none small">
-                  Task Engine
-                </a>
-              </li>
-            </ul>
-          </Col>
-
-          {/* Resources */}
-          <Col xs={6} md={3} className="mb-4 mb-md-0">
-            <p className="fw-semibold small mb-3">Resources</p>
-            <ul className="list-unstyled mb-0">
-              <li className="mb-2">
-                <a href="#" className="text-secondary text-decoration-none small">
-                  Help Center
-                </a>
-              </li>
-              <li className="mb-2">
-                <a href="#" className="text-secondary text-decoration-none small">
-                  Privacy Policy
-                </a>
-              </li>
-              <li className="mb-2">
-                <a href="#" className="text-secondary text-decoration-none small">
-                  Terms of Service
-                </a>
-              </li>
-            </ul>
+          <Col xs={12} md={4} className="mb-4 mb-md-0">
+            <a href="/privacy-policy" className="text-secondary text-decoration-none small fw-semibold small mb-3">
+              Privacy Policy
+            </a>
           </Col>
 
           {/* Contact */}
-          <Col xs={12} md={3}>
-            <p className="fw-semibold small mb-3">Contact</p>
+          <Col xs={12} md={4}>
+            <p className="fw-semibold small mb-2">Get in touch</p>
+
+            <span>elena@raposinha.dev</span>
             <div className="d-flex gap-1 justify-content-center">
-              <a
-                href="mailto:elena@raposinha.dev"
-                className="rounded-circle border text-secondary text-decoration-none "
-                style={{ width: 34, height: 34 }}
-                aria-label="Email"
-              >
-                <i className="bi bi-envelope-at"></i>
-              </a>
               <a
                 href="https://raposinha.dev"
                 target="_blank"

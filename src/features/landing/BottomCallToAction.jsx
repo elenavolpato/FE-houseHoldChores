@@ -12,8 +12,8 @@ function BottomCallToAction() {
           <div className="circle-right"></div>
 
           <Container className="cta-content z-1 text-light d-flex align-items-center flex-column justify-content-evenly position-relative ">
-            <h3 className=" text-light z-10">Start managing LandingPage efficiently today</h3>
-            <p>Join over 10,000 households using ChoreMate to maintain balance and clarity in their daily routines.</p>
+            <h3 className=" text-light z-10">Start managing your household efficiently today</h3>
+            <p>Join us by using ChoreMate to maintain balance and clarity in your daily routines.</p>
             <div className="d-flex gap-3 mt-4">
               <Button className="btn-primary-custom" onClick={() => navigateTo("register")}>
                 Get started free

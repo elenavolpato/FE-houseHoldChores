@@ -26,7 +26,10 @@ function Hero() {
                 Coordinate household tasks with ease. Track, assign, and manage LandingPage's daily operations in one central place.
               </p>
 
-              <div className="d-flex flex-wrap gap-3 align-items-center justify-content-center justify-content-md-start">
+              <div
+                className="d-flex flex-wrap gap-3 align-items-center justify-content-center justify-content-md-start mb-5 mb-md-2"
+                style={{ zIndex: "1000" }}
+              >
                 <button
                   className="btn-primary-custom"
                   onMouseEnter={() => setHovered(true)}
@@ -37,14 +40,14 @@ function Hero() {
                   <span className="arrow">→</span>
                 </button>
 
-                <button className="btn-outline-custom" onClick={() => navigateTo("login")}>
+                <button className="btn-outline-custom z-3" onClick={() => navigateTo("login")}>
                   Login
                 </button>
               </div>
             </Col>
 
             {/* Right  */}
-            <Col lg={6} className="hero-visual py-5 w-1/2">
+            <Col lg={6} className="hero-visual py-5 w-1/2 pt-5 pt-md-3">
               <div className="visual-wrapper">
                 <div className="scene-card">
                   <div className="scene-illustration">
