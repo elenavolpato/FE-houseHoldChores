@@ -6,7 +6,6 @@ import { login } from "@/redux/authSlice"
 import { fetchCurrentUserProfile } from "@/services/authApi"
 import { Link } from "react-router-dom"
 import API_BASE_URL from "@/api"
-import houseImg from "@/assets/login-house.png"
 
 function Login() {
   const dispatch = useDispatch()
@@ -65,7 +64,7 @@ function Login() {
   return (
     <Container className="w-75 login-container mt-5">
       <header className="text-center mb-4">
-        <img src={houseImg} alt="illustration of a house with a smile" />
+        <img src={`${import.meta.env.BASE_URL}assets/login-house.png`} alt="illustration of a house with a smile" />
         <h1 className="text-light-navy">Welcome back</h1>
         <p className="fw-semibold">Tackle household tasks with joy and ease</p>
       </header>

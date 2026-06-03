@@ -3,7 +3,6 @@ import { useAppNavigation } from "@/utils/useAppNavigation"
 import { useState } from "react"
 import { Link, useSearchParams } from "react-router-dom"
 import API_BASE_URL from "@/api"
-import houseImg from "@/assets/login-house.png"
 
 function Register() {
   const { navigateTo } = useAppNavigation()
@@ -87,7 +86,7 @@ function Register() {
   return (
     <Container className="w-75 login-container  mt-5 ">
       <header className="text-center mb-4">
-        <img src={houseImg} alt="illustration of a house with a smile" />
+        <img src={`${import.meta.env.BASE_URL}assets/hero-img-1.png`} alt="illustration of a house with a smile" />
         <h1 className="text-light-navy">{greetings}</h1>
       </header>
       {errors.length > 0 && (
