@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { getAllGroupMembers, sendGroupInvitation, updateGroupNameApi } from "../services/groupApi"
+import { createGroup, getAllGroupMembers, sendGroupInvitation, updateGroupNameApi } from "../services/groupApi"
 
 export const groupSlice = createSlice({
   name: "group",
@@ -52,6 +52,10 @@ export const groupSlice = createSlice({
         if (state.user) {
           state.groupName = action.payload.name || action.payload.newGroupName || action.meta.arg.newGroupName
         }
+      })
+      .addCase(createGroup.fulfilled, (state, action) => {
+        state.groupDetails = action.payload
+        state.groupName = action.payload.name || action.payload.groupName // Adjust based on your API response keys
       })
   },
 })

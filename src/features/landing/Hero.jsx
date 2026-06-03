@@ -2,6 +2,7 @@ import { Badge, Col, Container, Row } from "react-bootstrap"
 import { useState } from "react"
 import "/src/css/hero.css"
 import { useAppNavigation } from "/src/utils/useAppNavigation"
+import heroImg from "@/assets/hero-img-1.png"
 
 function Hero() {
   // eslint-disable-next-line no-unused-vars
@@ -48,7 +49,7 @@ function Hero() {
               <div className="visual-wrapper">
                 <div className="scene-card">
                   <div className="scene-illustration">
-                    <img src="src/assets/hero-img-1.png" alt="image of two people watering plants in a house" />
+                    <img src={heroImg} alt="image of two people watering plants in a house" />
                   </div>
                 </div>
               </div>
