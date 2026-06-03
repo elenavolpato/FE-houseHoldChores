@@ -48,7 +48,7 @@ function Hero() {
               <div className="visual-wrapper">
                 <div className="scene-card">
                   <div className="scene-illustration">
-                    <img src="/assets/hero-img-1.png" alt="image of two people watering plants in a house" />
+                    <img src={`${import.meta.env.BASE_URL}assets/hero-img-1.png`} alt="image of two people watering plants in a house" />
                   </div>
                 </div>
               </div>
