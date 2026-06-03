@@ -1,12 +1,12 @@
 import { useState } from "react"
 import { Container, Col } from "react-bootstrap"
 import CreateGroupName from "./CreateGroupName"
-import SearchGroupByEmail from "./SearchGroupByEmail"
+//import SearchGroupByEmail from "./SearchGroupByEmail"
 import NoGroups from "./NoGroups"
 
 function CreateGroups() {
   const [showAddName, setShowAddName] = useState(false)
-  const [showSearchBar, setShowSearchBar] = useState(false)
+  //const [showSearchBar, setShowSearchBar] = useState(false)
 
   return (
     <Container className="pt-4 px-3 ">
@@ -29,7 +29,7 @@ function CreateGroups() {
           </div>
           {showAddName && <CreateGroupName />}
         </div>
-        <div
+        {/* <div
           onClick={() => setShowSearchBar(true)}
           className="rounded-4 p-4  position-relative overflow-hidden shadow-sm mb-4 bg-light"
           onMouseEnter={(e) => (e.currentTarget.style.filter = "brightness(0.95)")}
@@ -45,13 +45,13 @@ function CreateGroups() {
             </div>
           </div>
           {showSearchBar && <SearchGroupByEmail />}
-        </div>
+        </div> */}
       </Col>
 
-      <div className="bg-light-gray rounded-3 p-3 d-flex align-items-center gap-2">
+      {/*  <div className="bg-light-gray rounded-3 p-3 d-flex align-items-center gap-2">
         <i className="fa-solid fa-circle-info text-info fs-4"></i>
         <span>Tip: You can invite roommates or family members after creating a group.</span>
-      </div>
+      </div> */}
     </Container>
   )
 }

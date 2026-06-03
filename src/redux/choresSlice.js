@@ -49,7 +49,7 @@ const initialWeek = generateWeekData()
 export const choresSlice = createSlice({
   name: "chores",
   initialState: {
-    activeTab: "today",
+    activeTab: "",
     selectedCategory: "",
     selectedDate: initialWeek.todayStr,
     daysOfWeek: initialWeek.daysOfWeek,

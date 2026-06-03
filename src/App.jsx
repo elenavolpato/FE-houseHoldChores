@@ -4,7 +4,7 @@ import LandingPage from "@/views/LandingPage"
 import TopBar from "@/components/TopBar"
 import Login from "@/features/auth/LogIn"
 import Register from "@/features/auth/Register"
-import GroceriesView from "@/views/GroceriesView"
+//import GroceriesView from "@/views/GroceriesView"
 import WeeklyView from "@/views/WeeklyView"
 import ManageGroupView from "@/views/ManageGroupView"
 import AddNewTask from "@/views/AddNewTaskView"
@@ -14,18 +14,18 @@ import { fetchCurrentUserProfile } from "@/services/authApi"
 import ResetPassword from "./features/auth/ResetPassword"
 import ForgotPassword from "./features/auth/ForgotPassword"
 import ProfileView from "./views/ProfileView"
+import { Spinner } from "react-bootstrap"
 
-const ProtectedRoute = ({ token, children }) => {
-  if (!token) {
-    return <Navigate to="/" replace />
+const PublicRoute = ({ token, user, isProfileLoading, children }) => {
+  if (token) {
+    if (isProfileLoading || !user) return <Spinner />
+    return <Navigate to={user?.groupId ? "/home" : "/groups"} replace />
   }
   return children
 }
-
-const PublicRoute = ({ token, children }) => {
-  if (token) {
-    return <Navigate to="/home" replace />
-  }
+const ProtectedRoute = ({ token, user, isProfileLoading, children }) => {
+  if (!token) return <Navigate to="/" replace />
+  if (isProfileLoading || !user) return <Spinner />
   return children
 }
 
@@ -33,6 +33,8 @@ function App() {
   const dispatch = useDispatch()
   const token = useSelector((state) => state.auth.token)
   const user = useSelector((state) => state.auth.user)
+  const isProfileLoading = useSelector((state) => state.auth.loading)
+  console.log(user)
 
   useEffect(() => {
     if (token && !user) {
@@ -44,11 +46,11 @@ function App() {
     <BrowserRouter>
       <TopBar />
       <Routes>
-        {/* Public Landing Page */}
+        {/* Public routes */}
         <Route
           path="/"
           element={
-            <PublicRoute token={token}>
+            <PublicRoute token={token} user={user} isProfileLoading={isProfileLoading}>
               <LandingPage />
             </PublicRoute>
           }
@@ -56,72 +58,62 @@ function App() {
         <Route
           path="/login"
           element={
-            <PublicRoute token={token}>
+            <PublicRoute token={token} user={user} isProfileLoading={isProfileLoading}>
               <Login />
             </PublicRoute>
           }
         />
-
         <Route
           path="/register"
           element={
-            <PublicRoute token={token}>
+            <PublicRoute token={token} user={user} isProfileLoading={isProfileLoading}>
               <Register />
             </PublicRoute>
           }
         />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/register-with-invite" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+        <Route path="/forgot-password" element={<ForgotPassword />} />
 
-        {/* Require valid !token validation check */}
+        {/* Protected routes */}
         <Route
           path="/home"
           element={
-            <ProtectedRoute token={token}>
+            <ProtectedRoute token={token} user={user} isProfileLoading={isProfileLoading}>
               <WeeklyView />
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/groups"
           element={
-            <ProtectedRoute token={token}>
+            <ProtectedRoute token={token} user={user} isProfileLoading={isProfileLoading}>
               <ManageGroupView />
             </ProtectedRoute>
           }
         />
-
-        <Route
-          path="/groceries"
-          element={
-            <ProtectedRoute token={token}>
-              <GroceriesView />
-            </ProtectedRoute>
-          }
-        />
-
         <Route
           path="/new-task"
           element={
-            <ProtectedRoute token={token}>
+            <ProtectedRoute token={token} user={user} isProfileLoading={isProfileLoading}>
               <AddNewTask />
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/me"
           element={
-            <ProtectedRoute token={token}>
+            <ProtectedRoute token={token} user={user} isProfileLoading={isProfileLoading}>
               <ProfileView />
             </ProtectedRoute>
           }
         />
 
-        {/* Wildcard Fallback redirect */}
-        <Route path="*" element={<Navigate to={token ? "/home" : "/"} replace />} />
+        {/* Wildcard fallback */}
+        <Route
+          path="*"
+          element={token ? isProfileLoading || !user ? <Spinner /> : <Navigate to={user.groupId ? "/home" : "/groups"} replace /> : <Navigate to="/" replace />}
+        />
       </Routes>
     </BrowserRouter>
   )

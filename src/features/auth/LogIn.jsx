@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Container, Form, Alert, InputGroup, Button } from "react-bootstrap"
 import "/src/css/login.css"
 import { useAppNavigation } from "@/utils/useAppNavigation"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { login } from "@/redux/authSlice"
 import { fetchCurrentUserProfile } from "@/services/authApi"
 import { Link } from "react-router-dom"
@@ -10,7 +10,6 @@ import API_BASE_URL from "@/api"
 import houseImg from "@/assets/login-house.png"
 
 function Login() {
-  const { navigateTo } = useAppNavigation()
   const dispatch = useDispatch()
   const [show, setShow] = useState(false)
 
@@ -21,7 +20,6 @@ function Login() {
 
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
-
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
@@ -53,7 +51,6 @@ function Login() {
       if (token) {
         dispatch(login(token))
         await dispatch(fetchCurrentUserProfile()).unwrap()
-        navigateTo("/home")
       } else {
         setError("Authentication token missing from server response.")
         setIsLoading(false)
