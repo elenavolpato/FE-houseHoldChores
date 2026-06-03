@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Modal, Form, Button } from "react-bootstrap"
+import { Modal, Form, Button, Alert } from "react-bootstrap"
 import { useDispatch } from "react-redux"
 import { createTaskFromPreset } from "@/services/choreApi"
 import { getAllGroupMembers } from "@/services/groupApi"
@@ -18,14 +18,17 @@ function ModalTaskSelection({ show, handleClose, activeChore, onTaskAdded }) {
   const [dueDate, setDueDate] = useState(getDateString())
   const [groupMembers, setGroupMembers] = useState([])
   const [selectedUser, setSelectedUser] = useState(null)
+  const [errorMessage, setErrorMessage] = useState("")
 
   const handleConfirmAdd = async () => {
     if (!activeChore) return
+    setErrorMessage("")
 
     try {
       const payload = {
         presetId: activeChore.id,
         dueDate: `${dueDate}T12:00:00`,
+        assignedTo: selectedUser ? selectedUser.id : null,
       }
 
       await dispatch(createTaskFromPreset(payload)).unwrap()
@@ -39,10 +42,12 @@ function ModalTaskSelection({ show, handleClose, activeChore, onTaskAdded }) {
   useEffect(() => {
     const getGroupMembers = async () => {
       try {
+        setErrorMessage("")
         const data = await dispatch(getAllGroupMembers()).unwrap()
         setGroupMembers(data)
       } catch (err) {
         console.error("Fetch group members failed:", err)
+        setErrorMessage(err || "Could not retrieve group members. Do you belong to a household?")
       }
     }
     if (show) {
@@ -63,6 +68,11 @@ function ModalTaskSelection({ show, handleClose, activeChore, onTaskAdded }) {
       </Modal.Header>
 
       <Modal.Body className="pt-3">
+        {errorMessage && (
+          <Alert variant="danger" className="py-2 px-3 rounded-3 mb-3 small" onClose={() => setErrorMessage("")} dismissible>
+            {errorMessage}
+          </Alert>
+        )}
         <Form.Group controlId="popupDueDate">
           <Form.Label className="text-muted small fw-semibold text-uppercase mb-2">Select Due Date</Form.Label>
           <Form.Control

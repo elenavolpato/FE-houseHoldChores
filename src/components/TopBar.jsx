@@ -4,12 +4,13 @@ import { useDispatch, useSelector } from "react-redux"
 import { selectIsLoggedIn, logout } from "@/redux/authSlice"
 import { useEffect } from "react"
 import { getAllGroupMembers } from "../services/groupApi"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 function TopBar() {
   const isLoggedIn = useSelector(selectIsLoggedIn)
   const dispatch = useDispatch()
   const user = useSelector((state) => state.auth.user)
+  const location = useLocation()
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -44,11 +45,11 @@ function TopBar() {
           </div>
         )}
 
-        {isLoggedIn && (
+        {isLoggedIn && user && (
           <Dropdown align="end">
             <Dropdown.Toggle as="div" className="d-flex align-items-center gap-1 cursor-pointer border rounded-pill px-3 py-1 bg-light shadow-sm">
-              {user.avatarUrl ? (
-                <img src={user.avatarUrl} alt={user.username} className="rounded-circle object-fit-cover" style={{ width: "54px", height: "54px" }} />
+              {user?.avatarUrl ? (
+                <img src={user?.avatarUrl} alt={user?.username} className="rounded-circle object-fit-cover" style={{ width: "54px", height: "54px" }} />
               ) : (
                 <i className="fa-solid fa-circle-user text-secondary fs-2 b"></i>
               )}

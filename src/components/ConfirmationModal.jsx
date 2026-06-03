@@ -1,4 +1,7 @@
 import { Modal, Button } from "react-bootstrap"
+import { useDispatch } from "react-redux"
+import { fetchCurrentUserProfile } from "../services/authApi"
+import { useAppNavigation } from "../utils/useAppNavigation"
 
 function ConfirmationModal({
   show,
@@ -10,6 +13,14 @@ function ConfirmationModal({
   confirmVariant = "danger",
   isLoading = false,
 }) {
+  const dispatch = useDispatch()
+  const { navigateTo } = useAppNavigation()
+
+  const handleModalConfirm = async () => {
+    await dispatch(fetchCurrentUserProfile()).unwrap()
+    navigateTo("/new-task")
+  }
+
   return (
     <Modal show={show} onHide={onClose} centered keyboard={!isLoading} backdrop={isLoading ? "static" : true}>
       <Modal.Header closeButton={!isLoading}>
@@ -24,7 +35,7 @@ function ConfirmationModal({
         <Button variant="secondary" onClick={onClose} disabled={isLoading}>
           Cancel
         </Button>
-        <Button variant={confirmVariant} onClick={onConfirm} disabled={isLoading}>
+        <Button variant={confirmVariant} onClick={confirmText === "Proceed to Tasks" ? handleModalConfirm : onConfirm} disabled={isLoading}>
           {isLoading ? "Processing..." : confirmText}
         </Button>
       </Modal.Footer>
@@ -33,29 +44,3 @@ function ConfirmationModal({
 }
 
 export default ConfirmationModal
-
-/* const [modalConfig, setModalConfig] = useState({
-    show: false,
-    title: "",
-    message: "",
-    confirmText: "",
-    confirmVariant: "primary",
-    action: null, // Stores the function execution closure
-  });
-
-  const handleCloseModal = () => {
-    if (isActionLoading) return; // Prevent closing while processing an API call
-    setModalConfig((prev) => ({ ...prev, show: false }));
-  };
-
-  // 1️⃣ Trigger Configuration: For Sending Invites
-  const triggerInviteConfirm = (emailPayload) => {
-    setModalConfig({
-      show: true,
-      title: "Send Household Invitation",
-      message: `Are you sure you want to email a secure registration link to ${emailPayload.recipientEmail}?`,
-      confirmText: "Send Invitation",
-      confirmVariant: "success",
-      action: () => executeInvitation(emailPayload),
-    });
-  }; */

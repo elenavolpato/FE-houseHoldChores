@@ -50,7 +50,7 @@ function GroupMembersList() {
                     {member.avatarUrl ? (
                       <img src={member.avatarUrl} alt={member.username} className="rounded-circle object-fit-cover" style={{ width: "54px", height: "54px" }} />
                     ) : (
-                      <i className="fa-solid fa-circle-user fs-1  text-secondary "></i>
+                      <i className="fa-solid fa-circle-user fs-1 text-secondary"></i>
                     )}
 
                     <span
