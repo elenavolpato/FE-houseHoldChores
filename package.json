@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://elenavolpato.github.io/fe-householdchoresapp",
+  "homepage": "https://elenavolpato.github.io/FE-houseHoldChores",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
