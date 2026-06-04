@@ -71,9 +71,30 @@ function App() {
             </PublicRoute>
           }
         />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/register-with-invite" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route
+          path="/register-with-invite"
+          element={
+            <PublicRoute token={token} user={user} isProfileLoading={isProfileLoading}>
+              <Register />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/reset-password"
+          element={
+            <PublicRoute token={token} user={user} isProfileLoading={isProfileLoading}>
+              <ResetPassword />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/forgot-password"
+          element={
+            <PublicRoute token={token} user={user} isProfileLoading={isProfileLoading}>
+              <ForgotPassword />
+            </PublicRoute>
+          }
+        />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
 
         {/* Protected routes */}
