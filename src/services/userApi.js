@@ -48,8 +48,8 @@ export const updateAvatar = createAsyncThunk("auth/updateAvatar", async ({ file 
       return thunkAPI.rejectWithValue(err || "Upload failed.")
     }
 
-    const avatarUrl = await response.text()
-    return avatarUrl
+    const data = await response.json()
+    return data.avatarUrl
     // eslint-disable-next-line no-unused-vars
   } catch (_) {
     return thunkAPI.rejectWithValue("Upload failed. Please try again.")

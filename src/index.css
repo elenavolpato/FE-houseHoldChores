@@ -108,3 +108,12 @@ h3 {
   right: 0;
   top: 50%;
 }
+
+.standard-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 80px;
+  width: 80px;
+  border-width: 8px;
+}

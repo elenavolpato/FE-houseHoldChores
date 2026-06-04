@@ -19,14 +19,14 @@ import PrivacyPolicy from "./static/PrivacyPolicy"
 
 const PublicRoute = ({ token, user, isProfileLoading, children }) => {
   if (token) {
-    if (isProfileLoading || !user) return <Spinner />
+    if (isProfileLoading || !user) return <Spinner variant="warning" className="standard-spinner" />
     return <Navigate to={user?.groupId ? "/home" : "/groups"} replace />
   }
   return children
 }
 const ProtectedRoute = ({ token, user, isProfileLoading, children }) => {
   if (!token) return <Navigate to="/" replace />
-  if (isProfileLoading || !user) return <Spinner />
+  if (isProfileLoading || !user) return <Spinner variant="warning" className="standard-spinner" />
   return children
 }
 
@@ -113,7 +113,17 @@ function App() {
         {/* Wildcard fallback */}
         <Route
           path="*"
-          element={token ? isProfileLoading || !user ? <Spinner /> : <Navigate to={user.groupId ? "/home" : "/groups"} replace /> : <Navigate to="/" replace />}
+          element={
+            token ? (
+              isProfileLoading || !user ? (
+                <Spinner variant="warning" className="standard-spinner" />
+              ) : (
+                <Navigate to={user.groupId ? "/home" : "/groups"} replace />
+              )
+            ) : (
+              <Navigate to="/" replace />
+            )
+          }
         />
       </Routes>
     </BrowserRouter>
