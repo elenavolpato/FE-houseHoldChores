@@ -5,7 +5,7 @@ import NavigationBar from "../components/NavigationBar"
 
 function ProfileView() {
   return (
-    <Container className="d-flex justify-content-center align-items-center flex-column my-3">
+    <Container className="d-flex justify-content-center align-items-center flex-column mt-3 mb-5 pb-5">
       <Col md={6} xs={12}>
         <ProfileAvatarChange />
         <UserProfileDetails />

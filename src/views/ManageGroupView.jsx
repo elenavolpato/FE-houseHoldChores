@@ -10,7 +10,7 @@ function ManageGroup() {
   const hasGroup = Boolean(groupId)
 
   return (
-    <Container className="d-flex justify-content-center align-items-center flex-column my-3">
+    <Container className="d-flex justify-content-center align-items-center flex-column mt-3 mb-5 pb-5">
       <Col md={6}>
         {/* create groups only shows when user has no groups yet */}
         {!hasGroup && (
