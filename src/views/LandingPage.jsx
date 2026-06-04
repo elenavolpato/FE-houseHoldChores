@@ -5,7 +5,7 @@ import Footer from "@/features/landing/Footer"
 
 function LandingPage() {
   return (
-    <section className="flex flex-grow items-center justify-center">
+    <section className="flex flex-grow items-center justify-center overflow-x-hidden">
       <div className="text-center">
         <Hero />
         <Features />

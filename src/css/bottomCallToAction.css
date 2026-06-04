@@ -2,7 +2,7 @@
 
 .cta-section {
   position: relative;
-  height: 320px;
+  min-height: 320px;
   background: #0d6e8a;
   border-radius: 20px;
   overflow: hidden;
