@@ -58,6 +58,7 @@ function ModalTaskSelection({ show, handleClose, activeChore, onTaskAdded }) {
   const handleUserSelection = (e) => {
     const selectedId = e.target.value
     const foundUser = groupMembers.find((user) => String(user.id) === String(selectedId))
+    console.log(foundUser)
     setSelectedUser(foundUser || null)
   }
 
@@ -84,7 +85,7 @@ function ModalTaskSelection({ show, handleClose, activeChore, onTaskAdded }) {
           />
         </Form.Group>
         <Form.Group className="mb-4">
-          <Form.Label className="fw-semibold text-muted small text-uppercase">Category </Form.Label>
+          <Form.Label className="fw-semibold text-muted small text-uppercase">Assign To</Form.Label>
           <Form.Select
             value={selectedUser ? selectedUser.id : ""}
             className="p-2 rounded-3 bg-light border-0 shadow-sm text-dark"

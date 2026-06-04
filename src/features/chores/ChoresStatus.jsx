@@ -85,9 +85,19 @@ function ChoresStatus({ filterType = "all", categoryName }) {
 
                       <span
                         className=" px-2 py-1 text-dark text-uppercase bg-light fw-lighter rounded-4 ms-2"
-                        style={{ fontSize: "10px", letterSpacing: "0.5px" }}
+                        style={{ fontSize: "12px", letterSpacing: "0.5px" }}
                       >
-                        <img src={chore.avatarUrl} alt="user avatar" className="" style={{ height: "25px" }} />
+                        {chore?.avatarUrl ? (
+                          <img
+                            src={chore?.avatarUrl}
+                            alt={chore?.username}
+                            className="rounded-circle object-fit-cover"
+                            style={{ width: "25px", height: "25px" }}
+                          />
+                        ) : (
+                          <i className="fa-solid fa-circle-user text-secondary fs-5 me-2" style={{ marginBottom: "-10px" }}></i>
+                        )}
+
                         {chore.assignedTo}
                       </span>
                     </div>

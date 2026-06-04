@@ -4,7 +4,7 @@ import "/src/css/features.css"
 function Features() {
   return (
     <section>
-      <Container className="my-5 px-4 mt-5 pt-md-0">
+      <Container className="my-5 px-4">
         <div className="mb-5">
           <h2>Why Chores Mate? </h2>
           <p>Designed for clarity and efficiency in every room of your household</p>

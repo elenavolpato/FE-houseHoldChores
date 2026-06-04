@@ -70,14 +70,13 @@ function CreateCustomChore() {
     setUiSuccess("")
     setIsSaving(true)
 
-    // 🚀 FIXED: Appends a safe end-of-day time cutoff signature to prevent timezone/past-hour overlap slips
     const safeDueDate = dueDate ? `${dueDate.split("T")[0]}T23:59:59` : null
 
     const outboundPayload = {
       taskName: taskName,
       categoryId: selectedCategory.id,
       frequency: customDays,
-      assignedToUsername: assignedMember || null,
+      assignedTo: assignedMember || null,
       dueDate: safeDueDate,
     }
 
@@ -191,7 +190,7 @@ function CreateCustomChore() {
                 <Form.Select value={assignedMember} onChange={(e) => setAssignedMember(e.target.value)} className="p-2 rounded-3 shadow-sm bg-white">
                   <option value="">Leave Unassigned</option>
                   {groupMembers.map((member) => (
-                    <option key={member.id} value={member.username}>
+                    <option key={member.id} value={member.id}>
                       {member.username}
                     </option>
                   ))}
