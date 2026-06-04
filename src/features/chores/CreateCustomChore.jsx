@@ -33,7 +33,10 @@ function CreateCustomChore() {
     const loadCategories = async () => {
       try {
         const data = await dispatch(getAllCategories()).unwrap()
-        setCategories(data)
+        // removes groceries until it is implemented
+        const removedGroceries = data.filter((cat) => cat.title !== "Groceries")
+        console.log(removedGroceries)
+        setCategories(removedGroceries)
       } catch (err) {
         console.error("Failed to load layout categories:", err)
       }

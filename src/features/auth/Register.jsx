@@ -84,7 +84,7 @@ function Register() {
   }
 
   return (
-    <Container className="w-75 login-container  mt-5 ">
+    <Container className="w-md-75 login-container  mt-5 ">
       <header className="text-center mb-4">
         <img src={`${import.meta.env.BASE_URL}assets/login-house.png`} alt="illustration of a house with a smile" />
         <h1 className="text-light-navy">{greetings}</h1>
