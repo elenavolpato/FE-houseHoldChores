@@ -24,7 +24,7 @@ function TopBar() {
     <>
       <Container fluid className="p-3 bg-white shadow-lg border-top d-flex justify-content-between align-items-center sticky-top">
         <Link to={isLoggedIn ? "home" : " "} className="text-light-navy m-0 d-flex align-items-center fs-3 text-decoration-none">
-          <i className="bi bi-house-check me-2 fs-1 "></i>
+          <i className="bi bi-house-check me-2 fs-1"></i>
           <h1 className="d-md-inline fw-bold mt-3">ChoreMate</h1>
         </Link>
 
@@ -33,16 +33,37 @@ function TopBar() {
         </div>
 
         {showAuthButtons && (
-          <div className="d-flex gap-2">
-            <Link to="/login">
-              <button className="btn btn-outline-secondary px-3 rounded-pill fw-medium">Login</button>
-            </Link>
-            <Link to="/register">
-              <button className="btn btn-warning px-3 rounded-pill fw-medium" style={{ backgroundColor: "#F1C40F" }}>
-                Register
-              </button>
-            </Link>
-          </div>
+          <>
+            {/* Full buttons on md+ screens */}
+            <div className="d-none d-md-flex gap-2">
+              <Link to="/login">
+                <button className="btn btn-outline-secondary px-3 rounded-pill fw-medium">Login</button>
+              </Link>
+              <Link to="/register">
+                <button className="btn btn-warning px-3 rounded-pill fw-medium" style={{ backgroundColor: "#F1C40F" }}>
+                  Register
+                </button>
+              </Link>
+            </div>
+
+            {/* Hamburger dropdown on small screens */}
+            <div className="d-flex d-md-none">
+              <Dropdown align="end">
+                <Dropdown.Toggle as="button" className="btn btn-outline-secondary border rounded-pill px-3 py-1" style={{ background: "none" }}>
+                  <i className="bi bi-list fs-5"></i>
+                </Dropdown.Toggle>
+                <Dropdown.Menu className="shadow border-0 mt-2 p-2">
+                  <Dropdown.Item as={Link} to="/login" className="text-dark fw-medium">
+                    <i className="bi bi-box-arrow-in-right me-2"></i>Login
+                  </Dropdown.Item>
+                  <Dropdown.Divider />
+                  <Dropdown.Item as={Link} to="/register" className="fw-medium" style={{ color: "#b8960c" }}>
+                    <i className="bi bi-person-plus me-2"></i>Register
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          </>
         )}
 
         {isLoggedIn && user && (
@@ -52,18 +73,14 @@ function TopBar() {
                 <img
                   src={user?.avatarUrl}
                   alt={user?.username}
-                  className="rounded-circle object-fit-cover "
+                  className="rounded-circle object-fit-cover"
                   style={{ width: "35px", height: "35px", marginLeft: "-10px" }}
                 />
               ) : (
-                <i
-                  className="fa-solid fa-circle-user text-secondary fs-2 b"
-                  style={{ width: "35px", height: "35px", marginLeft: "-10px", marginTop: "5px" }}
-                ></i>
+                <i className="fa-solid fa-circle-user text-secondary fs-2" style={{ width: "35px", height: "35px", marginLeft: "-10px", marginTop: "5px" }}></i>
               )}
               <span className="fw-medium text-secondary m-1">{user?.username}</span>
             </Dropdown.Toggle>
-
             <Dropdown.Menu className="shadow border-0 mt-2 p-2">
               <Dropdown.Item as={Link} to="/me" className="text-dark">
                 <i className="fa-regular fa-user me-2"></i>My profile

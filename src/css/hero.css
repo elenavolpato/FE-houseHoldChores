@@ -126,4 +126,18 @@
   .hero-visual {
     margin-left: -40px;
   }
+  .visual-wrapper {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .scene-card {
+    width: 100%;
+  }
+
+  .scene-illustration img {
+    width: 100%;
+    max-height: 500px;
+    width: auto;
+  }
 }
