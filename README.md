@@ -1,4 +1,4 @@
-# Household Chores App — Frontend Documentation
+# ChoreMate App — Frontend Documentation
 
 [backend Repo](https://github.com/elenavolpato/BE-houseHoldChores)
 (Italiano sotto)
@@ -145,7 +145,7 @@ const headers = {
 
 ---
 
-# Documentazione Frontend — App Household Chores
+# Documentazione Frontend — App ChoreMate
 
 Benvenuto nella documentazione frontend della piattaforma di gestione delle faccende domestiche. Questa applicazione è sviluppata come una Single-Page Application (SPA) altamente interattiva e responsive utilizzando React, Redux Toolkit e Bootstrap. Consente agli utenti di monitorare le attività, organizzare i coinquilini, gestire le metriche del profilo domestico e sincronizzare i programmi in tempo reale. L'app è stata progettata principalmente per l'uso su dispositivi mobili, ma l'interfaccia è anche reattiva e facilmente utilizzabile con le risoluzioni dei computer desktop.
 
