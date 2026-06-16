@@ -6,7 +6,7 @@
   "homepage": "https://elenavolpato.github.io/FE-houseHoldChores",
   "scripts": {
     "dev": "vite",
-    "build": "cross-env VITE_API_BASE_URL=https://be-householdchores.onrender.com vite build",
+    "build": "cross-env VITE_API_BASE_URL=https://spring-boot-api-production-980f.up.railway.app/ vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
