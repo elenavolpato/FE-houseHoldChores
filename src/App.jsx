@@ -40,7 +40,8 @@ function App() {
   const isProfileLoading = useSelector((state) => state.auth.loading)
 
   useEffect(() => {
-    if (token && !user && !isProfileLoading) {
+    console.log("[useEffect]", { token, user, isProfileLoading })
+    if (token && !user) {
       dispatch(fetchCurrentUserProfile())
     }
   }, [token, user, dispatch, isProfileLoading])
