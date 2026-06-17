@@ -40,10 +40,10 @@ function App() {
   const isProfileLoading = useSelector((state) => state.auth.loading)
 
   useEffect(() => {
-    if (token && !user) {
+    if (token && !user && !isProfileLoading) {
       dispatch(fetchCurrentUserProfile())
     }
-  }, [token, user, dispatch])
+  }, [token, user, dispatch, isProfileLoading])
 
   return (
     <BrowserRouter>
