@@ -46,6 +46,7 @@ const authSlice = createSlice({
       .addCase(fetchCurrentUserProfile.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
+        state.token = null
       })
       .addCase(deleteUserAccount.pending, (state) => {
         state.loading = true

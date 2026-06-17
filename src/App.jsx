@@ -19,8 +19,11 @@ import PrivacyPolicy from "./static/PrivacyPolicy"
 
 const PublicRoute = ({ token, user, isProfileLoading, children }) => {
   if (token) {
-    if (isProfileLoading || !user) return <Spinner variant="warning" className="standard-spinner" />
-    return <Navigate to={user?.groupId ? "/home" : "/groups"} replace />
+    // Still waiting for profile to resolve
+    if (isProfileLoading) return <Spinner variant="warning" className="standard-spinner" />
+    // Profile fetch done — redirect if we have a user
+    if (user) return <Navigate to={user.groupId ? "/home" : "/groups"} replace />
+    // Token exists but profile failed to load (e.g. expired) — fall through and show page
   }
   return children
 }
