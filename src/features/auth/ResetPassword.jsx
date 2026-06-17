@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useSearchParams, useNavigate } from "react-router-dom"
 import { Form, Button, Container, Alert, InputGroup } from "react-bootstrap"
+import API_BASE_URL from "@/api"
 
 function ResetPassword() {
   const [searchParams] = useSearchParams()
