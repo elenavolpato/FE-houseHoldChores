@@ -39,6 +39,10 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(fetchCurrentUserProfile.pending, (state) => {
+        state.loading = true
+        state.error = null
+      })
       .addCase(fetchCurrentUserProfile.fulfilled, (state, action) => {
         state.loading = false
         state.user = action.payload
@@ -47,6 +51,7 @@ const authSlice = createSlice({
         state.loading = false
         state.error = action.payload
         state.token = null
+        state.user = null // ← add this
       })
       .addCase(deleteUserAccount.pending, (state) => {
         state.loading = true
