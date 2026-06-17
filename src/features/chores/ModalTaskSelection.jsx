@@ -58,7 +58,7 @@ function ModalTaskSelection({ show, handleClose, activeChore, onTaskAdded }) {
   const handleUserSelection = (e) => {
     const selectedId = e.target.value
     const foundUser = groupMembers.find((user) => String(user.id) === String(selectedId))
-    console.log(foundUser)
+    //console.log(foundUser)
     setSelectedUser(foundUser || null)
   }
 

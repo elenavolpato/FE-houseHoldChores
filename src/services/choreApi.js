@@ -44,7 +44,7 @@ export const fetchGroupTasks = createAsyncThunk("tasks/fetchGroupTasks", async (
       },
     })
     const data = await response.json()
-    console.log("fetchGroupTasks", data)
+    //console.log("fetchGroupTasks", data)
 
     if (!response.ok) {
       return thunkAPI.rejectedWithValue(data.message || "Failed to load group tasks.")
