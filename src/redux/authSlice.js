@@ -9,7 +9,7 @@ const authSlice = createSlice({
   initialState: {
     token: localStorage.getItem("token") || null,
     user: null,
-    loading: false,
+    loading: !!localStorage.getItem("token"),
     error: null,
   },
   reducers: {
@@ -51,7 +51,7 @@ const authSlice = createSlice({
         state.loading = false
         state.error = action.payload
         state.token = null
-        state.user = null // ← add this
+        state.user = null
       })
       .addCase(deleteUserAccount.pending, (state) => {
         state.loading = true
