@@ -91,7 +91,7 @@ function ChoresStatus({ filterType = "all", categoryName }) {
                           <img
                             src={chore?.avatarUrl}
                             alt={chore?.username}
-                            className="rounded-circle object-fit-cover"
+                            className="rounded-circle object-fit-cover me-2"
                             style={{ width: "25px", height: "25px" }}
                           />
                         ) : (
@@ -151,7 +151,7 @@ function ChoresStatus({ filterType = "all", categoryName }) {
                       className=" px-2 py-1 text-dark text-uppercase bg-light fw-lighter rounded-4 ms-2"
                       style={{ fontSize: "10px", letterSpacing: "0.5px" }}
                     >
-                      <img src={chore.avatarUrl} alt="user avatar" className="" style={{ height: "25px" }} />
+                      <img src={chore.avatarUrl} alt="user avatar" className="rounded-circle object-fit-cover me-2" style={{ width: "25px", height: "25px" }} />
                       {chore.assignedTo}
                     </span>
                   </div>
