@@ -29,6 +29,7 @@ function GroupMembersList() {
       } finally {
         setLoading(false)
       }
+      console.log(groupMembers)
     }
     getGroups()
   }, [dispatch])
@@ -48,23 +49,25 @@ function GroupMembersList() {
                 <div className="d-flex align-items-center gap-3">
                   <div className="position-relative">
                     {member.avatarUrl ? (
-                      <img src={member.avatarUrl} alt={member.username} className="rounded-circle object-fit-cover" style={{ width: "54px", height: "54px" }} />
+                      <img src={member.avatarUrl} alt={member.username} className="rounded-circle object-fit-cover" style={{ width: "40px", height: "40px" }} />
                     ) : (
                       <i className="fa-solid fa-circle-user fs-1 text-secondary"></i>
                     )}
 
-                    <span
-                      className="position-absolute bottom-0 end-0 rounded-circle d-flex align-items-center justify-content-center shadow-sm"
-                      style={{
-                        backgroundColor: "#FFD700",
-                        width: "20px",
-                        height: "20px",
-                        border: "2px solid #FFF",
-                        fontSize: "10px",
-                      }}
-                    >
-                      <i className="fa-solid fa-star text-white"></i>
-                    </span>
+                    {member.role === "ADMIN" && (
+                      <span
+                        className="position-absolute bottom-0 end-0 rounded-circle d-flex align-items-center justify-content-center shadow-sm"
+                        style={{
+                          backgroundColor: "#FFD700",
+                          width: "18px",
+                          height: "18px",
+                          border: "2px solid #FFF",
+                          fontSize: "10px",
+                        }}
+                      >
+                        <i className="fa-solid fa-star text-white"></i>
+                      </span>
+                    )}
                   </div>
 
                   <div>

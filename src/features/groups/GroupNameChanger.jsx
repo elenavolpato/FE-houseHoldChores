@@ -8,6 +8,7 @@ function GroupNameChanger() {
   const dispatch = useDispatch()
   const reduxGroupName = useSelector((state) => state.group.groupName || "My Household")
   const groupId = useSelector((state) => state.auth.user?.groupId)
+  const user = useSelector((state) => state.auth.user)
 
   const safeGroupName = reduxGroupName || "My Household"
   const [localNameInput, setLocalNameInput] = useState(safeGroupName)
@@ -24,6 +25,7 @@ function GroupNameChanger() {
   }, [safeGroupName, isEditing])
 
   const handleSaveGroupName = async (e) => {
+    console.log(user)
     e.preventDefault()
 
     // if nothing changes, just close the editor without sending anything to the server
@@ -96,11 +98,13 @@ function GroupNameChanger() {
         <div className="d-flex align-items-center justify-content-between p-2">
           <h2 className="h3 fw-bold mb-0 custom-navy-title">{safeGroupName}</h2>
           <div>
-            <OverlayTrigger placement="right" delay={{ show: 250, hide: 400 }} overlay={renderTooltip}>
-              <Button variant="link" className="text-secondary text-decoration-none py-0 small fw-semibold" onClick={() => setIsEditing(true)}>
-                <i className="fa-solid fa-pen-to-square me-0"></i>
-              </Button>
-            </OverlayTrigger>
+            {user.role === "ADMIN" && (
+              <OverlayTrigger placement="right" delay={{ show: 250, hide: 400 }} overlay={renderTooltip}>
+                <Button variant="link" className="text-secondary text-decoration-none py-0 small fw-semibold" onClick={() => setIsEditing(true)}>
+                  <i className="fa-solid fa-pen-to-square me-0"></i>
+                </Button>
+              </OverlayTrigger>
+            )}
           </div>
         </div>
       )}
