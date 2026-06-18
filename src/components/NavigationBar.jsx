@@ -39,7 +39,7 @@ function NavigationBar({ variant = "mobile" }) {
 
   if (variant === "desktop" && !isPublicPage) {
     return (
-      <div className="d-flex align-items-center gap-4">
+      <div className="d-flex align-items-center gap-4" style={{ marginLeft: "-8rem" }}>
         {navItems.map((item) => {
           const isActive = activeTab === item.id
           return (
