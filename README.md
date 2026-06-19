@@ -4,7 +4,7 @@
 
 (Italiano sotto)
 
-Welcome to the frontend documentation for the Household Chores management platform. This application is built as an interactive, responsive single-page application (SPA) using React, Redux Toolkit, and Bootstrap. It allows users to track tasks, create tasks, invite roommates and assign tasks to yourself or other in your group. The app was planned for mobile as the primary use, but the interface is also responsive and easily usable in desktop resolutions.
+Welcome to the frontend documentation for the ChoreMate app, a household management platform. This application is built as an interactive, responsive single-page application (SPA) using React, Redux Toolkit, and Bootstrap. It allows users to track tasks, create tasks, invite roommates and assign tasks to yourself or other in your group. The app was planned for mobile as the primary use, but the interface is also responsive and easily usable in desktop resolutions.
 🛠️ Tech Stack & Key Libraries
 
 - #### Framework: React 18+ (Vite Build Tool)
