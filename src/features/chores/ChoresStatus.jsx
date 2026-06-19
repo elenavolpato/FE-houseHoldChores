@@ -1,27 +1,29 @@
-import { Col, Container } from "react-bootstrap"
+import { Button, Col, Container } from "react-bootstrap"
 import "/src/css/choresStatus.css"
 import { useDispatch, useSelector } from "react-redux"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { fetchGroupTasks, setChoreCompletionStatus } from "../../services/choreApi"
+import ModalTaskSelection from "./ModalTaskSelection"
 
 function ChoresStatus({ filterType = "all", categoryName }) {
   const dispatch = useDispatch()
 
-  // Grab states from Redux
   const chores = useSelector((state) => state.chores.list)
   const reduxCategory = useSelector((state) => state.chores.selectedCategory)
   const activeCategory = categoryName || reduxCategory
+  const userRole = useSelector((state) => state.auth.user?.role)
 
-  // track the active day selection
   const selectedDateStr = useSelector((state) => state.chores.selectedDate)
   const weekStart = useSelector((state) => state.chores.weekStartIso)
   const weekEnd = useSelector((state) => state.chores.weekEndIso)
+
+  const [showEditModal, setShowEditModal] = useState(false)
+  const [taskBeingEdited, setTaskBeingEdited] = useState(null)
 
   useEffect(() => {
     dispatch(fetchGroupTasks({ startDate: weekStart, endDate: weekEnd }))
   }, [dispatch, weekStart, weekEnd])
 
-  // filter local display dataset
   let displayChores = chores.filter((chore) => {
     if (!chore.dueDate) return false
     const choreDatePart = chore.dueDate.split("T")[0]
@@ -35,9 +37,22 @@ function ChoresStatus({ filterType = "all", categoryName }) {
     })
   }
 
-  // separate by task complete attributes
   const remainingChores = displayChores.filter((chore) => !chore.isCompleted)
   const completedChores = displayChores.filter((chore) => chore.isCompleted)
+
+  const openEditTask = (chore) => {
+    setTaskBeingEdited(chore)
+    setShowEditModal(true)
+  }
+
+  const closeEditTask = () => {
+    setShowEditModal(false)
+    setTaskBeingEdited(null)
+  }
+
+  const handleTaskUpdated = () => {
+    closeEditTask()
+  }
 
   return (
     <Container className="py-4">
@@ -63,7 +78,6 @@ function ChoresStatus({ filterType = "all", categoryName }) {
                   }}
                 >
                   <div className="d-flex align-items-center gap-3">
-                    {/* Round Icon Container */}
                     <div
                       className="rounded-circle d-flex align-items-center justify-content-center"
                       style={{
@@ -76,9 +90,16 @@ function ChoresStatus({ filterType = "all", categoryName }) {
                       <i className={`fa-solid fa-${uiIcon} fs-4`}></i>
                     </div>
 
-                    {/* Title & Category Badge */}
                     <div>
-                      <h4 className="h5 text-dark mb-1 fw-normal">{chore.title}</h4>
+                      <h4 className="h5 text-dark mb-1 fw-normal">
+                        {chore.title}{" "}
+                        {userRole === "ADMIN" && (
+                          <Button variant="link" className="text-secondary text-decoration-none py-0 small fw-semibold" onClick={() => openEditTask(chore)}>
+                            <i className="fa-solid fa-pen-to-square me-0"></i>
+                          </Button>
+                        )}
+                      </h4>
+
                       <span className="badge text-uppercase px-2 py-1 bg-light text-dark fw-lighter" style={{ fontSize: "10px", letterSpacing: "0.5px" }}>
                         {catName}
                       </span>
@@ -103,7 +124,6 @@ function ChoresStatus({ filterType = "all", categoryName }) {
                     </div>
                   </div>
 
-                  {/* Checkbox Control */}
                   <label className="position-relative d-flex align-items-center" style={{ cursor: "pointer" }}>
                     <input
                       className="visually-hidden chore-checkbox"
@@ -111,8 +131,6 @@ function ChoresStatus({ filterType = "all", categoryName }) {
                       checked={chore.isCompleted}
                       onChange={() => dispatch(setChoreCompletionStatus(chore.taskId))}
                     />
-
-                    {/* Visual Custom Circle */}
                     <div className="rounded-circle border border-2 border-secondary-subtle checkbox-visual" style={{ width: "32px", height: "32px" }}></div>
                   </label>
                 </div>
@@ -133,7 +151,6 @@ function ChoresStatus({ filterType = "all", categoryName }) {
             return (
               <div key={chore.taskId} className="d-flex align-items-center justify-content-between bg-light p-3 rounded-3 opacity-75 mb-3">
                 <div className="d-flex align-items-center gap-3">
-                  {/* Icon Container */}
                   <div
                     className="rounded-circle bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center"
                     style={{ width: "48px", height: "48px" }}
@@ -141,7 +158,6 @@ function ChoresStatus({ filterType = "all", categoryName }) {
                     <i className={`fa-solid fa-${uiIcon} text-secondary`}></i>
                   </div>
 
-                  {/* Text and Badge */}
                   <div>
                     <h4 className="h5 text-secondary text-decoration-line-through mb-0">{chore.title}</h4>
                     <span className="badge text-uppercase px-2 py-1 bg-light text-dark fw-lighter" style={{ fontSize: "10px", letterSpacing: "0.5px" }}>
@@ -151,13 +167,21 @@ function ChoresStatus({ filterType = "all", categoryName }) {
                       className=" px-2 py-1 text-dark text-uppercase bg-light fw-lighter rounded-4 ms-2"
                       style={{ fontSize: "10px", letterSpacing: "0.5px" }}
                     >
-                      <img src={chore.avatarUrl} alt="user avatar" className="rounded-circle object-fit-cover me-2" style={{ width: "25px", height: "25px" }} />
+                      {chore?.avatarUrl ? (
+                        <img
+                          src={chore?.avatarUrl}
+                          alt={chore?.username}
+                          className="rounded-circle object-fit-cover me-2"
+                          style={{ width: "25px", height: "25px" }}
+                        />
+                      ) : (
+                        <i className="fa-solid fa-circle-user text-secondary fs-5 me-2" style={{ marginBottom: "-10px" }}></i>
+                      )}
                       {chore.assignedTo}
                     </span>
                   </div>
                 </div>
 
-                {/* Checkmark Container */}
                 <label className="position-relative d-flex align-items-center" style={{ cursor: "pointer" }}>
                   <input
                     className="visually-hidden chore-checkbox"
@@ -177,6 +201,8 @@ function ChoresStatus({ filterType = "all", categoryName }) {
           })
         )}
       </Col>
+
+      <ModalTaskSelection show={showEditModal} handleClose={closeEditTask} editingTask={taskBeingEdited} onTaskUpdated={handleTaskUpdated} />
     </Container>
   )
 }

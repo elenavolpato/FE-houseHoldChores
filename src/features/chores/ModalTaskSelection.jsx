@@ -3,9 +3,11 @@ import { Modal, Form, Button, Alert } from "react-bootstrap"
 import { useDispatch } from "react-redux"
 import { createTaskFromPreset } from "@/services/choreApi"
 import { getAllGroupMembers } from "@/services/groupApi"
+import { assignUserToTask, updateTaskDueDate } from "../../services/choreApi"
 
-function ModalTaskSelection({ show, handleClose, activeChore, onTaskAdded }) {
+function ModalTaskSelection({ show, handleClose, activeChore, editingTask, onTaskAdded, onTaskUpdated }) {
   const dispatch = useDispatch()
+  const isEditMode = Boolean(editingTask)
 
   // Helper to grab local today date string structure
   const getDateString = () => {
@@ -20,23 +22,69 @@ function ModalTaskSelection({ show, handleClose, activeChore, onTaskAdded }) {
   const [selectedUser, setSelectedUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState("")
 
+  useEffect(() => {
+    if (!show) return
+    if (isEditMode) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setDueDate(editingTask.dueDate?.split("T")[0] || getDateString())
+    } else {
+      setDueDate(getDateString())
+      setSelectedUser(null)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [show, editingTask])
+
+  useEffect(() => {
+    if (!show || !isEditMode) return
+    if (!editingTask.userID) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setSelectedUser(null)
+      return
+    }
+    const matchedMember = groupMembers.find((m) => String(m.id) === String(editingTask.userID))
+    setSelectedUser(matchedMember || null)
+  }, [show, isEditMode, editingTask, groupMembers])
+
   const handleConfirmAdd = async () => {
-    if (!activeChore) return
     setErrorMessage("")
-
     try {
-      const payload = {
-        presetId: activeChore.id,
-        dueDate: `${dueDate}T12:00:00`,
-        assignedTo: selectedUser ? selectedUser.id : null,
+      if (isEditMode) {
+        const newDueDate = dueDate // already just the date portion, e.g. "2026-06-25"
+        const newAssignedId = selectedUser ? selectedUser.id : null
+
+        const originalDueDate = editingTask.dueDate?.split("T")[0] ?? null
+        const originalAssignedId = editingTask.userID ?? null
+
+        const dueDateChanged = newDueDate !== originalDueDate
+        const assigneeChanged = newAssignedId !== originalAssignedId
+
+        if (!dueDateChanged && !assigneeChanged) {
+          handleClose()
+          return
+        }
+
+        if (dueDateChanged) {
+          await dispatch(updateTaskDueDate({ taskId: editingTask.taskId, dueDate: `${newDueDate}T12:00:00` })).unwrap()
+        }
+
+        if (assigneeChanged) {
+          await dispatch(assignUserToTask({ taskId: editingTask.taskId, userId: newAssignedId })).unwrap()
+        }
+
+        onTaskUpdated(editingTask.taskId)
+      } else {
+        if (!activeChore) return
+        const payload = {
+          presetId: activeChore.id,
+          dueDate: `${dueDate}T12:00:00`,
+          assignedTo: selectedUser ? selectedUser.id : null,
+        }
+        await dispatch(createTaskFromPreset(payload)).unwrap()
+        onTaskAdded(activeChore.id)
       }
-
-      await dispatch(createTaskFromPreset(payload)).unwrap()
-
-      onTaskAdded(activeChore.id)
       handleClose()
     } catch (err) {
-      alert(err || "Something went wrong activating that chore configuration.")
+      alert(err || "Something went wrong saving that task.")
     }
   }
   useEffect(() => {
@@ -65,7 +113,7 @@ function ModalTaskSelection({ show, handleClose, activeChore, onTaskAdded }) {
   return (
     <Modal show={show} onHide={handleClose} centered contentClassName="border-0 p-2 rounded-4 shadow">
       <Modal.Header closeButton className="border-0 pb-0">
-        <Modal.Title className="h6 fw-bold text-dark">Schedule "{activeChore?.title}"</Modal.Title>
+        <Modal.Title className="h6 fw-bold text-dark">{isEditMode ? `Edit "${editingTask?.title}"` : `Schedule "${activeChore?.title}"`}</Modal.Title>{" "}
       </Modal.Header>
 
       <Modal.Body className="pt-3">
@@ -107,7 +155,7 @@ function ModalTaskSelection({ show, handleClose, activeChore, onTaskAdded }) {
           Cancel
         </Button>
         <Button variant="warning" className="rounded-pill px-4 fw-bold text-dark btn-sm shadow-sm" onClick={handleConfirmAdd}>
-          Confirm
+          {isEditMode ? "Save changes" : "Confirm"}
         </Button>
       </Modal.Footer>
     </Modal>

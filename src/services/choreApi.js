@@ -215,3 +215,109 @@ export const setChoreCompletionStatus = createAsyncThunk("tasks/setChoreCompleti
     return thunkAPI.rejectWithValue("Server connection failed")
   }
 })
+
+export const assignUserToTask = createAsyncThunk("task/assignUserToTask", async ({ taskId, userId }, thunkAPI) => {
+  try {
+    const state = thunkAPI.getState()
+    const token = state.auth.token
+
+    if (!token) {
+      return thunkAPI.rejectWithValue("Authentication token missing. Please log in again.")
+    }
+
+    const requestBody = {
+      userId: userId,
+    }
+
+    const response = await fetch(`${API_BASE_URL}/api/tasks/${taskId}/assign`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      return thunkAPI.rejectWithValue(data.message || "Failed to assign user to task.")
+    }
+
+    return data
+  } catch (error) {
+    console.error(error)
+    return thunkAPI.rejectWithValue("Server connectivity lost. Please try again shortly.")
+  }
+})
+
+export const updateTaskDueDate = createAsyncThunk("task/updateTaskDueDate", async ({ taskId, dueDate }, thunkAPI) => {
+  try {
+    const state = thunkAPI.getState()
+    const token = state.auth.token
+
+    if (!token) {
+      return thunkAPI.rejectWithValue("Authentication token missing. Please log in again.")
+    }
+
+    const requestBody = {
+      dueDate: dueDate,
+    }
+
+    const response = await fetch(`${API_BASE_URL}/api/tasks/${taskId}/due-date`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      return thunkAPI.rejectWithValue(data.message || "Failed to update due date.")
+    }
+
+    return data
+  } catch (error) {
+    console.error(error)
+    return thunkAPI.rejectWithValue("Server connectivity lost. Please try again shortly.")
+  }
+})
+
+export const updateTaskFrequency = createAsyncThunk("task/updateTaskFrequency", async ({ taskId, frequency, customInterval }, thunkAPI) => {
+  try {
+    const state = thunkAPI.getState()
+    const token = state.auth.token
+
+    if (!token) {
+      return thunkAPI.rejectWithValue("Authentication token missing. Please log in again.")
+    }
+
+    const requestBody = {
+      frequency: frequency,
+      customInterval: customInterval ?? null,
+    }
+
+    const response = await fetch(`${API_BASE_URL}/api/tasks/${taskId}/frequency`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      return thunkAPI.rejectWithValue(data.message || "Failed to update frequency.")
+    }
+
+    return data
+  } catch (error) {
+    console.error(error)
+    return thunkAPI.rejectWithValue("Server connectivity lost. Please try again shortly.")
+  }
+})

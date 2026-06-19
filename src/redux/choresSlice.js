@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { fetchAvailableTasks, fetchGroupTasks, setChoreCompletionStatus } from "../services/choreApi"
+import { fetchAvailableTasks, fetchGroupTasks, setChoreCompletionStatus, updateTaskDueDate, assignUserToTask, updateTaskFrequency } from "../services/choreApi"
 
 const formatDateString = (dateObj) => {
   const offset = dateObj.getTimezoneOffset()
@@ -171,6 +171,30 @@ export const choresSlice = createSlice({
       })
       .addCase(setChoreCompletionStatus.rejected, (state, action) => {
         state.error = action.payload
+      })
+      .addCase(assignUserToTask.fulfilled, (state, action) => {
+        state.loading = false
+        const updatedTask = action.payload
+        const index = state.list.findIndex((c) => c.taskId === updatedTask.taskId)
+        if (index !== -1) {
+          state.list[index] = { ...state.list[index], ...updatedTask }
+        }
+      })
+      .addCase(updateTaskDueDate.fulfilled, (state, action) => {
+        state.loading = false
+        const updatedTask = action.payload
+        const index = state.list.findIndex((c) => c.taskId === updatedTask.taskId)
+        if (index !== -1) {
+          state.list[index] = { ...state.list[index], ...updatedTask }
+        }
+      })
+      .addCase(updateTaskFrequency.fulfilled, (state, action) => {
+        state.loading = false
+        const updatedTask = action.payload
+        const index = state.list.findIndex((c) => c.taskId === updatedTask.taskId)
+        if (index !== -1) {
+          state.list[index] = { ...state.list[index], ...updatedTask }
+        }
       })
   },
 })
