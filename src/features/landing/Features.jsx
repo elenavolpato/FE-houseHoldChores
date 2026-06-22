@@ -6,7 +6,7 @@ function Features() {
     <section>
       <Container className="my-5 px-4">
         <div className="mb-5">
-          <h2>Why Chores Mate? </h2>
+          <h2>Why ChoreMate? </h2>
           <p>Designed for clarity and efficiency in every room of your household</p>
         </div>
         <Row className="d-flex justify-content-between">

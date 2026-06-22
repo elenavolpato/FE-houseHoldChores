@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Modal, Form, Button, Alert } from "react-bootstrap"
+import { Modal, Form, Button, Alert, Row, Col, InputGroup } from "react-bootstrap"
 import { useDispatch } from "react-redux"
 import { createTaskFromPreset } from "@/services/choreApi"
 import { getAllGroupMembers } from "@/services/groupApi"
@@ -21,6 +21,15 @@ function ModalTaskSelection({ show, handleClose, activeChore, editingTask, onTas
   const [groupMembers, setGroupMembers] = useState([])
   const [selectedUser, setSelectedUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState("")
+  const [frequency, setFrequency] = useState(7)
+
+  useEffect(() => {
+    if (!show) return
+    else {
+      setFrequency(editingTask.frequency)
+      console.log(editingTask)
+    }
+  }, [frequency])
 
   useEffect(() => {
     if (!show) return
@@ -122,16 +131,36 @@ function ModalTaskSelection({ show, handleClose, activeChore, editingTask, onTas
             {errorMessage}
           </Alert>
         )}
-        <Form.Group controlId="popupDueDate">
-          <Form.Label className="text-muted small fw-semibold text-uppercase mb-2">Select Due Date</Form.Label>
-          <Form.Control
-            type="date"
-            value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
-            className="p-2 rounded-3 bg-light border-0 shadow-sm text-dark"
-            required
-          />
-        </Form.Group>
+        <Row>
+          <Col className="mb-3">
+            <Form.Group controlId="popupDueDate">
+              <Form.Label className="text-muted small fw-semibold text-uppercase mb-2">Select Due Date</Form.Label>
+              <Form.Control
+                type="date"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+                className="p-2 rounded-3 bg-light border-0 shadow-sm text-dark"
+                required
+              />
+            </Form.Group>
+          </Col>
+          <Col>
+            <Form.Group>
+              <Form.Label className="text-muted small fw-semibold text-uppercase mb-2">Frequency</Form.Label>
+              <InputGroup>
+                <Form.Control
+                  type="number"
+                  value={frequency}
+                  onChange={(e) => setFrequency(e.target.value)}
+                  className="p-2 rounded-3 bg-light border-0 shadow-sm text-dark"
+                  style={{ webkitAppearance: "none" }}
+                  required
+                />
+                <InputGroup.Text className="p-2 rounded-3 bg-light border-0 shadow-sm text-dark">days</InputGroup.Text>
+              </InputGroup>
+            </Form.Group>
+          </Col>
+        </Row>
         <Form.Group className="mb-4">
           <Form.Label className="fw-semibold text-muted small text-uppercase">Assign To</Form.Label>
           <Form.Select

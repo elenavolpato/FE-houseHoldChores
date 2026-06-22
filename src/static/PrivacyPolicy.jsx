@@ -19,7 +19,7 @@ function PrivacyPolicy() {
               <p className="text-muted small mb-5">Effective Date: June 3, 2026</p>
 
               <p className="lead text-secondary mb-5">
-                Welcome to Chores Mate ("we," "our," or "us"). We are committed to protecting your privacy and ensuring you have a safe experience managing your
+                Welcome to ChoreMate ("we," "our," or "us"). We are committed to protecting your privacy and ensuring you have a safe experience managing your
                 household chores. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our web application.
               </p>
 
@@ -51,7 +51,7 @@ function PrivacyPolicy() {
               <section className="mb-5">
                 <h3 className="fw-semibold text-dark mb-3">2. How We Use Your Information</h3>
                 <p className="text-secondary">
-                  We use the information we collect solely to run, maintain, and improve Chores Mate. Specifically, we use your data to:
+                  We use the information we collect solely to run, maintain, and improve ChoreMate. Specifically, we use your data to:
                 </p>
                 <ul className="text-secondary lh-lg">
                   <li>Create, manage, and authenticate your user account.</li>
@@ -70,7 +70,7 @@ function PrivacyPolicy() {
                 </p>
                 <ul className="text-secondary lh-lg">
                   <li>
-                    <strong>With Household Members:</strong> The primary purpose of Chores Mate is collaborative coordination. Any chores you create, edit, or
+                    <strong>With Household Members:</strong> The primary purpose of ChoreMate is collaborative coordination. Any chores you create, edit, or
                     mark complete, as well as your display name, will be visible to other authenticated users who belong to your specific household group.
                   </li>
                   <li>
@@ -97,7 +97,7 @@ function PrivacyPolicy() {
               {/* Section 5 */}
               <section className="mb-5">
                 <h3 className="fw-semibold text-dark mb-3">5. Your Rights and Choices</h3>
-                <p className="text-secondary">You have control over the personal information you store within Chores Mate:</p>
+                <p className="text-secondary">You have control over the personal information you store within ChoreMate:</p>
                 <ul className="text-secondary lh-lg">
                   <li>
                     <strong>Account and Profile Edits:</strong> You can view and update your profile information at any time through the Profile View screen.
