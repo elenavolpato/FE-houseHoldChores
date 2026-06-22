@@ -3,7 +3,7 @@ import { Modal, Form, Button, Alert, Row, Col, InputGroup } from "react-bootstra
 import { useDispatch } from "react-redux"
 import { createTaskFromPreset } from "@/services/choreApi"
 import { getAllGroupMembers } from "@/services/groupApi"
-import { assignUserToTask, updateTaskDueDate } from "../../services/choreApi"
+import { assignUserToTask, updateTaskDueDate, updateTaskFrequency } from "../../services/choreApi"
 
 function ModalTaskSelection({ show, handleClose, activeChore, editingTask, onTaskAdded, onTaskUpdated }) {
   const dispatch = useDispatch()
@@ -21,13 +21,19 @@ function ModalTaskSelection({ show, handleClose, activeChore, editingTask, onTas
   const [groupMembers, setGroupMembers] = useState([])
   const [selectedUser, setSelectedUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState("")
-  const [frequency, setFrequency] = useState(7)
+  const [frequency, setFrequency] = useState(0)
 
   useEffect(() => {
-    if (!show || !editingTask) return
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setFrequency(editingTask.frequency)
-  }, [show, editingTask])
+    if (!show) return
+    if (editingTask) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setFrequency(editingTask.frequency)
+      console.log("editingTask", editingTask.frequency)
+    } else if (activeChore) {
+      setFrequency(activeChore.frequency)
+      console.log("activeChore", activeChore.frequency)
+    }
+  }, [show, editingTask, activeChore])
 
   useEffect(() => {
     if (!show) return
@@ -58,14 +64,17 @@ function ModalTaskSelection({ show, handleClose, activeChore, editingTask, onTas
       if (isEditMode) {
         const newDueDate = dueDate // already just the date portion, e.g. "2026-06-25"
         const newAssignedId = selectedUser ? selectedUser.id : null
+        const newFrequency = Number(frequency)
 
         const originalDueDate = editingTask.dueDate?.split("T")[0] ?? null
         const originalAssignedId = editingTask.userID ?? null
+        const originalFrequency = editingTask.frequency
 
         const dueDateChanged = newDueDate !== originalDueDate
         const assigneeChanged = newAssignedId !== originalAssignedId
+        const frequencyChanged = newFrequency !== originalFrequency // 👈
 
-        if (!dueDateChanged && !assigneeChanged) {
+        if (!dueDateChanged && !assigneeChanged && !frequencyChanged) {
           handleClose()
           return
         }
@@ -76,6 +85,9 @@ function ModalTaskSelection({ show, handleClose, activeChore, editingTask, onTas
 
         if (assigneeChanged) {
           await dispatch(assignUserToTask({ taskId: editingTask.taskId, userId: newAssignedId })).unwrap()
+        }
+        if (frequencyChanged) {
+          await dispatch(updateTaskFrequency({ taskId: editingTask.taskId, frequency: newFrequency })).unwrap()
         }
 
         onTaskUpdated(editingTask.taskId)

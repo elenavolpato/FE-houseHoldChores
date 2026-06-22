@@ -46,13 +46,17 @@ function PickChore() {
 
   const handleCardClick = (chore) => {
     if (addedPresetIds.includes(chore.id)) return
-
     setActiveChore(chore)
     setShowModal(true)
   }
 
   const handleTaskAddedSuccess = (presetId) => {
     setAddedPresetIds((prev) => [...prev, presetId])
+    closeEditTask()
+  }
+  const closeEditTask = () => {
+    setShowModal(false)
+    setActiveChore(null)
   }
 
   if (loading) {

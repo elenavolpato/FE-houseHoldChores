@@ -56,7 +56,7 @@ export const fetchGroupTasks = createAsyncThunk("tasks/fetchGroupTasks", async (
   }
 })
 
-export const createTaskFromPreset = createAsyncThunk("task/createTaskFromPreset", async ({ presetId, dueDate, assignedTo }, thunkAPI) => {
+export const createTaskFromPreset = createAsyncThunk("task/createTaskFromPreset", async ({ presetId, dueDate, assignedTo, frequency }, thunkAPI) => {
   try {
     const state = thunkAPI.getState()
     const token = state.auth.token
@@ -77,7 +77,7 @@ export const createTaskFromPreset = createAsyncThunk("task/createTaskFromPreset"
       assignedUserId: assignedTo ?? null,
       groupId: currentGroupId,
       dueDate: dueDate,
-      frequency: 0,
+      frequency: frequency,
     }
 
     const response = await fetch(`${API_BASE_URL}/api/tasks/create-from-preset`, {
