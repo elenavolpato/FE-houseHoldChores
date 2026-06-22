@@ -24,12 +24,10 @@ function ModalTaskSelection({ show, handleClose, activeChore, editingTask, onTas
   const [frequency, setFrequency] = useState(7)
 
   useEffect(() => {
-    if (!show) return
-    else {
-      setFrequency(editingTask.frequency)
-      console.log(editingTask)
-    }
-  }, [frequency])
+    if (!show || !editingTask) return
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setFrequency(editingTask.frequency)
+  }, [show, editingTask])
 
   useEffect(() => {
     if (!show) return
@@ -86,7 +84,8 @@ function ModalTaskSelection({ show, handleClose, activeChore, editingTask, onTas
         const payload = {
           presetId: activeChore.id,
           dueDate: `${dueDate}T12:00:00`,
-          assignedTo: selectedUser ? selectedUser.id : null,
+          assignedUserId: selectedUser ? selectedUser.id : null,
+          frequency: Number(frequency),
         }
         await dispatch(createTaskFromPreset(payload)).unwrap()
         onTaskAdded(activeChore.id)
@@ -153,7 +152,7 @@ function ModalTaskSelection({ show, handleClose, activeChore, editingTask, onTas
                   value={frequency}
                   onChange={(e) => setFrequency(e.target.value)}
                   className="p-2 rounded-3 bg-light border-0 shadow-sm text-dark"
-                  style={{ webkitAppearance: "none" }}
+                  style={{ WebkitAppearance: "none" }}
                   required
                 />
                 <InputGroup.Text className="p-2 rounded-3 bg-light border-0 shadow-sm text-dark">days</InputGroup.Text>
