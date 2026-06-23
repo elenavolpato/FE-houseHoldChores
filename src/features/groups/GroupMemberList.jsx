@@ -39,7 +39,7 @@ function GroupMembersList() {
 
   return (
     <Col className="mx-3">
-      <h2 className=" mb-4 mt-2">Your group</h2>
+      <h2 className="mb-4 mt-2">Your group</h2>
       <GroupNameChanger groupName={groupName} />
       <div className="d-flex flex-column gap-3">
         {groupMembers.map((member) => {

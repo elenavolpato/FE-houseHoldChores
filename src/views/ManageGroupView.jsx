@@ -15,7 +15,7 @@ function ManageGroup() {
         {/* create groups only shows when user has no groups yet */}
         {!hasGroup && (
           <>
-            <CreateGroups />{" "}
+            <CreateGroups />
           </>
         )}
         {/* member list only show when user is already in a group */}

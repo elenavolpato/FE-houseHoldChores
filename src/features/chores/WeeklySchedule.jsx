@@ -18,7 +18,7 @@ const WeeklySchedule = () => {
     dispatch(setSelectedDate(isoString))
   }
 
-  const datesWithTasks = new Set(chores.filter((c) => c.dueDate).map((c) => c.dueDate.split("T")[0]))
+  const datesWithTasks = new Set(chores.filter((c) => c.dueDate && !c.isCompleted).map((c) => c.dueDate.split("T")[0]))
 
   return (
     <Col md={8} xs={12}>
