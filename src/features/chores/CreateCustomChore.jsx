@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Form, Button, Col, Row, Alert } from "react-bootstrap"
+import { Form, Button, Col, Row, Alert, InputGroup } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux"
 import "/src/css/createCustomChore.css"
 import { createPersonalizedTask, getAllCategories } from "@/services/choreApi"
@@ -13,7 +13,7 @@ function CreateCustomChore() {
   const getTomorrowDateString = () => {
     const today = new Date()
     const tomorrow = new Date(today)
-    tomorrow.setDate(today.getDate() + 1)
+    tomorrow.setDate(today.getDate())
     return tomorrow.toISOString().split("T")[0]
   }
 
@@ -92,13 +92,13 @@ function CreateCustomChore() {
       setDueDate(getTomorrowDateString())
       setTimeout(() => setUiSuccess(""), 4000)
     } catch (err) {
-      setUiError(err || "Something went sideways processing that custom layout.")
+      setUiError(err || "Something went sideways processing that.")
       setIsSaving(false)
     }
   }
 
   return (
-    <Col md={8} xs={12} className="pb-5">
+    <Col lg={8} xs={12} className="pb-5">
       <Form onSubmit={handleCreateChore} className="bg-white p-4 rounded-4 shadow-sm border my-5">
         <h3 className="h5 fw-bold text-dark mb-4">Add a custom chore</h3>
 
@@ -143,34 +143,36 @@ function CreateCustomChore() {
           </Col>
         </Row>
 
-        {/* Row 2: Frequency Interval & Assignment Selector */}
+        {/* Row 2: Frequency Interval */}
         <Row>
-          <Col xs={6} md={3}>
+          <Col xs={6}>
             <Form.Group className="mb-4">
               <Form.Label className="fw-semibold text-muted small d-block text-uppercase mb-2">How often?</Form.Label>
               <div className="animate-fade-in p-3 rounded-4 bg-light border border-light-subtle d-flex flex-column gap-1">
                 <Form.Label className="fw-semibold text-dark small mb-1">Repeat every </Form.Label>
                 <div className="d-flex align-items-center gap-2">
-                  <Form.Control
-                    type="number"
-                    min="1"
-                    max="365"
-                    value={customDays}
-                    onChange={(e) => setCustomDays(Math.max(1, parseInt(e.target.value) || 1))}
-                    className="p-2 rounded-3 text-center fw-bold shadow-sm"
-                    style={{ width: "100px" }}
-                  />
-                  <span className="text-secondary fw-medium">days</span>
+                  <InputGroup>
+                    <Form.Control
+                      type="number"
+                      min="1"
+                      max="365"
+                      value={customDays}
+                      onChange={(e) => setCustomDays(Math.max(1, parseInt(e.target.value) || 1))}
+                      className="p-2 rounded-3 text-center fw-bold shadow-sm"
+                      style={{ WebkitAppearance: "none" }}
+                    />
+                    <InputGroup.Text className="text-secondary fw-medium">days</InputGroup.Text>
+                  </InputGroup>
                 </div>
               </div>
             </Form.Group>
           </Col>
-
-          <Col xs={6} md={3}>
+          {/* due date selector */}
+          <Col xs={6}>
             <Form.Group className="mb-4">
               <Form.Label className="fw-semibold text-muted small d-block text-uppercase mb-2">Start</Form.Label>
               <div className="p-3 rounded-4 bg-light border border-light-subtle d-flex flex-column gap-1">
-                <Form.Label className="fw-semibold text-dark small mb-1">Initial Due Date</Form.Label>
+                <Form.Label className="fw-semibold text-dark small mb-1">Due Date</Form.Label>
                 <Form.Control
                   type="date"
                   value={dueDate}
@@ -183,8 +185,8 @@ function CreateCustomChore() {
             </Form.Group>
           </Col>
 
-          {/* Row 3: Due Date Picker Selection Row */}
-          <Col xs={6} md={6}>
+          {/* Row 3: Assign to someone */}
+          <Col xs={12}>
             <Form.Group className="mb-4">
               <Form.Label className="fw-semibold text-muted small d-block text-uppercase mb-2">Assign task</Form.Label>
               <div className="p-3 rounded-4 bg-light border border-light-subtle d-flex flex-column gap-1">

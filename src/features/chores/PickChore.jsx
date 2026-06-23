@@ -76,7 +76,7 @@ function PickChore() {
     )
 
   return (
-    <Col xs={12} md={8}>
+    <Col xs={12} lg={8}>
       {userGroup ? (
         <>
           <h3 className="h2 fw-bold text-dark mb-2">Available Chores</h3>
