@@ -8,6 +8,7 @@ function Register() {
   const { navigateTo } = useAppNavigation()
   const [searchParams] = useSearchParams()
   const token = searchParams.get("token")
+  const emailFromInvite = searchParams.get("email")
 
   const [show, setShow] = useState(false)
   const [errors, setErrors] = useState([])
@@ -17,7 +18,7 @@ function Register() {
 
   const [formData, setFormData] = useState({
     username: "",
-    email: "",
+    email: emailFromInvite || "",
     password: "",
     confirmPassword: "",
   })
