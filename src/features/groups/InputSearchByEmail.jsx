@@ -66,12 +66,12 @@ function InputSearchByEmail({ onLoadingChange, placeholder, isInvite }) {
     }
   }
   return (
-    <>
+    <Col>
       {error && <Alert variant="danger">{error}</Alert>}
       {inviteSuccess && <Alert variant="success">Invitation send!</Alert>}
-      <Form onSubmit={isInvite ? handleInvitationSend : handleGroupSearch} className="ps-3 pe-4 d-flex gap-3">
-        <Col xs={10}>
-          <InputGroup className="mb-2">
+      <Form onSubmit={isInvite ? handleInvitationSend : handleGroupSearch} className="d-flex ps">
+        <Col xs={9} md={10} className="pe-2">
+          <InputGroup className="mb-2 ">
             <Form.Control type="text" placeholder="First name" value={recipientName} onChange={(e) => setRecipientName(e.target.value)} />
           </InputGroup>
           <InputGroup>
@@ -79,12 +79,12 @@ function InputSearchByEmail({ onLoadingChange, placeholder, isInvite }) {
           </InputGroup>
         </Col>
         <Col xs={2} className="d-flex align-content-stretch my-2">
-          <button className="btn btn-danger" type="submit">
+          <button className="btn btn-danger rounded-3" type="submit">
             Send invite
           </button>
         </Col>
       </Form>
-    </>
+    </Col>
   )
 }
 

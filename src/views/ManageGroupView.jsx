@@ -11,7 +11,7 @@ function ManageGroup() {
 
   return (
     <Container className="d-flex justify-content-center align-items-center flex-column mt-3 mb-5 pb-5">
-      <Col lg={8} xs={12}>
+      <Col lg={6} xs={12}>
         {/* create groups only shows when user has no groups yet */}
         {!hasGroup && (
           <>

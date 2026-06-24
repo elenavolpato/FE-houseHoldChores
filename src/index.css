@@ -3,6 +3,11 @@ body {
   font-optical-sizing: auto;
   background-color: #e8f4fd;
 }
+
+html,
+body {
+  overflow-x: hidden !important;
+}
 :root {
   --navy: #1a2e44;
   --teal: #0d7377;

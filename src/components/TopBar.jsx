@@ -5,6 +5,7 @@ import { selectIsLoggedIn, logout } from "@/redux/authSlice"
 import { useEffect } from "react"
 import { getAllGroupMembers } from "../services/groupApi"
 import { Link, useLocation } from "react-router-dom"
+import "../css/topBar.css"
 
 function TopBar() {
   const isLoggedIn = useSelector(selectIsLoggedIn)
@@ -23,9 +24,9 @@ function TopBar() {
   return (
     <>
       <Container fluid className="p-3 bg-white shadow-lg border-top d-flex justify-content-between align-items-center sticky-top">
-        <Link to={isLoggedIn ? "home" : " "} className="text-light-navy m-0 d-flex align-items-center fs-3 text-decoration-none">
-          <i className="bi bi-house-check me-2 fs-1"></i>
-          <h1 className="d-md-inline fw-bold mt-3">ChoreMate</h1>
+        <Link to={isLoggedIn ? "home" : " "} className="text-light-navy m-0 ps-md-2 d-flex align-items-center fs-3 text-decoration-none">
+          <i className="bi bi-house-check me-2 fs-3 top-bar-icon"></i>
+          <h1 className="d-md-inline fw-bold mt-3 fs-3 pb-1 top-bar-logo">ChoreMate</h1>
         </Link>
 
         <div className="d-none d-lg-block z-3">
@@ -74,12 +75,12 @@ function TopBar() {
                   src={user?.avatarUrl}
                   alt={user?.username}
                   className="rounded-circle object-fit-cover"
-                  style={{ width: "35px", height: "35px", marginLeft: "-10px" }}
+                  style={{ width: "25px", height: "25px", marginLeft: "-10px" }}
                 />
               ) : (
-                <i className="fa-solid fa-circle-user text-secondary fs-2" style={{ width: "35px", height: "35px", marginLeft: "-10px", marginTop: "5px" }}></i>
+                <i className="fa-solid fa-circle-user text-secondary fs-1 " style={{ marginLeft: "-10px", marginTop: "0" }}></i>
               )}
-              <span className="fw-medium text-secondary m-1">{user?.username}</span>
+              <span className="fw-medium text-secondary m-1 d-none d-md-block">{user?.username}</span>
             </Dropdown.Toggle>
             <Dropdown.Menu className="shadow border-0 mt-2 p-2">
               <Dropdown.Item as={Link} to="/me" className="text-dark">

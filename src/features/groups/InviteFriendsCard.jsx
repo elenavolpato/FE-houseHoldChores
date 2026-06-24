@@ -8,7 +8,7 @@ function InviteFriendsCard() {
   const [searchResult, setSearchResult] = useState(null)
 
   return (
-    <Container className="py-3 px-3 mt-4">
+    <Col className="py-3 mt-4">
       <div
         className="rounded-4 p-4 text-center d-flex flex-column align-items-center"
         style={{
@@ -86,7 +86,7 @@ function InviteFriendsCard() {
           Copy Invite Link
         </Button> */}
       </div>
-    </Container>
+    </Col>
   )
 }
 

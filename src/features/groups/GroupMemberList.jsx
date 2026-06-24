@@ -38,7 +38,7 @@ function GroupMembersList() {
   if (error) return <div className="alert alert-danger m-3 rounded-4">{error}</div>
 
   return (
-    <Col className="mx-3">
+    <Col>
       <h2 className="mb-4 mt-2">Your group</h2>
       <GroupNameChanger groupName={groupName} />
       <div className="d-flex flex-column gap-3">

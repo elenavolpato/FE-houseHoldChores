@@ -1,0 +1,6 @@
+@media (min-width: 992px) {
+  .top-bar-icon,
+  .top-bar-logo {
+    font-size: 2rem !important;
+  }
+}

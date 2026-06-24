@@ -9,7 +9,7 @@ function CreateGroups() {
   //const [showSearchBar, setShowSearchBar] = useState(false)
 
   return (
-    <Container className="pt-4 px-3 d-flex flex-column align-items-center">
+    <Container className="pt-4 px-1 d-flex flex-column align-items-center">
       <NoGroups />
       <Col xs={12}>
         <div

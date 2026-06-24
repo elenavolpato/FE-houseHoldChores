@@ -59,17 +59,15 @@ const WeeklySchedule = () => {
             return (
               <Col
                 key={item.isoString}
-                className={`day-col text-center p-2 d-flex flex-column align-items-center justify-content-between 
+                className={`day-col text-center p-1 p-lg-2 d-flex flex-column align-items-center justify-content-between 
                   ${isSelected ? "selected" : ""} 
                   ${isToday ? "is-today" : ""}`}
                 onClick={() => handleDaySelect(item.isoString)}
                 style={{ cursor: "pointer" }}
               >
-                <span className={`text-muted small ${isSelected || isToday ? "fw-bold text-dark" : ""}`}>{item.dayName}</span>
-                <span className="fs-4 fw-bold my-1 text-dark">{item.dateNumber}</span>
-                <div>
-                  <i className="fa-solid fa-circle indicator-dot" style={{ opacity: datesWithTasks.has(item.isoString) ? 1 : 0 }}></i>
-                </div>
+                <span className={`text-muted day-name ${isSelected || isToday ? "fw-bold text-dark" : ""}`}>{item.dayName}</span>
+                <span className="date-number fs-6 fw-bold pb-2  text-dark">{item.dateNumber}</span>
+                <i className="fa-solid fa-circle indicator-dot pb-1 pb-lg-2" style={{ opacity: datesWithTasks.has(item.isoString) ? 1 : 0 }}></i>
               </Col>
             )
           })}

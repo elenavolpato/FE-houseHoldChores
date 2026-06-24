@@ -12,7 +12,6 @@
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s ease;
-  min-width: 55px;
 }
 
 /* Selected Day State (Yellow background only) */
@@ -71,4 +70,17 @@
 .indicator-dot {
   font-size: 6px;
   color: #212529;
+}
+
+@media (min-width: 992px) {
+  .date-number {
+    font-size: 1.75rem !important;
+  }
+}
+
+.day-name {
+  font-size: 0.6rem;
+  @media (min-width: 992px) {
+    font-size: 1.15rem;
+  }
 }
