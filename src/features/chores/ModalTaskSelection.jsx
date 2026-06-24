@@ -28,10 +28,8 @@ function ModalTaskSelection({ show, handleClose, activeChore, editingTask, onTas
     if (editingTask) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setFrequency(editingTask.frequency)
-      console.log("editingTask", editingTask.frequency)
     } else if (activeChore) {
       setFrequency(activeChore.frequency)
-      console.log("activeChore", activeChore.frequency)
     }
   }, [show, editingTask, activeChore])
 
@@ -173,14 +171,14 @@ function ModalTaskSelection({ show, handleClose, activeChore, editingTask, onTas
           </Col>
         </Row>
         <Form.Group className="mb-4">
-          <Form.Label className="fw-semibold text-muted small text-uppercase">Assign To</Form.Label>
+          <Form.Label className="fw-semibold text-muted small text-uppercase">Assign</Form.Label>
           <Form.Select
             value={selectedUser ? selectedUser.id : ""}
             className="p-2 rounded-3 bg-light border-0 shadow-sm text-dark"
             onChange={handleUserSelection}
             required
           >
-            <option value="">Assign someone</option>
+            <option value="">{isEditMode && editingTask?.userID ? "Unassign" : "Assign someone"}</option>
             {(groupMembers || []).map((member) => (
               <option key={member.id} value={member.id}>
                 {member.username}
