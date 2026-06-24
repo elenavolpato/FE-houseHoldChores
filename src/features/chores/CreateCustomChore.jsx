@@ -157,7 +157,17 @@ function CreateCustomChore() {
                       min="1"
                       max="365"
                       value={customDays}
-                      onChange={(e) => setCustomDays(Math.max(1, parseInt(e.target.value) || 1))}
+                      onChange={(e) => {
+                        const val = e.target.value
+                        if (val === "") {
+                          setCustomDays("")
+                        } else {
+                          setCustomDays(Math.max(1, parseInt(val) || 1))
+                        }
+                      }}
+                      onBlur={() => {
+                        if (customDays === "" || customDays < 1) setCustomDays(1)
+                      }}
                       className="p-2 rounded-3 text-center fw-bold shadow-sm"
                       style={{ WebkitAppearance: "none" }}
                     />
