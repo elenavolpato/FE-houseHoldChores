@@ -9,6 +9,7 @@ function Register() {
   const [searchParams] = useSearchParams()
   const token = searchParams.get("token")
   const emailFromInvite = searchParams.get("email")
+  const usernameFromInvite = searchParams.get("username")
 
   const [show, setShow] = useState(false)
   const [errors, setErrors] = useState([])
@@ -17,7 +18,7 @@ function Register() {
   const greetings = !token ? "Create account" : "Join group"
 
   const [formData, setFormData] = useState({
-    username: "",
+    username: usernameFromInvite || "",
     email: emailFromInvite || "",
     password: "",
     confirmPassword: "",
