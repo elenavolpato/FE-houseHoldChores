@@ -1,5 +1,5 @@
-import { Container, Col, Spinner, Card } from "react-bootstrap"
-import InputSearchByEmail from "./InputSearchByEmail"
+import { Col, Spinner, Card } from "react-bootstrap"
+import InviteMembers from "./InviteMembers"
 import { useState } from "react"
 
 function InviteFriendsCard() {
@@ -35,7 +35,7 @@ function InviteFriendsCard() {
 
         <div className="d-flex w-100 justify-content-between">
           <Col xs={12}>
-            <InputSearchByEmail placeholder={"Email"} onLoadingChange={setIsLoading} onResponse={searchResult} isInvite={true} />
+            <InviteMembers placeholder={"Email"} onLoadingChange={setIsLoading} onResponse={searchResult} isInvite={true} />
           </Col>
         </div>
         {searchResult && (

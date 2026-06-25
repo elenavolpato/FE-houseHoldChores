@@ -4,11 +4,12 @@ import { useDispatch } from "react-redux"
 //import { findGroupByAdminEmail } from "../../services/groupApi"
 import { sendGroupInvitation } from "../../services/groupApi"
 
-function InputSearchByEmail({ onLoadingChange, placeholder, isInvite }) {
+function InviteMembers({ onLoadingChange, placeholder, isInvite }) {
   const [recipientEmail, setRecipientEmail] = useState("")
   const [recipientName, setRecipientName] = useState("")
   const [error, setError] = useState("")
   const [inviteSuccess, setInviteSuccess] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -39,7 +40,7 @@ function InputSearchByEmail({ onLoadingChange, placeholder, isInvite }) {
 
   const handleInvitationSend = async (e) => {
     if (e) e.preventDefault()
-
+    setLoading(true)
     if (!recipientEmail.trim()) {
       setError("Please enter a valid email address to search.")
       return
@@ -63,6 +64,7 @@ function InputSearchByEmail({ onLoadingChange, placeholder, isInvite }) {
       setError(err?.message || err || fallbackMessage)
     } finally {
       onLoadingChange(false)
+      setLoading(false)
     }
   }
   return (
@@ -80,7 +82,14 @@ function InputSearchByEmail({ onLoadingChange, placeholder, isInvite }) {
         </Col>
         <Col xs={2} className="d-flex align-content-stretch my-2">
           <button className="btn btn-danger rounded-3" type="submit">
-            Send invite
+            {loading ? (
+              <>
+                <span className="spinner-border spinner-border-sm me-2" role="status" />
+                Sending...
+              </>
+            ) : (
+              "Send invite"
+            )}
           </button>
         </Col>
       </Form>
@@ -88,4 +97,4 @@ function InputSearchByEmail({ onLoadingChange, placeholder, isInvite }) {
   )
 }
 
-export default InputSearchByEmail
+export default InviteMembers

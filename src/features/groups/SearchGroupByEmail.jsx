@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Container, Spinner, Card, Col } from "react-bootstrap"
-import InputSearchByEmail from "./InputSearchByEmail"
+import InviteMembers from "./InviteMembers"
 
 function SearchGroupByEmail() {
   const [isLoading, setIsLoading] = useState(false)
@@ -8,7 +8,7 @@ function SearchGroupByEmail() {
 
   return (
     <Container className="mt-3">
-      <InputSearchByEmail placeholder="Search group by admin's email" onLoadingChange={setIsLoading} onSearchResult={setSearchResult} />
+      <InviteMembers placeholder="Search group by admin's email" onLoadingChange={setIsLoading} onSearchResult={setSearchResult} />
 
       {searchResult && (
         <Col className="mt-4">
