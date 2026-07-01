@@ -86,6 +86,7 @@ function ModalTaskSelection({ show, handleClose, activeChore, editingTask, onTas
         }
         if (frequencyChanged) {
           await dispatch(updateTaskFrequency({ taskId: editingTask.taskId, frequency: newFrequency })).unwrap()
+          console.log("frequency", newFrequency)
         }
 
         onTaskUpdated(editingTask.taskId)

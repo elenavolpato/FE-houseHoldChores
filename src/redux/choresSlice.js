@@ -190,10 +190,22 @@ export const choresSlice = createSlice({
       })
       .addCase(updateTaskFrequency.fulfilled, (state, action) => {
         state.loading = false
-        const updatedTask = action.payload
-        const index = state.list.findIndex((c) => c.taskId === updatedTask.taskId)
+        const { parentTask, deletedOccurrenceIds, newOccurrences } = action.payload
+
+        // remove stale future occurrences
+        if (deletedOccurrenceIds?.length) {
+          state.list = state.list.filter((t) => !deletedOccurrenceIds.includes(t.taskId))
+        }
+
+        // patch the parent task in place
+        const index = state.list.findIndex((c) => c.taskId === parentTask.taskId)
         if (index !== -1) {
-          state.list[index] = { ...state.list[index], ...updatedTask }
+          state.list[index] = { ...state.list[index], ...parentTask }
+        }
+
+        // append freshly generated occurrences
+        if (newOccurrences?.length) {
+          state.list.push(...newOccurrences)
         }
       })
   },
