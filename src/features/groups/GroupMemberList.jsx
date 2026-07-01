@@ -29,7 +29,6 @@ function GroupMembersList() {
       } finally {
         setLoading(false)
       }
-      console.log(groupMembers)
     }
     getGroups()
   }, [dispatch])

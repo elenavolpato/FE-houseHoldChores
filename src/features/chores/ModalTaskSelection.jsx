@@ -70,7 +70,7 @@ function ModalTaskSelection({ show, handleClose, activeChore, editingTask, onTas
 
         const dueDateChanged = newDueDate !== originalDueDate
         const assigneeChanged = newAssignedId !== originalAssignedId
-        const frequencyChanged = newFrequency !== originalFrequency // 👈
+        const frequencyChanged = newFrequency !== originalFrequency
 
         if (!dueDateChanged && !assigneeChanged && !frequencyChanged) {
           handleClose()
@@ -91,12 +91,14 @@ function ModalTaskSelection({ show, handleClose, activeChore, editingTask, onTas
         onTaskUpdated(editingTask.taskId)
       } else {
         if (!activeChore) return
+        console.log(selectedUser)
         const payload = {
           presetId: activeChore.id,
           dueDate: `${dueDate}T12:00:00`,
           assignedUserId: selectedUser ? selectedUser.id : null,
           frequency: Number(frequency),
         }
+        console.log(payload)
         await dispatch(createTaskFromPreset(payload)).unwrap()
         onTaskAdded(activeChore.id)
       }
@@ -124,7 +126,6 @@ function ModalTaskSelection({ show, handleClose, activeChore, editingTask, onTas
   const handleUserSelection = (e) => {
     const selectedId = e.target.value
     const foundUser = groupMembers.find((user) => String(user.id) === String(selectedId))
-    //console.log(foundUser)
     setSelectedUser(foundUser || null)
   }
 

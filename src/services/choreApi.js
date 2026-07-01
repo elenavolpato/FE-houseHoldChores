@@ -44,7 +44,6 @@ export const fetchGroupTasks = createAsyncThunk("tasks/fetchGroupTasks", async (
       },
     })
     const data = await response.json()
-    //console.log("fetchGroupTasks", data)
 
     if (!response.ok) {
       return thunkAPI.rejectedWithValue(data.message || "Failed to load group tasks.")
@@ -56,7 +55,7 @@ export const fetchGroupTasks = createAsyncThunk("tasks/fetchGroupTasks", async (
   }
 })
 
-export const createTaskFromPreset = createAsyncThunk("task/createTaskFromPreset", async ({ presetId, dueDate, assignedTo, frequency }, thunkAPI) => {
+export const createTaskFromPreset = createAsyncThunk("task/createTaskFromPreset", async ({ presetId, dueDate, assignedUserId, frequency }, thunkAPI) => {
   try {
     const state = thunkAPI.getState()
     const token = state.auth.token
@@ -74,11 +73,12 @@ export const createTaskFromPreset = createAsyncThunk("task/createTaskFromPreset"
 
     const requestBody = {
       presetId: presetId,
-      assignedUserId: assignedTo ?? null,
+      assignedUserId: assignedUserId ?? null,
       groupId: currentGroupId,
       dueDate: dueDate,
       frequency: frequency,
     }
+    console.log("api", requestBody)
 
     const response = await fetch(`${API_BASE_URL}/api/tasks/create-from-preset`, {
       method: "POST",

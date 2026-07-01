@@ -43,6 +43,8 @@ function App() {
     if (token && !user) {
       dispatch(fetchCurrentUserProfile())
     }
+    // eslint-disable-next-line no-undef
+    console.log("ChoreMate v" + __APP_VERSION__)
   }, [token, user, dispatch, isProfileLoading])
 
   return (

@@ -25,7 +25,6 @@ function GroupNameChanger() {
   }, [safeGroupName, isEditing])
 
   const handleSaveGroupName = async (e) => {
-    console.log(user)
     e.preventDefault()
 
     // if nothing changes, just close the editor without sending anything to the server

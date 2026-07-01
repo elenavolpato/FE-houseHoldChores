@@ -39,6 +39,7 @@ function ChoresStatus({ filterType = "all", categoryName }) {
 
   const remainingChores = displayChores.filter((chore) => !chore.isCompleted)
   const completedChores = displayChores.filter((chore) => chore.isCompleted)
+  console.log(chores[8])
 
   const openEditTask = (chore) => {
     setTaskBeingEdited(chore)
@@ -92,7 +93,7 @@ function ChoresStatus({ filterType = "all", categoryName }) {
 
                     <div>
                       <h4 className="h5 text-dark mb-1 fw-normal">
-                        {chore.title}{" "}
+                        {chore.title}
                         {userRole === "ADMIN" && (
                           <Button variant="link" className="text-secondary text-decoration-none py-0 small fw-semibold" onClick={() => openEditTask(chore)}>
                             <i className="fa-solid fa-pen-to-square me-0"></i>
